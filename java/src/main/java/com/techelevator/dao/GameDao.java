@@ -11,7 +11,9 @@ public interface GameDao {
 
     public Game getGame(int gameId);
 
-    public int saveGame(Game gameToSave);
+    public int createGame(Game gameToSave);
+
+    public int saveGame(Game game);
 
 //    public void removeGame(int gameId);
 

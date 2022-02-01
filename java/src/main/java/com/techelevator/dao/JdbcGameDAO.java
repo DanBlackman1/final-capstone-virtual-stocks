@@ -13,6 +13,7 @@ import java.util.List;
 public class JdbcGameDao implements GameDao{
 
     private JdbcTemplate template;
+    private JdbcAccountDao accountDao;
 
     public JdbcGameDao(DataSource datasource) {
         template = new JdbcTemplate(datasource);
@@ -43,11 +44,23 @@ public class JdbcGameDao implements GameDao{
     }
 
     @Override
-    public int saveGame(Game gameToSave) {
+    public int createGame(Game gameToSave) {
         String sql = "INSERT INTO game (game_name, organizer_id, start_date, end_date)" +
                 " VALUES (?, ?, ?, ?) RETURNING game_id;";
         int id = template.queryForObject(sql, Integer.class);
         return id;
+    }
+
+    @Override
+    public int saveGame(Game newGame) {
+        int gameId = createGame(newGame);
+        int accountId = accountDao.createAccount();
+        int userId = newGame.getOrganizerId();
+
+        String sql = "INSERT INTO game_data (user_id, game_id, account_id) VALUES " +
+                "(?, ?, ?);";
+        template.update(sql, userId, gameId, accountId);
+        return gameId;
     }
 
     @Override
@@ -60,7 +73,6 @@ public class JdbcGameDao implements GameDao{
 
         String sql = "INSERT INTO game_data (game_id, user_id, account_id) VALUES (?, ?, ?);";
         template.update(sql, gameId, userId, accountId);
-
 
     }
     private Game mapRowToGame(SqlRowSet rs){
