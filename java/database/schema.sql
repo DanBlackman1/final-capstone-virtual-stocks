@@ -19,20 +19,13 @@ CREATE TABLE users (
 	username varchar(50) NOT NULL,
 	password_hash varchar(200) NOT NULL,
 	role varchar(50) NOT NULL,
+	email varchar(50) NOT NULL,
 	CONSTRAINT PK_users PRIMARY KEY (user_id)
-	-- needs email?
+
 );
--- added below
--- CREATE TABLE player (
---     -- should user_ID be "Serial?"
--- 	user_id serial,
---     email varchar(50) NOT NULL,
---     username varchar (25) NOT NULL,
---     CONSTRAINT PK_player PRIMARY KEY (user_id)
--- );
 
 CREATE TABLE game (
-    game_id int NOT NULL,
+    game_id serial,
     organizer_id int NOT NULL,
     game_name varchar (40) NOT NULL,
     start_date DATE NOT NULL,
@@ -44,7 +37,7 @@ CREATE TABLE game (
     -- CONSTRAINT FK_game_users FOREIGN KEY organizer_id REFERENCES users(user_id)
 );
 CREATE TABLE accounts (
-    account_id int NOT NULL,
+    account_id serial,
     user_balance int NOT NULL,
     stock_value int,
     dollar_amount int NOT NULL,
@@ -63,8 +56,8 @@ CREATE TABLE gameData (
 
 -- added above
 
-INSERT INTO users (username,password_hash,role) VALUES ('user','$2a$08$UkVvwpULis18S19S5pZFn.YHPZt3oaqHZnDwqbCW9pft6uFtkXKDC','ROLE_USER');
-INSERT INTO users (username,password_hash,role) VALUES ('admin','$2a$08$UkVvwpULis18S19S5pZFn.YHPZt3oaqHZnDwqbCW9pft6uFtkXKDC','ROLE_ADMIN');
+INSERT INTO users (email,username,password_hash,role) VALUES ('foo@game.com','user','$2a$08$UkVvwpULis18S19S5pZFn.YHPZt3oaqHZnDwqbCW9pft6uFtkXKDC','ROLE_USER');
+INSERT INTO users (email,username,password_hash,role) VALUES ('foo@game.com','admin','$2a$08$UkVvwpULis18S19S5pZFn.YHPZt3oaqHZnDwqbCW9pft6uFtkXKDC','ROLE_ADMIN');
 
 
 COMMIT TRANSACTION;
