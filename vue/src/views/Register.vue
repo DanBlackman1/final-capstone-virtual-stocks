@@ -5,6 +5,16 @@
       <div class="alert alert-danger" role="alert" v-if="registrationErrors">
         {{ registrationErrorMsg }}
       </div>
+      <label for="email" class="sr-only">Email:</label>
+      <input
+        type="text"
+        id="email"
+        class="form-control"
+        placeholder="Email"
+        v-model="user.email"
+        required
+        autofocus
+      />
       <label for="username" class="sr-only">Username</label>
       <input
         type="text"

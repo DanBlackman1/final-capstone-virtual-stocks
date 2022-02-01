@@ -3,8 +3,8 @@ BEGIN TRANSACTION;
 DROP TABLE IF EXISTS users ;
 DROP TABLE IF EXISTS player ;
 DROP TABLE IF EXISTS game ;
-DROP TABLE IF EXISTS gameData ;
-DROP TABLE IF EXISTS accounts ;
+DROP TABLE IF EXISTS game_data ;
+DROP TABLE IF EXISTS account ;
 DROP SEQUENCE IF EXISTS seq_user_id;
 
 CREATE SEQUENCE seq_user_id
@@ -36,22 +36,22 @@ CREATE TABLE game (
     -- May not need below.
     -- CONSTRAINT FK_game_users FOREIGN KEY organizer_id REFERENCES users(user_id)
 );
-CREATE TABLE accounts (
+CREATE TABLE account (
     account_id serial,
     user_balance int NOT NULL,
     stock_value int,
     dollar_amount int NOT NULL,
-    CONSTRAINT PK_accounts PRIMARY KEY (account_id)
+    CONSTRAINT PK_account PRIMARY KEY (account_id)
 );
 
-CREATE TABLE gameData (
+CREATE TABLE game_data (
     game_id int  NOT NULL,
     user_id int  NOT NULL,
     account_id int  NOT NULL,
-    CONSTRAINT PK_gameData PRIMARY KEY (game_id, user_id, account_id),
-    CONSTRAINT FK_gameData_accounts FOREIGN KEY (account_id) REFERENCES accounts(account_id),
-    CONSTRAINT FK_gameData_users FOREIGN KEY (user_id) REFERENCES users(user_id),
-    CONSTRAINT FK_gameData_game FOREIGN KEY (game_id) REFERENCES game(game_id)
+    CONSTRAINT PK_game_data PRIMARY KEY (game_id, user_id, account_id),
+    CONSTRAINT FK_game_data_account FOREIGN KEY (account_id) REFERENCES account(account_id),
+    CONSTRAINT FK_game_data_users FOREIGN KEY (user_id) REFERENCES users(user_id),
+    CONSTRAINT FK_game_data_game FOREIGN KEY (game_id) REFERENCES game(game_id)
 );
 
 -- added above

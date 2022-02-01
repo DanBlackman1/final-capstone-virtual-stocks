@@ -11,7 +11,7 @@ public interface GameDao {
 
     public Game getGame(int gameId);
 
-    public void saveGame(Game gameToSave);
+    public int saveGame(Game gameToSave);
 
 //    public void removeGame(int gameId);
 
@@ -19,6 +19,6 @@ public interface GameDao {
 
 //    public void editGame(Game gameToSave);
 
-    public void addUser(int gameId, int userId);
+    public void addUser(int gameId, int userId, int accountId);
 
 }
