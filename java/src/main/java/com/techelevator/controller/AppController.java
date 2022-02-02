@@ -33,7 +33,8 @@ public class AppController {
 
     @RequestMapping(path = "/{id}", method = RequestMethod.POST)
     public int createGame(@RequestBody Game newGame) {
-        return gameDao.saveGame(newGame);
+        int id = accountDao.createAccount();
+        return gameDao.saveGame(newGame, id);
     }
 
 }

@@ -4,7 +4,7 @@ import com.techelevator.model.Game;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Component;
-
+import com.techelevator.dao.JdbcAccountDao;
 import javax.sql.DataSource;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,6 +13,7 @@ import java.util.List;
 public class JdbcGameDAO implements GameDao{
 
     private JdbcTemplate template;
+
     private JdbcAccountDao accountDao;
 
     public JdbcGameDAO(DataSource datasource) {
@@ -47,16 +48,13 @@ public class JdbcGameDAO implements GameDao{
     public int createGame(Game gameToSave) {
         String sql = "INSERT INTO game (game_name, organizer_id, start_date, end_date)" +
                 " VALUES (?, ?, ?, ?) RETURNING game_id;";
-        int id = template.queryForObject(sql, Integer.class);
-        return id;
+        return template.queryForObject(sql, Integer.class, gameToSave.getGameName(), gameToSave.getOrganizerId(), gameToSave.getStartDate(), gameToSave.getEndDate());
     }
 
     @Override
-    public int saveGame(Game newGame) {
+    public int saveGame(Game newGame, int accountId) {
         int gameId = createGame(newGame);
-        int accountId = accountDao.createAccount();
         int userId = newGame.getOrganizerId();
-
         String sql = "INSERT INTO game_data (user_id, game_id, account_id) VALUES " +
                 "(?, ?, ?);";
         template.update(sql, userId, gameId, accountId);

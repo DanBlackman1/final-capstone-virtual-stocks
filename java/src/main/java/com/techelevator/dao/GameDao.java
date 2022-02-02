@@ -13,7 +13,7 @@ public interface GameDao {
 
     public int createGame(Game gameToSave);
 
-    public int saveGame(Game game);
+    public int saveGame(Game game, int id);
 
 //    public void removeGame(int gameId);
 
