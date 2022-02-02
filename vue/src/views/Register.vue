@@ -5,7 +5,13 @@
       <div class="alert alert-danger" role="alert" v-if="registrationErrors">
         {{ registrationErrorMsg }}
       </div>
-      <label for="email" class="sr-only">Email:</label>
+
+
+      <!-- DO NOT NEED THE LABEL: EMAIL USERNAME, ETC.  Sam took them out for now  -->
+      <!-- "Home" is in the app.vue -->
+
+      
+      <label for="email" class="sr-only" id="email"></label>
       <input
         type="text"
         id="email"
@@ -15,34 +21,40 @@
         required
         autofocus
       />
-      <label for="username" class="sr-only">Username</label>
-      <input
-        type="text"
-        id="username"
-        class="form-control"
-        placeholder="Username"
-        v-model="user.username"
-        required
-        autofocus
-      />
-      <label for="password" class="sr-only">Password</label>
-      <input
-        type="password"
-        id="password"
-        class="form-control"
-        placeholder="Password"
-        v-model="user.password"
-        required
-      />
-      <input
-        type="password"
-        id="confirmPassword"
-        class="form-control"
-        placeholder="Confirm Password"
-        v-model="user.confirmPassword"
-        required
-      />
-      <router-link :to="{ name: 'login' }">Have an account?</router-link>
+      <div id="username">
+        <label for="username" class="sr-only" ></label>
+        <input
+          type="text"
+          id="username"
+          class="form-control"
+          placeholder="Username"
+          v-model="user.username"
+          required
+          autofocus
+        />
+      </div>
+      <div id="password">
+        <label for="password" class="sr-only"></label>
+        <input
+          type="password"
+          id="password"
+          class="form-control"
+          placeholder="Password"
+          v-model="user.password"
+          required
+          />
+        <input
+          type="password"
+          id="confirmPassword"
+          class="form-control"
+          placeholder="Confirm Password"
+          v-model="user.confirmPassword"
+          required
+          />
+      </div>
+      <div class="account">
+        <router-link :to="{ name: 'login' }">Already have an account? </router-link>
+      </div>
       <button class="btn btn-lg btn-primary btn-block" type="submit">
         Create Account
       </button>
@@ -100,4 +112,62 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+.h3{
+  grid-area: create;
+  
+  color: #2c3e50;
+  margin-top: 15px;
+}
+
+.alert{
+  grid-area: alert;
+  
+}
+
+#email{
+  grid-area: email;
+  width: 95%;
+}
+/* WE WOULD NEED TO ADDRESS MIN WIDTH IF THEY ARE ON VERY SMALL SCREEN */
+#password{
+  grid-area: password;
+  min-width: 40%;
+  margin-right: 10px;
+  margin-top: 5px
+}
+#username{
+  grid-area: username;
+  width: 97.5%;
+  margin-top: 5px
+  
+}
+.account{
+  grid-area: account;
+  margin-top: 5px
+}
+.btn{
+  grid-area: button;
+  margin-top: 20px
+}
+#register{
+  display: grid;
+  display: flex;
+    grid-template-columns:  1fr;
+    text-align: left;
+    grid-template-areas: 
+        "create "
+        "alert "
+        "email "
+        "username "
+        "password "
+        "account "
+        "button ";
+        justify-content: center;
+        
+}
+html{
+background-color: aqua;
+}
+
+</style>
