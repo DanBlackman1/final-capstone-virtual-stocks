@@ -8,6 +8,7 @@ public class Account {
     private BigDecimal userBalance;
     private BigDecimal stockValue;
     private BigDecimal dollarAmount;
+    private int gameId;
 
     public int getAccountId() {
         return accountId;
@@ -39,5 +40,13 @@ public class Account {
 
     public void setDollarAmount(BigDecimal dollarAmount) {
         this.dollarAmount = dollarAmount;
+    }
+
+    public int getGameId() {
+        return gameId;
+    }
+
+    public void setGameId(int gameId) {
+        this.gameId = gameId;
     }
 }

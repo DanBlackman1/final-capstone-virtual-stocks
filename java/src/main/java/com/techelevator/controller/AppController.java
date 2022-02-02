@@ -2,7 +2,9 @@ package com.techelevator.controller;
 
 import com.techelevator.dao.AccountDao;
 import com.techelevator.dao.GameDao;
+import com.techelevator.model.Account;
 import com.techelevator.model.Game;
+import com.techelevator.model.ViewGamesResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -11,7 +13,7 @@ import java.util.List;
 @RestController
 @CrossOrigin
 @PreAuthorize("isAuthenticated()")
-@RequestMapping ("/myGames")
+@RequestMapping ("/")
 public class AppController {
 
     @Autowired
@@ -20,11 +22,16 @@ public class AppController {
     AccountDao accountDao;
 
     @RequestMapping(path = "/{id}", method = RequestMethod.GET)
-    public List<Game> viewGames(@PathVariable("id") int userId) {
-        return gameDao.getGames(userId);
+    public ViewGamesResponse viewGames(@PathVariable("id") int userId) {
+        ViewGamesResponse viewGamesResponse = new ViewGamesResponse();
+        List<Game> gameList = gameDao.getGames(userId);
+        List<Account> accountList = accountDao.listAccounts(gameList, userId);
+        viewGamesResponse.setGamesList(gameList);
+        viewGamesResponse.setAccountsList(accountList);
+        return viewGamesResponse;
     }
 
-    @RequestMapping(path = "/{id}/createGame", method = RequestMethod.POST)
+    @RequestMapping(path = "/{id}", method = RequestMethod.POST)
     public int createGame(@RequestBody Game newGame) {
         return gameDao.saveGame(newGame);
     }
