@@ -53,6 +53,22 @@ const router = new Router({
         requiresAuth: false
       }
     },
+    {
+      path: "myGames/:userId",
+      name: "myGames",
+      component: UserGames,
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
+      path: "myGames/:userId/createGame",
+      name: "createGame",
+      component: CreateGame,
+      meta: {
+        requiresAuth: true
+      }
+    }
   ]
 })
 

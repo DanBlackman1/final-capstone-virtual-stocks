@@ -10,12 +10,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class JdbcGameDao implements GameDao{
+public class JdbcGameDAO implements GameDao{
 
     private JdbcTemplate template;
     private JdbcAccountDao accountDao;
 
-    public JdbcGameDao(DataSource datasource) {
+    public JdbcGameDAO(DataSource datasource) {
         template = new JdbcTemplate(datasource);
     }
 
