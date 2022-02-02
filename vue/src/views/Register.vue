@@ -67,6 +67,14 @@ import authService from '../services/AuthService';
 
 export default {
   name: 'register',
+  // ADDED BACKGROUND COLOR HERE
+  beforeCreate () {
+    document.querySelector('body').setAttribute('style', 'background:rgb(0, 255, 255)')
+  },
+  beforeDestroy () {
+    document.querySelector('body').setAttribute('style', '')
+  },
+  // ABOVE
   data() {
     return {
       user: {
@@ -112,7 +120,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .h3{
   grid-area: create;
   
@@ -164,10 +172,8 @@ export default {
         "account "
         "button ";
         justify-content: center;
-        
+      
 }
-html{
-background-color: aqua;
-}
+
 
 </style>
