@@ -1,10 +1,14 @@
 <template>
   <div id="main">
-    hey
-    <div v-for:='game in gameList' :key="game.id">
-    gameName: {{game.gameName}} 
-    </div>
-    <div v-for:="account in AccountList" :key="account.id"></div>
+    <ul>
+      <li v-for='game in gameList' v-bind:key="game.gameId">
+        gameName: {{game.gameName}}
+        <!-- {{game.indexOf()}}  -->
+        <!-- {{accountList[game.indexOf()].userBalance}} -->
+        end Date: {{game.endDate}}
+      </li>
+    </ul>
+    <!-- <div v-for="account in AccountList" v-bind:key="account.accountId"></div> -->
     
     
   </div>
@@ -20,13 +24,16 @@ export default {
     }
   },
   methods: {
-    getGameList(){
-           GameService.viewGamesByUserId(this.userId).then((response) =>{
-             this.accountList = response.data[0];
-             this.gameList = response.data[1];
+    getGameList(id){
+           GameService.viewGamesByUserId(id).then((response) =>{
+             this.accountList = response.data.accountsList;
+             this.gameList = response.data.gamesList;
             })
-  }
-}
+         }
+      },
+    beforeMount(){
+      this.getGameList(this.$store.state.user.id);
+    }
 }
 </script>
 

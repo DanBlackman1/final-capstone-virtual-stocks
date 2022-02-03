@@ -12,8 +12,10 @@
 
       
       <label for="email" class="sr-only" id="email"></label>
+      Please enter a valid Email Address that may not include !:
       <input
-        type="text"
+        type="email" 
+        pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
         id="email"
         class="form-control"
         placeholder="Email"

@@ -1,6 +1,6 @@
 <template>
   <div id="main">
-      <form v-on:submit.prevent='addGame()'>
+      <form v-on:submit='addGame()'>
         Name: <input type="text" v-model='game.gameName'/>
         End date: <input type="date" v-model='game.endDate'>
         Start date: <input type="date" v-model='game.startDate'>
@@ -26,7 +26,9 @@ export default {
     methods:{
         addGame(){
             GameService.createGame(this.game, this.$store.state.user.id).then(() =>{
-                this.game={};
+                this.game.endDate="";
+                this.game.startDate="";
+                this.game.gameName="";
                 this.$router.push({name:'home'});
             })
         }

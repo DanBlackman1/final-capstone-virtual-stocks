@@ -26,6 +26,7 @@ public class JdbcAccountDao implements AccountDao{
         account.setStockValue(rs.getBigDecimal("stock_value"));
         account.setDollarAmount(rs.getBigDecimal("dollar_amount"));
         account.setGameId(rs.getInt("game_id"));
+        account.setAccountId(rs.getInt("account_id"));
 
         return account;
     }
@@ -40,11 +41,16 @@ public class JdbcAccountDao implements AccountDao{
     @Override
     public Account getAccount(int userId, int gameId) {
         Account account = null;
+//        Account account = new Account();
         String sql = "SELECT a.account_id, a.user_balance, a.stock_value, a.dollar_amount, " +
                 "gd.game_id AS game_id FROM game_data gd JOIN account a ON a.account_id = gd.account_id WHERE " +
-                "gd.game_id = ? AND gd.user_id = ?";
+                "gd.game_id = ? AND gd.user_id = ?;";
         SqlRowSet results = template.queryForRowSet(sql, gameId, userId);
-        account = mapRowToAccount(results);
+//        return mapRowToAccount(results);
+//        account = mapRowToAccount(results);
+        if(results.next()){
+            account = mapRowToAccount(results);
+        }
         return account;
     }
 

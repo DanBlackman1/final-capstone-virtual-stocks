@@ -80,6 +80,8 @@ public class JdbcGameDAO implements GameDao{
         game.setGameName(rs.getString("game_name"));
         game.setStartDate(rs.getDate("start_date").toLocalDate());
         game.setEndDate(rs.getDate("end_date").toLocalDate());
+        //added
+        game.setGameId(rs.getInt("game_id"));
 
         return game;
 

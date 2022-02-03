@@ -8,6 +8,8 @@ import com.techelevator.model.ViewGamesResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -25,7 +27,11 @@ public class AppController {
     public ViewGamesResponse viewGames(@PathVariable("id") int userId) {
         ViewGamesResponse viewGamesResponse = new ViewGamesResponse();
         List<Game> gameList = gameDao.getGames(userId);
-        List<Account> accountList = accountDao.listAccounts(gameList, userId);
+//        List<Account> accountList = new ArrayList<>();
+//        Account account = new Account();
+//        accountList.add(account);
+
+       List<Account> accountList = accountDao.listAccounts(gameList, userId);
         viewGamesResponse.setGamesList(gameList);
         viewGamesResponse.setAccountsList(accountList);
         return viewGamesResponse;
