@@ -161,11 +161,15 @@ export default {
   margin-top: 20px
 }
 #register{
+  grid-area: register;
+}
+#register{
   display: grid;
   display: flex;
     grid-template-columns:  1fr;
     text-align: left;
     grid-template-areas: 
+        "register"
         "create "
         "alert "
         "email "

@@ -1,4 +1,5 @@
 <template>
+<body>
   <div id="login" class="text-center">
     <form class="form-signin" @submit.prevent="login">
       <h1 class="h3 mb-3 font-weight-normal">Please Sign In</h1>
@@ -7,12 +8,17 @@
         role="alert"
         v-if="invalidCredentials"
       >Invalid username and password!</div>
+      
       <div
         class="alert alert-success"
         role="alert"
         v-if="this.$route.query.registration"
       >Thank you for registering, please sign in.</div>
-      <label for="username" class="sr-only" id="htmlUsername">Username</label>
+      <div class="htmlUserName">
+        <label for="username" class="sr-only">Username</label>
+      </div>
+
+      <div class="username">
       <input
         type="text"
         id="username"
@@ -22,7 +28,12 @@
         required
         autofocus
       />
-      <label for="password" class="sr-only" id="htmlPassword">Password</label>
+      </div>
+
+      <div class="htmlPassword">
+        <label for="password" class="sr-only">Password</label>
+      </div>
+      <div class="inputPass">
       <input
         type="password"
         id="password"
@@ -31,10 +42,16 @@
         v-model="user.password"
         required
       />
+      </div>
+      <div class="register">
       <router-link id="register" :to="{ name: 'register' }">Click here to create a new account?</router-link>
+      </div>
+      <div class="submitButton">
       <button id="submitButton" type="submit">Sign in</button>
+      </div>
     </form>
   </div>
+</body>
 </template>
 
 <script>
@@ -79,38 +96,68 @@ export default {
 .form-signin{
   grid-area: form;
 }
+.inputPass{
+  display: flex;
+  justify-content: center;
+}
 #login{
   grid-area: login;
 }
 .h3{
   grid-area: signIn;
+  
 }
 .alert{
   grid-area: alertPopUp;
+  background-color: rgb(240, 240, 240);
+  color: red;
 }
-#htmlUsername{
+.htmlUsername{
 grid-area: username;
+  display:flex;
+  margin-bottom: 10px;
+  align-self: center;
 }
-#username{
-  grid-area: textUsername
+.username{
+  grid-area: textUsername;
 }
 #password{
   grid-area: password;
+  display:flex;
+  margin-bottom: 10px
 }
 #htmlPassword{
   grid-area: passwordText;
+  display:flex;
+    justify-content: center;
 }
-#register{
-  grid-area: register
+.register{
+  grid-area: clickCreateNewAccount;
+    display:flex;
+    justify-content: center;
+    margin-bottom: 10px
 }
-#submitButton{
+.submitButton{
   grid-area: button;
+  display:flex;
+    justify-content: center;
+
+}
+form{
+  border: black;
+  border-style: solid;
+  padding: 1%;
+  background-color: rgb(233, 233, 233);
+  
+}
+body{
+background-color: lightblue;
 }
 #login{
   display: grid;
+  display: flex;
   grid-template-columns: 1fr;
   grid-template-areas: 
-  "form"
   "login"
   "signIn",
   "alertPopUp",
@@ -118,9 +165,11 @@ grid-area: username;
   "textUsername",
   "password",
   "passwordText"
-  "register"
+  "clickCreateNewAccount"
   "button";
 justify-content: center;
+text-align: center;
+padding-top: 8%;
 }
 
 </style>
