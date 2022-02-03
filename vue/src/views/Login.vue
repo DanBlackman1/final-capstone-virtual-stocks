@@ -12,7 +12,7 @@
         role="alert"
         v-if="this.$route.query.registration"
       >Thank you for registering, please sign in.</div>
-      <label for="username" class="sr-only">Username</label>
+      <label for="username" class="sr-only" id="htmlUsername">Username</label>
       <input
         type="text"
         id="username"
@@ -22,7 +22,7 @@
         required
         autofocus
       />
-      <label for="password" class="sr-only">Password</label>
+      <label for="password" class="sr-only" id="htmlPassword">Password</label>
       <input
         type="password"
         id="password"
@@ -31,8 +31,8 @@
         v-model="user.password"
         required
       />
-      <router-link :to="{ name: 'register' }">Need an account?</router-link>
-      <button type="submit">Sign in</button>
+      <router-link id="register" :to="{ name: 'register' }">Click here to create a new account?</router-link>
+      <button id="submitButton" type="submit">Sign in</button>
     </form>
   </div>
 </template>
@@ -74,3 +74,53 @@ export default {
   }
 };
 </script>
+
+<style>
+.form-signin{
+  grid-area: form;
+}
+#login{
+  grid-area: login;
+}
+.h3{
+  grid-area: signIn;
+}
+.alert{
+  grid-area: alertPopUp;
+}
+#htmlUsername{
+grid-area: username;
+}
+#username{
+  grid-area: textUsername
+}
+#password{
+  grid-area: password;
+}
+#htmlPassword{
+  grid-area: passwordText;
+}
+#register{
+  grid-area: register
+}
+#submitButton{
+  grid-area: button;
+}
+#login{
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-areas: 
+  "form"
+  "login"
+  "signIn",
+  "alertPopUp",
+  "username",
+  "textUsername",
+  "password",
+  "passwordText"
+  "register"
+  "button";
+justify-content: center;
+}
+
+</style>
