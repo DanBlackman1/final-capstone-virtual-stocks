@@ -14,8 +14,6 @@ public class JdbcGameDAO implements GameDao{
 
     private JdbcTemplate template;
 
-    private JdbcAccountDao accountDao;
-
     public JdbcGameDAO(DataSource datasource) {
         template = new JdbcTemplate(datasource);
     }
