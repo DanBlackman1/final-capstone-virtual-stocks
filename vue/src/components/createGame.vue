@@ -1,9 +1,10 @@
 <template>
   <div id="main">
       <form v-on:submit='addGame()'>
+          <!-- reversed order of start and end date -->
         Name: <input type="text" v-model='game.gameName'/>
-        End date: <input type="date" v-model='game.endDate'>
         Start date: <input type="date" v-model='game.startDate'>
+        End date: <input type="date" v-model='game.endDate'>
         <button type="submit" value="save">Create Game</button>
       </form>
    </div>

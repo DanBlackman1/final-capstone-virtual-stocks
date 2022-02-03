@@ -6,5 +6,8 @@ export default {
     },
     createGame(game, id) {
         return axios.post(`/${id}`, game)
+    },
+    viewDetailsByGameId(userId, gameId) {
+        return axios.get(`/${userId}/${gameId}`)
     }
 }

@@ -11,6 +11,7 @@ Vue.use(Vuex)
  */
 const currentToken = localStorage.getItem('token')
 const currentUser = JSON.parse(localStorage.getItem('user'));
+let currentGame = {};
 
 if(currentToken != null) {
   axios.defaults.headers.common['Authorization'] = `Bearer ${currentToken}`;
@@ -19,7 +20,8 @@ if(currentToken != null) {
 export default new Vuex.Store({
   state: {
     token: currentToken || '',
-    user: currentUser || {}
+    user: currentUser || {},
+    game: currentGame || {}
   },
   mutations: {
     SET_AUTH_TOKEN(state, token) {
@@ -37,6 +39,12 @@ export default new Vuex.Store({
       state.token = '';
       state.user = {};
       axios.defaults.headers.common = {};
-    }
-  }
-})
+    },
+    // verify mutation setup
+  //   SET_GAME(state, game) {
+  //     state.game = game;
+  //     localStorage.setItem('game',JSON.stringify(game));
+  //   }
+   }
+ })
+  

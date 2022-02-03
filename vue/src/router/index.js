@@ -55,14 +55,14 @@ const router = new Router({
     },
 
     // named below
-    // {
-    //   path: "/myGames/:userId",
-    //   name: "userGames",
-    //   component: UserGames,
-    //   meta: {
-    //     requiresAuth: true
-    //   }
-    // },
+    {
+      path: "/:userId/:gameId",
+      name: "gameDetails",
+      component: gameDetails,
+      meta: {
+        requiresAuth: true
+      }
+    },
     // {
     //   path: "/myGames/:userId/createGame",
     //   name: "createGame",
