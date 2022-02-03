@@ -1,10 +1,10 @@
 BEGIN TRANSACTION;
 
 DROP TABLE IF EXISTS users ;
-DROP TABLE IF EXISTS player ;
 DROP TABLE IF EXISTS game ;
 DROP TABLE IF EXISTS game_data ;
 DROP TABLE IF EXISTS account ;
+DROP TABLE IF EXISTS stock_amount ;
 DROP SEQUENCE IF EXISTS seq_user_id;
 
 CREATE SEQUENCE seq_user_id
@@ -52,6 +52,13 @@ CREATE TABLE game_data (
     CONSTRAINT FK_game_data_account FOREIGN KEY (account_id) REFERENCES account(account_id),
     CONSTRAINT FK_game_data_users FOREIGN KEY (user_id) REFERENCES users(user_id),
     CONSTRAINT FK_game_data_game FOREIGN KEY (game_id) REFERENCES game(game_id)
+);
+
+CREATE TABLE stock_amount (
+    account_id int NOT NULL,
+    stock_symbol varchar(10) NOT NULL,
+    total_shares int NOT NULL,
+    CONSTRAINT FK_stock_amount_account FOREIGN KEY (account_id) REFERENCES account(account_id)
 );
 
 -- added above
