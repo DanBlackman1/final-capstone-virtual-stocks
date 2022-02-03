@@ -1,16 +1,12 @@
 <template>
   <div id="main">
     <ul>
-      <li v-for='game in gameList' v-bind:key="game.gameId">
-        gameName: {{game.gameName}}
-        <!-- {{game.indexOf()}}  -->
-        <!-- {{accountList[game.indexOf()].userBalance}} -->
-        end Date: {{game.endDate}}
+      <li v-for='(game, index) in gameList' v-bind:key="game.gameId">
+        {{game.gameName}}
+        {{accountList[index].userBalance}}
+        {{game.endDate}}
       </li>
     </ul>
-    <!-- <div v-for="account in AccountList" v-bind:key="account.accountId"></div> -->
-    
-    
   </div>
 </template>
 
@@ -20,7 +16,7 @@ export default {
   data() {
     return { 
       accountList: [],
-      gameList: []
+      gameList: [],
     }
   },
   methods: {
@@ -29,11 +25,12 @@ export default {
              this.accountList = response.data.accountsList;
              this.gameList = response.data.gamesList;
             })
-         }
+         } 
       },
     beforeMount(){
       this.getGameList(this.$store.state.user.id);
     }
+
 }
 </script>
 
