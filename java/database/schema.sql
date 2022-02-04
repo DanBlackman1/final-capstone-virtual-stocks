@@ -5,6 +5,7 @@ DROP TABLE IF EXISTS game ;
 DROP TABLE IF EXISTS game_data ;
 DROP TABLE IF EXISTS account ;
 DROP TABLE IF EXISTS stock_amount ;
+DROP TABLE IF EXISTS stock_values ;
 DROP SEQUENCE IF EXISTS seq_user_id;
 
 CREATE SEQUENCE seq_user_id
@@ -54,14 +55,21 @@ CREATE TABLE game_data (
     CONSTRAINT FK_game_data_game FOREIGN KEY (game_id) REFERENCES game(game_id)
 );
 
+CREATE TABLE stock_price (
+    stock_symbol varchar(10) NOT NULL,
+    stock_price DECIMAL(19,2) NOT NULL,
+    CONSTRAINT PK_stock_price PRIMARY KEY (stock_symbol)
+
+);
+
 CREATE TABLE stock_amount (
     account_id int NOT NULL,
     stock_symbol varchar(10) NOT NULL,
-    --might to set default to zero until updated
-    stock_price DECIMAL(19,2) NOT NULL,
     total_shares DECIMAL(19,2) NOT NULL,
-    CONSTRAINT FK_stock_amount_account FOREIGN KEY (account_id) REFERENCES account(account_id)
+    CONSTRAINT FK_stock_amount_account FOREIGN KEY (account_id) REFERENCES account(account_id),
+    CONSTRAINT FK_stock_amount_stock_symbol FOREIGN KEY (stock_symbol) REFERENCES stock_price(stock_symbol)
 );
+
 
 -- added above
 
