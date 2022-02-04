@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios'
+import StockService from '../services/StockService'
 
 Vue.use(Vuex)
 
@@ -13,6 +14,8 @@ const currentToken = localStorage.getItem('token')
 const currentUser = JSON.parse(localStorage.getItem('user'));
 let currentGame = {};
 let currentAccount = {};
+let stocksArr = [];
+let stock = {};
 
 if(currentToken != null) {
   axios.defaults.headers.common['Authorization'] = `Bearer ${currentToken}`;
@@ -23,7 +26,14 @@ export default new Vuex.Store({
     token: currentToken || '',
     user: currentUser || {},
     game: currentGame || {},
-    account: currentAccount || {}
+    account: currentAccount || {},
+    stocksArr: [
+      "MSFT","AAPL","AMZN","GOOGL","BABA","FB",
+      "BRK","VOD","V","JPM","WMT","MA","TSM","CHT",
+      "RHHBF","UNH","HD","INTC","KO","VZ","XOM","DIS",
+      "NVS","CMCSA","PFE" ],
+    assetArr: [],
+    stock: {}
   },
   mutations: {
     SET_AUTH_TOKEN(state, token) {
@@ -47,6 +57,19 @@ export default new Vuex.Store({
     },
     SET_ACCOUNT(state, account) {
       state.account = account;
+    },
+    SET_ASSETS(state) {
+      let tempArr = [];
+      for(let i = 0; i < state.stocksArr.length; i++) {
+        let arr = [];
+        arr = StockService.getStockBySymbol(stocksArr[i]);
+        state.stock = {
+          stockSymbol: stocksArr[i],
+          currentPrice: arr[1][0].last
+        };
+        tempArr.push(stock);
+      }
+      state.assetArr = tempArr;
     }
    }
  })
