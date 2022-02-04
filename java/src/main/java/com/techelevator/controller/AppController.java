@@ -4,8 +4,12 @@ import com.techelevator.dao.GameDao;
 import com.techelevator.dao.StocksDao;
 import com.techelevator.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
+
+import java.lang.reflect.Array;
 import java.util.List;
 
 @RestController
@@ -55,6 +59,14 @@ public class AppController {
     @RequestMapping(path = "/stocks/buy", method = RequestMethod.PUT)
     public void buyStock(@RequestBody BuyOrder buyOrder) {
         stocksDao.buyExistingStock(buyOrder);
+    }
+
+    @RequestMapping(path = "/random", method = RequestMethod.GET)
+    public void getStockData(@RequestParam String stockSymbol) {
+        String url = "http://api.marketstack.com/v1/intraday?access_key=28d01c87a292d3ebe6d86949d6462031&symbols=" + stockSymbol +"&interval=1min";
+        RestTemplate restTemplate = new RestTemplate();
+        String results = restTemplate.exchange(url, HttpMethod.GET, null, String.class).getBody();
+        System.out.println(results);
     }
 
 

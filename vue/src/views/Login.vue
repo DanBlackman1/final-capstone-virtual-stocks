@@ -1,8 +1,8 @@
 <template>
-<body>
+<body class="loginBody">
   <div id="login" class="text-center">
     <form class="form-signin" @submit.prevent="login">
-      <h1 class="h3 mb-3 font-weight-normal">Please Sign In</h1>
+      <h1 class="h3 mb-3 font-weight-normal">Login to view your Games</h1>
       <div
         class="alert alert-danger"
         role="alert"
@@ -43,11 +43,11 @@
         required
       />
       </div>
-      <div class="register">
-      <router-link id="register" :to="{ name: 'register' }">Click here to create a new account?</router-link>
-      </div>
-      <div class="submitButton">
-      <button id="submitButton" type="submit">Sign in</button>
+        <div class="submitButton">
+          <button id="submitButton" type="submit">Sign in</button>
+        </div>
+        <div class="register"> Not a member? &nbsp; 
+          &nbsp;<router-link id="register" :to="{ name: 'register' }"> Register</router-link>
       </div>
     </form>
   </div>
@@ -135,7 +135,7 @@ grid-area: username;
   grid-area: clickCreateNewAccount;
     display:flex;
     justify-content: center;
-    margin-bottom: 10px
+    margin-top: 10px
 }
 .submitButton{
   grid-area: button;
@@ -143,10 +143,12 @@ grid-area: username;
     justify-content: center;
 
 }
-form{
+.form-signin{
   border: black;
   border-style: solid;
-  padding: 1%;
+  padding: 5px;
+  width: 500px;
+  height: 400px;
   background-color: rgb(233, 233, 233);
   
 }
@@ -157,7 +159,7 @@ background-color: lightblue;
   display: grid;
   display: flex;
   grid-template-columns: 1fr;
-  grid-template-areas: 
+  /* grid-template-areas: 
   "login"
   "signIn",
   "alertPopUp",
@@ -166,10 +168,10 @@ background-color: lightblue;
   "password",
   "passwordText"
   "clickCreateNewAccount"
-  "button";
+  "button"; */
 justify-content: center;
 text-align: center;
-padding-top: 8%;
+/* padding-top: 8%; */
 }
 
 </style>
