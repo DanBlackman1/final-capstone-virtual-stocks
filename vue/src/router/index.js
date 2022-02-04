@@ -6,6 +6,7 @@ import Logout from '../views/Logout.vue'
 import Register from '../views/Register.vue'
 import store from '../store/index'
 import GameDetails from '../views/GameDetails.vue'
+import Portfolio from '../views/Portfolio.vue'
 
 Vue.use(Router)
 
@@ -60,6 +61,14 @@ const router = new Router({
       path: "/gameDetails",
       name: "gameDetails",
       component: GameDetails,
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
+      path: "/portfolio",
+      name: "portfolio",
+      component: Portfolio,
       meta: {
         requiresAuth: true
       }

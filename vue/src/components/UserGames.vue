@@ -9,7 +9,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr v-for='(game, index) in gameList' v-bind:key="game.gameId" v-on:click="goToGameDetails(game)">
+      <tr v-for='(game, index) in gameList' v-bind:key="game.gameId" v-on:click="goToGameDetails(game, accountList[index])">
         <td>
           {{game.gameName}}
           </td>
@@ -41,8 +41,9 @@ export default {
              this.gameList = response.data.gamesList;
             })
          },
-    goToGameDetails(game) {
+    goToGameDetails(game, account) {
       this.$store.commit('SET_GAME', game);
+      this.$store.commit('SET_ACCOUNT', account)
       this.$router.push('/gameDetails');
     } 
       },

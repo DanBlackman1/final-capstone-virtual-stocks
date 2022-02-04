@@ -9,5 +9,8 @@ export default {
     },
     viewDetailsByGameId(userId, gameId) {
         return axios.get('/gameDetails', userId, gameId)
+    },
+    getPortfolio(accountId) {
+        return axios.get('/portfolio', accountId)
     }
 }
