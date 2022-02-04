@@ -1,11 +1,14 @@
 <template>
-  
+  <div class="main">
+      
+  </div>
 </template>
 
 <script>
 
 import GameService from "../services/GameService.js";
 export default {
+    name: 'gameDetails',
     data(){
         return{
             
@@ -25,6 +28,9 @@ export default {
                 this.game.gameName= this.$store.state.game.gameName;
             })
         }
+    },
+    beforeCreate(userId, gameId) {
+        this.viewDetailsByGameId(userId, gameId);
     }
 }
 </script>

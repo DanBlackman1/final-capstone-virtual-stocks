@@ -5,7 +5,7 @@ public class BuyOrder {
     private int sharesToAdd;
     private String stockSymbol;
     private int accountId;
-    private boolean isOwned;
+   // private boolean isOwned;
 
     public int getSharesToAdd() {
         return sharesToAdd;
@@ -31,11 +31,11 @@ public class BuyOrder {
         this.accountId = accountId;
     }
 
-    public boolean isOwned() {
-        return isOwned;
-    }
+  //  public boolean isOwned() {
+  //      return isOwned;
+ //   }
 
-    public void setOwned(boolean owned) {
-        isOwned = owned;
-    }
+   // public void setOwned(boolean owned) {
+   //     isOwned = owned;
+  //  }
 }

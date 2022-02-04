@@ -21,6 +21,8 @@ public class AppController {
     @Autowired
     StocksDao stocksDao;
 
+    // CHECK ABOUT PATHS AND WHETHER BEST PRACTICE
+
     @RequestMapping(path = "/{id}", method = RequestMethod.GET)
     public ViewGamesResponse viewGames(@PathVariable("id") int userId) {
         ViewGamesResponse viewGamesResponse = new ViewGamesResponse();

@@ -40,11 +40,9 @@ export default new Vuex.Store({
       state.user = {};
       axios.defaults.headers.common = {};
     },
-    // verify mutation setup
-  //   SET_GAME(state, game) {
-  //     state.game = game;
-  //     localStorage.setItem('game',JSON.stringify(game));
-  //   }
+    SET_GAME(state, game) {
+    state.game = game;
+    }
    }
  })
   

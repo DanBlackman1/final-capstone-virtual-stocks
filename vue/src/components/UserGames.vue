@@ -1,12 +1,5 @@
 <template>
   <div id="main">
-    <!-- <ul>
-      <li v-for='(game, index) in gameList' v-bind:key="game.gameId" >
-        {{game.gameName}}
-        {{accountList[index].userBalance}}
-        {{game.endDate}}
-      </li>
-    </ul> -->
     <table>
     <thead>
       <tr>
@@ -16,19 +9,15 @@
       </tr>
     </thead>
     <tbody>
-      <tr v-for='(game, index) in gameList' v-bind:key="game.gameId">
-        <td> <router-link
-            v-bind:to="{ name: 'gameDetails', params: { userId: this.$store.state.user.id, gameId: game.id }}"
-          >{{game.gameName}}</router-link></td>
+      <tr v-for='(game, index) in gameList' v-bind:key="game.gameId" v-on:click="goToGameDetails(game)">
         <td>
-          <router-link
-            v-bind:to="{ name: 'gameDetails', params: { userId: this.$store.state.user.id, gameId: game.id }}"
-          >{{accountList[index].userBalance}}</router-link>
+          {{game.gameName}}
+          </td>
+        <td>
+          {{accountList[index].userBalance}}
         </td>
-        <td>
-          <router-link
-            v-bind:to="{ name: 'gameDetails', params: { userId: this.$store.state.user.id, gameId: game.id }}"
-          >{{game.endDate}}</router-link>
+       <td>
+          {{game.endDate}}
         </td>
       </tr>
     </tbody>
@@ -51,15 +40,15 @@ export default {
              this.accountList = response.data.accountsList;
              this.gameList = response.data.gamesList;
             })
-         } 
+         },
+    goToGameDetails(game) {
+      this.$store.commit('SET_GAME', game);
+      this.$router.push('/gameDetails');
+    } 
       },
     beforeMount(){
       this.getGameList(this.$store.state.user.id);
     },
-  // mutations:{
-  //   SET_GAME(state, game)
-
-  // }
 
 }
 </script>

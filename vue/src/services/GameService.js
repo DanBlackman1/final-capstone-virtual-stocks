@@ -8,6 +8,6 @@ export default {
         return axios.post(`/${id}`, game)
     },
     viewDetailsByGameId(userId, gameId) {
-        return axios.get(`/${userId}/${gameId}`)
+        return axios.get('/gameDetails', userId, gameId)
     }
 }
