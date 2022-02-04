@@ -47,7 +47,6 @@ export default new Vuex.Store({
     },
     SET_ACCOUNT(state, account) {
       state.account = account;
+    },
     }
-   }
- })
-  
+  })
