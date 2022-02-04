@@ -38,9 +38,9 @@ CREATE TABLE game (
 );
 CREATE TABLE account (
     account_id serial,
-    user_balance int NOT NULL,
-    stock_value int,
-    dollar_amount int NOT NULL,
+    user_balance DECIMAL(19,2) NOT NULL,
+    stock_value DECIMAL(19,2),
+    dollar_amount DECIMAL(19,2) NOT NULL,
     CONSTRAINT PK_account PRIMARY KEY (account_id)
 );
 
@@ -57,7 +57,9 @@ CREATE TABLE game_data (
 CREATE TABLE stock_amount (
     account_id int NOT NULL,
     stock_symbol varchar(10) NOT NULL,
-    total_shares int NOT NULL,
+    --might to set default to zero until updated
+    stock_price DECIMAL(19,2) NOT NULL,
+    total_shares DECIMAL(19,2) NOT NULL,
     CONSTRAINT FK_stock_amount_account FOREIGN KEY (account_id) REFERENCES account(account_id)
 );
 
