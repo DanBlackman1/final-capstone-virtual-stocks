@@ -76,5 +76,34 @@ CREATE TABLE stock_amount (
 INSERT INTO users (email,username,password_hash,role) VALUES ('foo@game.com','user','$2a$08$UkVvwpULis18S19S5pZFn.YHPZt3oaqHZnDwqbCW9pft6uFtkXKDC','ROLE_USER');
 INSERT INTO users (email,username,password_hash,role) VALUES ('foo@game.com','admin','$2a$08$UkVvwpULis18S19S5pZFn.YHPZt3oaqHZnDwqbCW9pft6uFtkXKDC','ROLE_ADMIN');
 
+INSERT INTO stock_price (stock_symbol,stock_price) VALUES ('MSFT', '0');
+INSERT INTO stock_price (stock_symbol,stock_price) VALUES ('AAPL', '0');
+INSERT INTO stock_price (stock_symbol,stock_price) VALUES ('AMZN', '0');
+INSERT INTO stock_price (stock_symbol,stock_price) VALUES ('GOOGL', '0');
+INSERT INTO stock_price (stock_symbol,stock_price) VALUES ('BABA', '0');
+
+INSERT INTO stock_price (stock_symbol,stock_price) VALUES ('FB', '0');
+INSERT INTO stock_price (stock_symbol,stock_price) VALUES ('BRK', '0');
+INSERT INTO stock_price (stock_symbol,stock_price) VALUES ('VOD', '0');
+INSERT INTO stock_price (stock_symbol,stock_price) VALUES ('V', '0');
+INSERT INTO stock_price (stock_symbol,stock_price) VALUES ('JPM', '0');
+
+INSERT INTO stock_price (stock_symbol,stock_price) VALUES ('WMT', '0');
+INSERT INTO stock_price (stock_symbol,stock_price) VALUES ('MA', '0');
+INSERT INTO stock_price (stock_symbol,stock_price) VALUES ('TSM', '0');
+INSERT INTO stock_price (stock_symbol,stock_price) VALUES ('CHT', '0');
+INSERT INTO stock_price (stock_symbol,stock_price) VALUES ('RHHBF', '0');
+
+INSERT INTO stock_price (stock_symbol,stock_price) VALUES ('UNH', '0');
+INSERT INTO stock_price (stock_symbol,stock_price) VALUES ('HD', '0');
+INSERT INTO stock_price (stock_symbol,stock_price) VALUES ('INTC', '0');
+INSERT INTO stock_price (stock_symbol,stock_price) VALUES ('KO', '0');
+INSERT INTO stock_price (stock_symbol,stock_price) VALUES ('VZ', '0');
+
+INSERT INTO stock_price (stock_symbol,stock_price) VALUES ('XOM', '0');
+INSERT INTO stock_price (stock_symbol,stock_price) VALUES ('DIS', '0');
+INSERT INTO stock_price (stock_symbol,stock_price) VALUES ('NVS', '0');
+INSERT INTO stock_price (stock_symbol,stock_price) VALUES ('CMCSA', '0');
+INSERT INTO stock_price (stock_symbol,stock_price) VALUES ('PFE', '0');
 
 COMMIT TRANSACTION;

@@ -2,8 +2,8 @@ INSERT INTO users (email,username,password_hash,role) VALUES('user1@mail.com','u
 INSERT INTO game (game_name, organizer_id, start_date, end_date) VALUES ('game1', '3', '2022/02/03', '2022/02/11');
 INSERT INTO account (user_balance, stock_value, dollar_amount) VALUES ('100000', '0', '100000');
 INSERT INTO game_data (user_id, game_id, account_id) VALUES ('3', '1', '1');
-INSERT INTO stock_price (stock_symbol,stock_price) VALUES ('AMZN', '3200.00');
-INSERT INTO stock_price (stock_symbol,stock_price) VALUES ('AAPL', '175.00');
+--INSERT INTO stock_price (stock_symbol,stock_price) VALUES ('AMZN', '3200.00');
+--INSERT INTO stock_price (stock_symbol,stock_price) VALUES ('AAPL', '175.00');
 INSERT INTO stock_amount (account_id, stock_symbol, total_shares) VALUES ('1', 'AAPL', '10');
 
 INSERT INTO users (email,username,password_hash,role) VALUES('user2@mail.com','user2','$2a$10$dYmNhP4uopZmyyfpBzP7keUnpoj3euKS9H/CVtykOGh3lldbiOqOO','ROLE_USER');
