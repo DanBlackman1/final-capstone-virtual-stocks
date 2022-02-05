@@ -17,6 +17,9 @@ export default {
         return axios.post('/stocks/buyNew', accountId, stockSymbol, stockPrice, sharesPurchased)
     },
     buyStock(accountId, stockSymbol, stockPrice, sharesPurchased){
-        return axios.post('/stocks/buy', accountId, stockSymbol, stockPrice, sharesPurchased)
+        return axios.put('/stocks/buy', accountId, stockSymbol, stockPrice, sharesPurchased)
+    },
+    updateStockPrices() {
+        return axios.get('/currentPrices');
     }
 }

@@ -22,9 +22,9 @@ public class JdbcStocksDao implements StocksDao{
 
     private JdbcTemplate template;
     private String[] stockSymbols = new String[]{"MSFT","AAPL",
-            "AMZN","GOOGL","BABA","FB", "BRK","VOD","V","JPM","WMT",
-            "MA","TSM","CHT", "RHHBF","UNH","HD","INTC","KO","VZ",
-            "XOM","DIS", "NVS","CMCSA","PFE" };
+            "AMZN","GOOGL","BABA","FB", "VOD","V","JPM", "MA","TSM",
+            "CHT","UNH","HD","INTC","KO",
+            "DIS", "NVS"};
 
     public JdbcStocksDao(DataSource datasource) {
         template = new JdbcTemplate(datasource);
@@ -70,12 +70,15 @@ public class JdbcStocksDao implements StocksDao{
                     String.class);
             ObjectMapper objectMapper = new ObjectMapper();
             JsonNode jsonNode = objectMapper.readTree(response.getBody());
-            String lastPrice = jsonNode.path("last").asText();
-            BigDecimal stockPrice = new BigDecimal(lastPrice);
-            Stock stock = new Stock();
-            stock.setCurrentPrice(stockPrice);
-            stock.setStockSymbol(stockSymbol);
-            stocksList.add(stock);
+            String lastPrice = jsonNode.path("data").path(0).path("last").asText();
+            System.out.println(lastPrice);
+            if (!lastPrice.equals("null")) {
+                BigDecimal stockPrice = new BigDecimal(lastPrice);
+                Stock stock = new Stock();
+                stock.setCurrentPrice(stockPrice);
+                stock.setStockSymbol(stockSymbol);
+                stocksList.add(stock);
+            }
         }
         return stocksList;
     }
@@ -129,7 +132,7 @@ public class JdbcStocksDao implements StocksDao{
     private Stock mapRowToStock(SqlRowSet results) {
 
         Stock stock = new Stock();
-        stock.setAccountId(results.getInt("account_id"));
+       // stock.setAccountId(results.getInt("account_id"));
         stock.setNumberOfShares(results.getInt("total_shares"));
         stock.setStockSymbol(results.getString("stock_symbol"));
         stock.setCurrentPrice(results.getBigDecimal("stock_price"));
