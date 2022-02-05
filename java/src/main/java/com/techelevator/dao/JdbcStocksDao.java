@@ -100,6 +100,31 @@ public class JdbcStocksDao implements StocksDao{
         return stockList;
     }
 
+    @Override
+    public void updateStockValue(List<Integer> accountIdList, List<Stock> stockPrices) {
+        String sqlQuery = "SELECT * FROM stock_amount WHERE account_id = ?;";
+        String sqlUpdate = "UPDATE account SET stock_value = ? WHERE account_id = ?;";
+        for(Integer accountId : accountIdList) {
+            BigDecimal updatedStockValue = new BigDecimal("0");
+            List<Stock> accountStocks = new ArrayList<>();
+            SqlRowSet results = template.queryForRowSet(sqlQuery, accountId);
+            while(results.next()) {
+                Stock stock = mapRowToStock(results);
+                accountStocks.add(stock);
+            }
+            for(Stock stockDetails : accountStocks) {
+                for(Stock price : stockPrices) {
+                    if (stockDetails.getStockSymbol().equals(price.getStockSymbol())) {
+                        String shares = stockDetails.getNumberOfShares() + "";
+                        BigDecimal sharesNumber = new BigDecimal(shares);
+                        updatedStockValue.add(price.getCurrentPrice().multiply(sharesNumber));
+                    }
+                }
+            }
+            template.update(sqlUpdate, updatedStockValue, accountId);
+        }
+    }
+
 
     private Stock mapRowToStock(SqlRowSet results) {
 

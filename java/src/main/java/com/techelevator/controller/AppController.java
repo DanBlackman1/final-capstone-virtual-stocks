@@ -68,9 +68,11 @@ public class AppController {
     }
 
     @RequestMapping(path = "/currentPrices", method = RequestMethod.GET)
-    public List<Stock> getStockData() throws JsonProcessingException {
+    public List<Stock> getAndUpdateStockData() throws JsonProcessingException {
         List<Stock> pricesList = stocksDao.listCurrentPricesFromWeb();
         stocksDao.updateCurrentPrices(pricesList);
+        List<Integer> accountIdList = accountDao.getActiveAccounts();
+        stocksDao.updateStockValue(accountIdList, pricesList);
         return stocksDao.retrieveSavedPrices();
     }
 

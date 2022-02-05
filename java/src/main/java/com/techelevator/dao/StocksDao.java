@@ -20,4 +20,6 @@ public interface StocksDao {
 
     public List<Stock> retrieveSavedPrices();
 
+    public void updateStockValue(List<Integer> accountIdList, List<Stock> stockPrices);
+
 }

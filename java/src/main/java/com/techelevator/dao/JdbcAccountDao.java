@@ -2,6 +2,7 @@ package com.techelevator.dao;
 
 import com.techelevator.model.Account;
 import com.techelevator.model.Game;
+import com.techelevator.model.Stock;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Component;
@@ -33,21 +34,18 @@ public class JdbcAccountDao implements AccountDao{
 
     @Override
     public int createAccount() {
-        String sql = "INSERT INTO account (user_balance, stock_value, dollar_amount) " +
-                "VALUES (100000, 0, 100000) RETURNING account_id;";
+        String sql = "INSERT INTO account (stock_value, dollar_amount) " +
+                "VALUES (0, 100000) RETURNING account_id;";
             return template.queryForObject(sql, Integer.class);
     }
 
     @Override
     public Account getAccount(int userId, int gameId) {
         Account account = null;
-//        Account account = new Account();
         String sql = "SELECT a.account_id, a.user_balance, a.stock_value, a.dollar_amount, " +
                 "gd.game_id AS game_id FROM game_data gd JOIN account a ON a.account_id = gd.account_id WHERE " +
                 "gd.game_id = ? AND gd.user_id = ?;";
         SqlRowSet results = template.queryForRowSet(sql, gameId, userId);
-//        return mapRowToAccount(results);
-//        account = mapRowToAccount(results);
         if(results.next()){
             account = mapRowToAccount(results);
         }
@@ -62,6 +60,18 @@ public class JdbcAccountDao implements AccountDao{
             accountList.add(account);
         }
         return accountList;
+    }
+
+    @Override
+    public List<Integer> getActiveAccounts() {
+        List<Integer> accountIds = new ArrayList<>();
+        String sql = "SELECT account_id FROM account";
+        SqlRowSet results = template.queryForRowSet(sql);
+        while(results.next()) {
+            Integer id = results.getInt("account_id");
+            accountIds.add(id);
+        }
+        return accountIds;
     }
 
 
