@@ -39,9 +39,9 @@ CREATE TABLE game (
 );
 CREATE TABLE account (
     account_id serial,
-    user_balance DECIMAL(19,2) AS (dollar_amount + stock_value),
-    stock_value DECIMAL(19,2),
+    stock_value DECIMAL(19,2) NOT NULL,
     dollar_amount DECIMAL(19,2) NOT NULL,
+    user_balance DECIMAL(19,2) NOT NULL,  --TOOK OUT COMPUTING  user_balance DECIMAL(19,2) AS dollar_amount + stock_value,
     CONSTRAINT PK_account PRIMARY KEY (account_id)
 );
 

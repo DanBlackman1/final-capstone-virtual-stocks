@@ -1,6 +1,10 @@
 <template>
   <div class="main">
-    <h2>{{ game.gameName + " ENDS ON " + game.endDate }}</h2>
+    <div class="overview">
+    <h2 class="gameTitle">{{ game.gameName + " ENDS ON " + game.endDate }}</h2>
+    <h2>make a trade</h2>
+    <h2>Stocks to buy</h2>
+    </div>
     <div section id="tables">
       <table class="money">
         <!--<caption>{{Username_Portfolio}}{{UserID}}{{GameName}}</caption> Needed? -->
@@ -161,6 +165,13 @@ export default {
 };
 </script>
 <style scoped>
+.overview{
+  display: flex;
+  justify-content: space-between;
+}
+.gameTitle{
+  border: black solid;
+}
 #tables {
   display: flex;
   justify-content: space-evenly;
