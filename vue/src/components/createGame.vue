@@ -1,12 +1,15 @@
 <template>
   <div id="main">
-      <form v-on:submit='addGame()'>
-          <!-- reversed order of start and end date -->
-        Name: <input type="text" v-model='game.gameName'/>
-        Start date: <input type="date" v-model='game.startDate'>
-        End date: <input type="date" v-model='game.endDate'>
-        <button type="submit" value="save">Create Game</button>
-      </form>
+      <form class="form" v-on:submit='addGame()'>
+        <div class="aligning">
+            <div class="space">Name: <input type="text" v-model='game.gameName'/></div>
+            <div class="space">Start date: <input type="date" v-model='game.startDate'></div>
+            <div class="space">End date: <input type="date" v-model='game.endDate'></div>
+            <div class="space" id="createGame"><button type="submit" value="save">Create Game</button></div>
+        </div>
+        
+        </form>
+         
    </div>
 </template>
 
@@ -38,5 +41,17 @@ export default {
 </script>
 
 <style>
-
+.aligning{
+    display: flex;
+    flex-direction: column;
+    align-content: space-between;
+    border: black solid;
+    align-items: stretch;
+    }
+.space{
+     margin: 5px;
+}
+#createGame{
+    align-self: center;
+}
 </style>

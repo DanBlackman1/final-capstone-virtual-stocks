@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <div id="nav">
-      <router-link v-bind:to="{ name: 'home' }"> <img id="homeImage" src="../images/homeImage.jpg" alt="Home" style="width:40px;height:40px;"></router-link>&nbsp;|&nbsp;
+      <router-link v-bind:to="{ name: 'home' }"> <img id="homeImage" src="../images/homeImage.jpg" alt="Home" style="width:40px;height:40px;"></router-link>&nbsp;&nbsp;
      
       <router-link v-bind:to="{ name: 'logout' }" v-if="$store.state.token != ''">Logout</router-link>
     </div>

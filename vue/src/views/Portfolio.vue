@@ -38,11 +38,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="stock in assets" v-bind:key="stock.stockSymbol">
-            <td>{{ stock.stockSymbol }}</td>
-            <td>{{ stock.numberOfShares }}</td>
-            <td>{{ stock.numberOfShares * stock.price }}</td>
-          </tr>
+        
         </tbody>
         <tfoot>
           <tr>
