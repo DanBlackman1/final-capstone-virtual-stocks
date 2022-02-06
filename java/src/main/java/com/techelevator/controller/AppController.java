@@ -1,11 +1,21 @@
 package com.techelevator.controller;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.techelevator.dao.AccountDao;
 import com.techelevator.dao.GameDao;
 import com.techelevator.dao.StocksDao;
 import com.techelevator.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
+
+import java.lang.reflect.Array;
+import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -55,6 +65,17 @@ public class AppController {
     @RequestMapping(path = "/stocks/buy", method = RequestMethod.PUT)
     public void buyStock(@RequestBody BuyOrder buyOrder) {
         stocksDao.buyExistingStock(buyOrder);
+    }
+
+    @RequestMapping(path = "/currentPrices", method = RequestMethod.GET)
+    public List<Stock> getAndUpdateStockData() throws JsonProcessingException {
+        List<Stock> pricesList = stocksDao.listCurrentPricesFromWeb();
+        if (pricesList.size() > 0) {
+            stocksDao.updateCurrentPrices(pricesList);
+            List<Integer> accountIdList = accountDao.getActiveAccounts();
+            stocksDao.updateStockValue(accountIdList, pricesList);
+        }
+        return stocksDao.retrieveSavedPrices();
     }
 
 

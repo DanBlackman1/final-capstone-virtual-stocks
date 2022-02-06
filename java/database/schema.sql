@@ -5,6 +5,7 @@ DROP TABLE IF EXISTS game ;
 DROP TABLE IF EXISTS game_data ;
 DROP TABLE IF EXISTS account ;
 DROP TABLE IF EXISTS stock_amount ;
+DROP TABLE IF EXISTS stock_values ;
 DROP SEQUENCE IF EXISTS seq_user_id;
 
 CREATE SEQUENCE seq_user_id
@@ -38,9 +39,9 @@ CREATE TABLE game (
 );
 CREATE TABLE account (
     account_id serial,
-    user_balance int NOT NULL,
-    stock_value int,
-    dollar_amount int NOT NULL,
+    user_balance DECIMAL(19,2) AS (dollar_amount + stock_value),
+    stock_value DECIMAL(19,2),
+    dollar_amount DECIMAL(19,2) NOT NULL,
     CONSTRAINT PK_account PRIMARY KEY (account_id)
 );
 
@@ -54,17 +55,55 @@ CREATE TABLE game_data (
     CONSTRAINT FK_game_data_game FOREIGN KEY (game_id) REFERENCES game(game_id)
 );
 
+CREATE TABLE stock_price (
+    stock_symbol varchar(10) NOT NULL,
+    stock_price DECIMAL(19,2) NOT NULL,
+    CONSTRAINT PK_stock_price PRIMARY KEY (stock_symbol)
+
+);
+
 CREATE TABLE stock_amount (
     account_id int NOT NULL,
     stock_symbol varchar(10) NOT NULL,
-    total_shares int NOT NULL,
-    CONSTRAINT FK_stock_amount_account FOREIGN KEY (account_id) REFERENCES account(account_id)
+    total_shares DECIMAL(19,2) NOT NULL,
+    CONSTRAINT FK_stock_amount_account FOREIGN KEY (account_id) REFERENCES account(account_id),
+    CONSTRAINT FK_stock_amount_stock_symbol FOREIGN KEY (stock_symbol) REFERENCES stock_price(stock_symbol)
 );
+
 
 -- added above
 
 INSERT INTO users (email,username,password_hash,role) VALUES ('foo@game.com','user','$2a$08$UkVvwpULis18S19S5pZFn.YHPZt3oaqHZnDwqbCW9pft6uFtkXKDC','ROLE_USER');
 INSERT INTO users (email,username,password_hash,role) VALUES ('foo@game.com','admin','$2a$08$UkVvwpULis18S19S5pZFn.YHPZt3oaqHZnDwqbCW9pft6uFtkXKDC','ROLE_ADMIN');
 
+INSERT INTO stock_price (stock_symbol,stock_price) VALUES ('MSFT', '0');
+INSERT INTO stock_price (stock_symbol,stock_price) VALUES ('AAPL', '0');
+INSERT INTO stock_price (stock_symbol,stock_price) VALUES ('AMZN', '0');
+INSERT INTO stock_price (stock_symbol,stock_price) VALUES ('GOOGL', '0');
+INSERT INTO stock_price (stock_symbol,stock_price) VALUES ('BABA', '0');
+
+INSERT INTO stock_price (stock_symbol,stock_price) VALUES ('FB', '0');
+INSERT INTO stock_price (stock_symbol,stock_price) VALUES ('BRK', '0');
+INSERT INTO stock_price (stock_symbol,stock_price) VALUES ('VOD', '0');
+INSERT INTO stock_price (stock_symbol,stock_price) VALUES ('V', '0');
+INSERT INTO stock_price (stock_symbol,stock_price) VALUES ('JPM', '0');
+
+INSERT INTO stock_price (stock_symbol,stock_price) VALUES ('WMT', '0');
+INSERT INTO stock_price (stock_symbol,stock_price) VALUES ('MA', '0');
+INSERT INTO stock_price (stock_symbol,stock_price) VALUES ('TSM', '0');
+INSERT INTO stock_price (stock_symbol,stock_price) VALUES ('CHT', '0');
+INSERT INTO stock_price (stock_symbol,stock_price) VALUES ('RHHBF', '0');
+
+INSERT INTO stock_price (stock_symbol,stock_price) VALUES ('UNH', '0');
+INSERT INTO stock_price (stock_symbol,stock_price) VALUES ('HD', '0');
+INSERT INTO stock_price (stock_symbol,stock_price) VALUES ('INTC', '0');
+INSERT INTO stock_price (stock_symbol,stock_price) VALUES ('KO', '0');
+INSERT INTO stock_price (stock_symbol,stock_price) VALUES ('VZ', '0');
+
+INSERT INTO stock_price (stock_symbol,stock_price) VALUES ('XOM', '0');
+INSERT INTO stock_price (stock_symbol,stock_price) VALUES ('DIS', '0');
+INSERT INTO stock_price (stock_symbol,stock_price) VALUES ('NVS', '0');
+INSERT INTO stock_price (stock_symbol,stock_price) VALUES ('CMCSA', '0');
+INSERT INTO stock_price (stock_symbol,stock_price) VALUES ('PFE', '0');
 
 COMMIT TRANSACTION;

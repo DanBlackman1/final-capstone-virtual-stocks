@@ -57,9 +57,17 @@ export default {
         },
         goToPortfolio() {
             this.$router.push('/portfolio');
+        },
+        refresh() {
+            GameService.updateStockPrices().then((response) => {
+                if (response.status === 200) {
+                    this.$store.commit('SET_STOCK_PRICES', response.data);
+                }
+            })
         }
     },
     beforeMount(userId, gameId) {
+        this.refresh();
         this.viewDetailsByGameId(userId, gameId);
     },
     // CHANGE TO SOME KIND OF UPDATE TO SPECIFIC PAGE PUSH OR PORTFOLIO WILL NOT HAVE ACCESS TO INFO 

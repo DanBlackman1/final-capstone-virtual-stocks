@@ -1,7 +1,7 @@
 <template>
   <div id="register" class="text-center">
     <form class="form-register" @submit.prevent="register">
-      <h1 class="h3 mb-3 font-weight-normal">Create Account</h1>
+      <h1 class="h3 mb-3 font-weight-normal">Register</h1>
       <div class="alert alert-danger" role="alert" v-if="registrationErrors">
         {{ registrationErrorMsg }}
       </div>
@@ -13,6 +13,7 @@
       
       <label for="email" class="sr-only" id="email"></label>
       Please enter a valid Email Address that may not include !:
+      <div class="email">
       <input
         type="email" 
         pattern="[A-Za-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
@@ -23,6 +24,7 @@
         required
         autofocus
       />
+      </div>
       <div id="username">
         <label for="username" class="sr-only" ></label>
         <input
@@ -35,8 +37,10 @@
           autofocus
         />
       </div>
-      <div id="password">
+
+      
         <label for="password" class="sr-only"></label>
+          <div class="passFirst">
         <input
           type="password"
           id="password"
@@ -45,21 +49,23 @@
           v-model="user.password"
           required
           />
-        <input
-          type="password"
-          id="confirmPassword"
-          class="form-control"
-          placeholder="Confirm Password"
-          v-model="user.confirmPassword"
-          required
-          />
-      </div>
-      <div class="account">
-        <router-link :to="{ name: 'login' }">Already have an account? </router-link>
+        </div>
+        <div class="confirmPasswordClass">
+          <input
+            type="password"
+            id="confirmPassword"
+            class="form-control"
+            placeholder="Confirm Password"
+            v-model="user.confirmPassword"
+            required
+            />
       </div>
       <button class="btn btn-lg btn-primary btn-block" type="submit">
         Create Account
       </button>
+       <div class="account">
+        <router-link :to="{ name: 'login' }">Already have an account? </router-link>
+      </div>
     </form>
   </div>
 </template>
@@ -69,14 +75,7 @@ import authService from '../services/AuthService';
 
 export default {
   name: 'register',
-  // ADDED BACKGROUND COLOR HERE
-  beforeCreate () {
-    document.querySelector('body').setAttribute('style', 'background:rgb(0, 255, 255)')
-  },
-  beforeDestroy () {
-    document.querySelector('body').setAttribute('style', '')
-  },
-  // ABOVE
+  
   data() {
     return {
       user: {
@@ -123,63 +122,78 @@ export default {
 </script>
 
 <style scoped>
+/* "Create Account" */
 .h3{
   grid-area: create;
-  
   color: #2c3e50;
   margin-top: 15px;
+  color:goldenrod;
 }
 
 .alert{
   grid-area: alert;
-  
 }
 
-#email{
+/* Email field */
+.email{
   grid-area: email;
-  width: 95%;
+  margin-top: 10px;
 }
-/* WE WOULD NEED TO ADDRESS MIN WIDTH IF THEY ARE ON VERY SMALL SCREEN */
-#password{
+
+/* adjusts the password field */
+.passFirst{
+  display: flex;
   grid-area: password;
-  min-width: 40%;
-  margin-right: 10px;
-  margin-top: 5px
+  margin-top: 10px;
+  justify-content: center;
 }
-#username{
+.form-register{
+ border: black;
+  border-style: solid;
+  padding: 5px;
+  width: 500px;
+  height: 400px;
+  background-color: rgb(233, 233, 233);}
+/* adjusts the confirm password field*/
+.confirmPasswordClass{ 
+  grid-area: confirmPassword;
+  margin-bottom: 10px;
+}
+#username{ 
   grid-area: username;
-  width: 97.5%;
-  margin-top: 5px
-  
-}
-.account{
-  grid-area: account;
   margin-top: 5px
 }
+
 .btn{
   grid-area: button;
-  margin-top: 20px
 }
 #register{
   grid-area: register;
 }
+.account{
+  display: flex;
+  margin-top: 10px;
+  justify-content: center;
+}
 #register{
-  display: grid;
+  /* display: grid; */
   display: flex;
     grid-template-columns:  1fr;
-    text-align: left;
-    grid-template-areas: 
-        "register"
-        "create "
-        "alert "
-        "email "
-        "username "
-        "password "
-        "account "
-        "button ";
+    text-align: center;
+    /* grid-template-areas: 
+        "register",
+        "create",
+        "alert",
+        "email",
+        "username",
+        "initialPassword",
+        "confirmPassword",
+        "account",
+        "button"; */
         justify-content: center;
       
 }
+
 
 
 </style>
