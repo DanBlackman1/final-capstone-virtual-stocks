@@ -85,27 +85,28 @@ INSERT INTO stock_price (stock_symbol,stock_price) VALUES ('GOOGL', '0');
 INSERT INTO stock_price (stock_symbol,stock_price) VALUES ('BABA', '0');
 
 INSERT INTO stock_price (stock_symbol,stock_price) VALUES ('FB', '0');
-INSERT INTO stock_price (stock_symbol,stock_price) VALUES ('BRK', '0');
 INSERT INTO stock_price (stock_symbol,stock_price) VALUES ('VOD', '0');
 INSERT INTO stock_price (stock_symbol,stock_price) VALUES ('V', '0');
 INSERT INTO stock_price (stock_symbol,stock_price) VALUES ('JPM', '0');
-
-INSERT INTO stock_price (stock_symbol,stock_price) VALUES ('WMT', '0');
 INSERT INTO stock_price (stock_symbol,stock_price) VALUES ('MA', '0');
+
 INSERT INTO stock_price (stock_symbol,stock_price) VALUES ('TSM', '0');
 INSERT INTO stock_price (stock_symbol,stock_price) VALUES ('CHT', '0');
-INSERT INTO stock_price (stock_symbol,stock_price) VALUES ('RHHBF', '0');
-
 INSERT INTO stock_price (stock_symbol,stock_price) VALUES ('UNH', '0');
 INSERT INTO stock_price (stock_symbol,stock_price) VALUES ('HD', '0');
 INSERT INTO stock_price (stock_symbol,stock_price) VALUES ('INTC', '0');
-INSERT INTO stock_price (stock_symbol,stock_price) VALUES ('KO', '0');
-INSERT INTO stock_price (stock_symbol,stock_price) VALUES ('VZ', '0');
 
-INSERT INTO stock_price (stock_symbol,stock_price) VALUES ('XOM', '0');
+INSERT INTO stock_price (stock_symbol,stock_price) VALUES ('KO', '0');
 INSERT INTO stock_price (stock_symbol,stock_price) VALUES ('DIS', '0');
 INSERT INTO stock_price (stock_symbol,stock_price) VALUES ('NVS', '0');
-INSERT INTO stock_price (stock_symbol,stock_price) VALUES ('CMCSA', '0');
-INSERT INTO stock_price (stock_symbol,stock_price) VALUES ('PFE', '0');
+INSERT INTO stock_price (stock_symbol,stock_price) VALUES ('NFLX', '0');
+INSERT INTO stock_price (stock_symbol,stock_price) VALUES ('ORCL', '0');
+
+INSERT INTO stock_price (stock_symbol,stock_price) VALUES ('NVDA', '0');
+INSERT INTO stock_price (stock_symbol,stock_price) VALUES ('TM', '0');
+INSERT INTO stock_price (stock_symbol,stock_price) VALUES ('CVX', '0');
+INSERT INTO stock_price (stock_symbol,stock_price) VALUES ('ADBE', '0');
+INSERT INTO stock_price (stock_symbol,stock_price) VALUES ('CSCO', '0');
+
 
 COMMIT TRANSACTION;

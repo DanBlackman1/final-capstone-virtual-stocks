@@ -74,5 +74,19 @@ public class JdbcAccountDao implements AccountDao{
         return accountIds;
     }
 
+    @Override
+    public List<Account> getAccountsWithinGame(int gameId) {
+        String sql = "SELECT a.account_id, a.user_balance, a.dollar_amount, a.stock_value" +
+                " FROM game_data gd JOIN account a ON gd.account_id = a.account_id WHERE" +
+                " gd.game_id = 1 ORDER BY a.user_balance DESC;";
+        SqlRowSet results = template.queryForRowSet(sql, gameId);
+        List<Account> accountList = new ArrayList<>();
+        while(results.next()) {
+            Account account = mapRowToAccount(results);
+            accountList.add(account);
+        }
+        return accountList;
+    }
+
 
 }

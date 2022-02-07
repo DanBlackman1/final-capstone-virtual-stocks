@@ -16,4 +16,6 @@ public interface AccountDao {
 
     public List<Integer> getActiveAccounts();
 
+    public List<Account> getAccountsWithinGame(int gameId);
+
 }
