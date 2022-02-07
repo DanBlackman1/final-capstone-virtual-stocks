@@ -36,15 +36,10 @@
            </tr>
         </thead>
         <tbody>
-<<<<<<< HEAD
           <td rowspan="1">Enter stock ticker<input type="text"></td>
           <td rowspan="1">Enter number of shares<input type="text"></td>
           <tr> Buy </tr>
           <tr>Sell</tr>
-          
-=======
-        
->>>>>>> main
         </tbody>
         <tfoot>
           <tr>
