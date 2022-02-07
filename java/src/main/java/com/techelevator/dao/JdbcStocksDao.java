@@ -72,7 +72,7 @@ public class JdbcStocksDao implements StocksDao{
             JsonNode jsonNode = objectMapper.readTree(response.getBody());
             String lastPrice = jsonNode.path("data").path(0).path("last").asText();
             System.out.println(lastPrice);
-            if (!lastPrice.equals("null")) {
+            if (lastPrice != null) {
                 BigDecimal stockPrice = new BigDecimal(lastPrice);
                 Stock stock = new Stock();
                 stock.setCurrentPrice(stockPrice);
@@ -132,8 +132,8 @@ public class JdbcStocksDao implements StocksDao{
     private Stock mapRowToStock(SqlRowSet results) {
 
         Stock stock = new Stock();
-       // stock.setAccountId(results.getInt("account_id"));
-        stock.setNumberOfShares(results.getInt("total_shares"));
+        //stock.setAccountId(results.getInt("account_id"));
+        stock.setNumberOfShares(results.getDouble("total_shares"));
         stock.setStockSymbol(results.getString("stock_symbol"));
         stock.setCurrentPrice(results.getBigDecimal("stock_price"));
         return stock;
