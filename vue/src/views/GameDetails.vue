@@ -1,30 +1,50 @@
 <template>
   <div class="main">
-      <h1>{{ game.gameName + " ENDS ON " + game.endDate }}</h1>
+    <h1>{{ game.gameName + " ENDS ON " + game.endDate }}</h1>
+    <div id="layout">
     <div section id="leaderboard">
-        <table>
-            <thead>
-            <tr>
-        <th>Place</th>
-        <th>Username</th>
-        <th>Portfolio Value</th>
-            </tr>
-            </thead>
-          <tr v-for='(place, index) in leaderboard' v-bind:key="place.userId">
-              <td>{{ index + 1 }}</td>
-              <td>{{ place.userName }}</td>
-              <td>{{ place.userBalance }}</td>
-              </tr>  
-        </table>
-        <button v-on:click="goToPortfolio()">View My Portfolio</button>
-
-    </div>
-
+      <table>
+        <thead>
+          <tr>
+            <th>Place</th>
+            <th>Username</th>
+            <th>Portfolio Value</th>
+          </tr>
+        </thead>
+        <tr v-for="(place, index) in leaderboard" v-bind:key="place.userId">
+          <td>{{ index + 1 }}</td>
+          <td>{{ place.userName }}</td>
+          <td>{{ place.userBalance }}</td>
+        </tr>
+      </table>
+      <button v-on:click="goToPortfolio()">View My Portfolio</button>
+        </div>
+        <div section id="invite">
+        <thead>
+          <tr>
+            <th class="inviteUser">Invite User with Email</th>
+          </tr>
+        </thead>
+      <form action="" method="get" class="form-example">
+  <div class="form-example">
+    <label for="name">Enter User Email: </label>
+    <input type="text" name="name" id="name" required>
+  </div>
+  <div class="form-example">
+    <label for="email">Enter User Email: </label>
+    <input type="email" name="email" id="email" required>
+  </div>
+  <div class="form-example">
+    <input type="submit" value="Invite!">
+  </div>
+</form>
+  </div>
+   
+  </div>
   </div>
 </template>
 
 <script>
-
 import GameService from "../services/GameService.js";
 export default {
     name: 'gameDetails',
@@ -46,6 +66,7 @@ export default {
             },
             leaderboard: [],
         }
+      
     },
     methods:{
         viewDetails(){
@@ -74,18 +95,37 @@ export default {
 </script>
 
 <style scoped>
-#leaderboard {
-  display: flex;
-  justify-content: space-evenly;
-  align-items: stretch,
+
+#layout {
+display:flex;
+justify-content: space-around;
+
+}
+.invite
+   form.form-example {
+    display: table;
+}
+
+div.form-example {
+    display: table-row;
+}
+
+label, input {
+    display: table-cell;
+    margin-bottom: 10px;
+}
+
+label {
+    padding-right: 10px;
 }
 /* spacing */
 #leaderboard {
-  table-layout: flex;
+  display:grid;
   width: 33%;
   border-collapse: collapse;
   border: 3 px solid rgb(22, 29, 22);
   margin: 5px;
+  align-items: stretch;
 }
 thead th:nth-child(1) {
   width: 25%;
@@ -101,15 +141,13 @@ th,
 td {
   padding: 5px;
 }
-td
-{
-  font-size:75%;
-} 
-th
-{
-  font-size:100%;
+td {
+  font-size: 75%;
 }
-
+th {
+  font-size: 100%;
+}
+/* typography */
 th {
   letter-spacing: 2px;
 }
@@ -125,6 +163,14 @@ tbody tr {
   border: burlywood solid;
 }
 tfoot th {
+  text-align: center;
+}
+
+.inviteUser{
+  text-align: left;
+  padding: 20px;
+}
+h1{
   text-align: center;
 }
 </style>
