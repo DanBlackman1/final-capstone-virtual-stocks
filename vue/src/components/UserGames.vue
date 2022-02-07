@@ -58,6 +58,8 @@ export default {
 
 <style scoped>
 
-
+tr:hover{
+  background: gray;
+}
 
 </style>

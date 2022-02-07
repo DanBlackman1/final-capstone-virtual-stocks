@@ -39,4 +39,5 @@ export default {
 .box{
   border: black solid;
 }
+
 </style>
