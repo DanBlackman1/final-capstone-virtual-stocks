@@ -15,7 +15,7 @@
           {{game.gameName}}
           </td>
         <td class="hover">
-          {{accountList[index].userBalance}}
+          {{Number(accountList[index].userBalance).toLocaleString()}}
         </td>
        <td class="hover">
           {{game.endDate}}
