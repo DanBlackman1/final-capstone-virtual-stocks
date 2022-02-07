@@ -61,12 +61,7 @@
         <tbody>
           <tr v-for="stock in this.$store.state.stockPrices" v-bind:key="stock.stockSymbol">
             <td colspan="2">{{ stock.stockSymbol }}</td>
-<<<<<<< HEAD
-            <td>${{ parseFloat(stock.numberOfShares * stock.price).toFixed(2)}}</td>
-
-=======
-            <td>{{ stock.currentPrice }}</td>
->>>>>>> main
+            <td>${{ parseFloat(stock.currentPrice).toFixed(2)}}</td>
           </tr>
         </tbody>
         <tfoot>
@@ -97,7 +92,7 @@ export default {
         stockValue: this.$store.state.account.stockValue,
         userBalance: this.$store.state.account.userBalance,
       },
-      fundsForPurchase: 23000.0,
+     
 
       assets: [
         {

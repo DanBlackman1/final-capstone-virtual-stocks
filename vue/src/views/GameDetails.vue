@@ -79,7 +79,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 #leaderboard {
   display: flex;
   justify-content: space-evenly;
