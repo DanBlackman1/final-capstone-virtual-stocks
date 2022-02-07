@@ -1,7 +1,7 @@
 <template>
   <div class="main">
       <h1>{{ game.gameName + " ENDS ON " + game.endDate }}</h1>
-    <div id="leaderboard">
+    <div section id="leaderboard">
         <table>
             <thead>
             <tr>
@@ -80,5 +80,57 @@ export default {
 </script>
 
 <style>
+#leaderboard {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: stretch,
+}
+/* spacing */
+#leaderboard {
+  table-layout: flex;
+  width: 33%;
+  border-collapse: collapse;
+  border: 3 px solid rgb(22, 29, 22);
+  margin: 5px;
+}
+thead th:nth-child(1) {
+  width: 25%;
+}
+thead th:nth-child(2) {
+  width: 25%;
+}
+thead th:nth-child(3) {
+  width: 25%;
+}
 
+th,
+td {
+  padding: 5px;
+}
+td
+{
+  font-size:75%;
+} 
+th
+{
+  font-size:100%;
+}
+
+th {
+  letter-spacing: 2px;
+}
+td {
+  letter-spacing: 1px;
+}
+tbody td {
+  text-align: center;
+  border: burlywood solid;
+}
+tbody tr {
+  text-align: center;
+  border: burlywood solid;
+}
+tfoot th {
+  text-align: center;
+}
 </style>

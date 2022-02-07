@@ -19,7 +19,8 @@
           <tr v-for="stock in assets" v-bind:key="stock.stockSymbol">
             <td>{{ stock.stockSymbol }}</td>
             <td>{{ stock.numberOfShares }}</td>
-            <td>{{ stock.numberOfShares * stock.price }}</td>
+            <td>${{ parseFloat(stock.numberOfShares * stock.price).toFixed(2)}}</td>
+
           </tr>
         </tbody>
         <tfoot>
@@ -60,7 +61,12 @@
         <tbody>
           <tr v-for="stock in this.$store.state.stockPrices" v-bind:key="stock.stockSymbol">
             <td colspan="2">{{ stock.stockSymbol }}</td>
+<<<<<<< HEAD
+            <td>${{ parseFloat(stock.numberOfShares * stock.price).toFixed(2)}}</td>
+
+=======
             <td>{{ stock.currentPrice }}</td>
+>>>>>>> main
           </tr>
         </tbody>
         <tfoot>
@@ -160,11 +166,7 @@ export default {
     this.getAssets(this.$store.state.account.accountId);
     this.getTime();
   },
-  formatPrice(value) {
-    /*/lisa */
-    let val = (value / 1).toFixed(2).replace(".", ",");
-    return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-  },
+  
 };
 </script>
 <style scoped>
