@@ -21,5 +21,8 @@ export default {
     },
     updateStockPrices() {
         return axios.get('/currentPrices');
+    },
+    viewLeaderBoard(gameId){
+        return axios.get('/leaderboard', gameId)
     }
 }

@@ -85,14 +85,22 @@ export default {
                     this.$store.commit('SET_STOCK_PRICES', response.data);
                 }
             })
+        },
+        setLeaderBoard(gameId){
+            GameService.viewLeaderBoard(gameId).then((response)=>{
+                this.$store.commit('SET_LEADERBOARD', response.data);
+                this.leaderboard = this.$store.state.leaderboard;
+            })
         }
     },
     beforeMount() {
      this.refresh();
      this.viewDetails();
+     this.setLeaderBoard(this.game.gameId);
      },
 }
 </script>
+
 
 <style scoped>
 
