@@ -11,13 +11,13 @@
     </thead>
     <tbody>
       <tr v-for='(game, index) in gameList' v-bind:key="game.gameId" v-on:click="goToGameDetails(game, accountList[index])">
-        <td>
+        <td  class="hover" id="gameName">
           {{game.gameName}}
           </td>
-        <td>
+        <td class="hover">
           {{accountList[index].userBalance}}
         </td>
-       <td>
+       <td class="hover">
           {{game.endDate}}
         </td>
       </tr>
@@ -58,8 +58,13 @@ export default {
 
 <style scoped>
 
-tr:hover{
-  background: gray;
+.hover:hover{
+  cursor: pointer;
+}
+#gameName{
+  color: darkblue;
+  text-decoration: underline;
+  font: bold;
 }
 
 </style>
