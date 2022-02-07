@@ -23,8 +23,8 @@ public class JdbcStocksDao implements StocksDao{
     private JdbcTemplate template;
     private String[] stockSymbols = new String[]{"MSFT","AAPL",
             "AMZN","GOOGL","BABA","FB", "VOD","V","JPM", "MA","TSM",
-            "CHT","UNH","HD","INTC","KO",
-            "DIS", "NVS"};
+            "CHT","UNH","HD","INTC","KO", "DIS", "NVS",
+            };
 
     public JdbcStocksDao(DataSource datasource) {
         template = new JdbcTemplate(datasource);

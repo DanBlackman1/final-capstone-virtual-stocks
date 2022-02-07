@@ -45,7 +45,7 @@
         <tfoot>
           <tr>
             <th colspan="1">Funds for Purchase </th>
-            <th>{{ fundsForPurchase }}</th>
+            <th>{{ account.dollarAmount }}</th>
           </tr>
         </tfoot>
       </table>
@@ -65,7 +65,7 @@
         </tbody>
         <tfoot>
           <tr>
-            <th colspan="3">   </th>
+            <th colspan="3"> Current as of: {{ lastRefreshed }}</th>
           </tr>
         </tfoot>
       </table>
@@ -91,7 +91,8 @@ export default {
         stockValue: this.$store.state.account.stockValue,
         userBalance: this.$store.state.account.userBalance,
       },
-      fundsForPurchase: 23000.0,
+      
+      lastRefreshed: '',
 
       assets: [
         {
@@ -150,9 +151,14 @@ export default {
         this.assets = response.data;
       });
     },
+    getTime() {
+      let currentTime = new Date()
+      this.lastRefreshed = currentTime.toTimeString
+    }
   },
   beforeMount() {
     this.getAssets(this.$store.state.account.accountId);
+    this.getTime();
   },
   formatPrice(value) {
     /*/lisa */
