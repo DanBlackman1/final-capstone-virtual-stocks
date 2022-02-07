@@ -16,7 +16,6 @@
               <td>{{ place.userBalance }}</td>
               </tr>  
         </table>
-
         <button v-on:click="goToPortfolio()">View My Portfolio</button>
 
     </div>

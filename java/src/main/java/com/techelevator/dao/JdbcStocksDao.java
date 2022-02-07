@@ -46,14 +46,18 @@ public class JdbcStocksDao implements StocksDao{
 
     @Override
     public void buyNewStock(BuyOrder buyOrder) {
-        String sql = "INSERT INTO stock_amount (account_id, stock_symbol, total_shares) VALUES (?, ?, ?);";
-        template.update(sql, buyOrder.getAccountId(), buyOrder.getStockSymbol(), buyOrder.getSharesToAdd());
+        String sqlStock = "INSERT INTO stock_amount (account_id, stock_symbol, total_shares) VALUES (?, ?, ?);";
+        template.update(sqlStock, buyOrder.getAccountId(), buyOrder.getStockSymbol(), buyOrder.getSharesToAdd());
+        String sqlAccount = "UPDATE account SET dollar_amount = dollar_amount - ? WHERE account_id = ?;";
+        template.update(sqlAccount, buyOrder.getCost(), buyOrder.getAccountId());
     }
 
     @Override
     public void buyExistingStock(BuyOrder buyOrder) {
-        String sql = "UPDATE stock_amount SET total_shares = total_shares + ? WHERE account_id = ? AND stock_symbol = ?;";
-        template.update(sql, buyOrder.getSharesToAdd(), buyOrder.getAccountId());
+        String sqlStock = "UPDATE stock_amount SET total_shares = total_shares + ? WHERE account_id = ? AND stock_symbol = ?;";
+        template.update(sqlStock, buyOrder.getSharesToAdd(), buyOrder.getAccountId());
+        String sqlAccount = "UPDATE account SET dollar_amount = dollar_amount - ? WHERE account_id = ?;";
+        template.update(sqlAccount, buyOrder.getCost(), buyOrder.getAccountId());
     }
 
     @Override
@@ -71,7 +75,6 @@ public class JdbcStocksDao implements StocksDao{
             ObjectMapper objectMapper = new ObjectMapper();
             JsonNode jsonNode = objectMapper.readTree(response.getBody());
             String lastPrice = jsonNode.path("data").path(0).path("last").asText();
-            System.out.println(lastPrice);
             if (lastPrice != null) {
                 BigDecimal stockPrice = new BigDecimal(lastPrice);
                 Stock stock = new Stock();
@@ -97,7 +100,7 @@ public class JdbcStocksDao implements StocksDao{
         String sql = "SELECT * FROM stock_price;";
         SqlRowSet results = template.queryForRowSet(sql);
         while(results.next()) {
-            Stock stock = new Stock(); //mapRowToStock(results);
+            Stock stock = new Stock();
             stock.setStockSymbol(results.getString("stock_symbol"));
             stock.setCurrentPrice(results.getBigDecimal("stock_price"));
             stockList.add(stock);
@@ -114,7 +117,7 @@ public class JdbcStocksDao implements StocksDao{
             List<Stock> accountStocks = new ArrayList<>();
             SqlRowSet results = template.queryForRowSet(sqlQuery, accountId);
             while(results.next()) {
-                Stock stock = new Stock();  //mapRowToStock(results);
+                Stock stock = new Stock();
                 stock.setNumberOfShares(results.getDouble("total_shares"));
                 stock.setAccountId(results.getInt("account_id"));
                 stock.setStockSymbol(results.getString("stock_symbol"));
@@ -123,13 +126,10 @@ public class JdbcStocksDao implements StocksDao{
             for(Stock stockDetails : accountStocks) {
                 for(Stock price : stockPrices) {
                     if (stockDetails.getStockSymbol().equals(price.getStockSymbol())) {
-                        System.out.println("success in updatestockvalue");
                         String shares = stockDetails.getNumberOfShares() + "";
                         BigDecimal sharesNumber = new BigDecimal(shares);
-                        //BigDecimal tempPrice = price.getCurrentPrice();
                         BigDecimal multiplied = price.getCurrentPrice().multiply(sharesNumber);
-                        System.out.println(multiplied);
-                        updatedStockValue = updatedStockValue.add(multiplied); //price.getCurrentPrice().multiply(sharesNumber));
+                        updatedStockValue = updatedStockValue.add(multiplied);
                     }
                 }
             }

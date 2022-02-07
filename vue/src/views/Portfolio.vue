@@ -58,9 +58,9 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="stock in assets" v-bind:key="stock.stockSymbol">
+          <tr v-for="stock in this.$store.state.stockPrices" v-bind:key="stock.stockSymbol">
             <td colspan="2">{{ stock.stockSymbol }}</td>
-            <td>{{ stock.numberOfShares * stock.price }}</td>
+            <td>{{ stock.currentPrice }}</td>
           </tr>
         </tbody>
         <tfoot>
