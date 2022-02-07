@@ -61,7 +61,7 @@
         <tbody>
           <tr v-for="stock in this.$store.state.stockPrices" v-bind:key="stock.stockSymbol">
             <td colspan="2">{{ stock.stockSymbol }}</td>
-            <td>${{ parseFloat(stock.numberOfShares * stock.price).toFixed(2)}}</td>
+            <td>${{ parseFloat(stock.currentPrice).toFixed(2)}}</td>
 
           </tr>
         </tbody>
