@@ -24,7 +24,8 @@ export default new Vuex.Store({
     user: currentUser || {},
     game: currentGame || {},
     account: currentAccount || {},
-    stockPrices: []
+    stockPrices: [],
+    portfolio: []
   },
   mutations: {
     SET_AUTH_TOKEN(state, token) {
@@ -60,6 +61,21 @@ export default new Vuex.Store({
         tempStock.currentPrice = stockList[i].currentPrice;
         state.stockPrices.push(tempStock);
       }
+    },
+    SET_PORTFOLIO(state, updatedPortfolio) {
+      state.portfolio = [];
+      for(let i = 0; i < updatedPortfolio.length; i++) {
+        let tempItem = {
+          accountId: '',
+          stockSymbol: '',
+          numberOfShares: ''
+        };
+        accountId = updatedPortfolio[i].accountId,
+        stockSymbol = updatedPortfolio[i].stockSymbol,
+        numberOfShares = updatedPortfolio[i].numberOfShares
+        state.portfolio.push(tempItem);
+      }
+
     }
     }
   })

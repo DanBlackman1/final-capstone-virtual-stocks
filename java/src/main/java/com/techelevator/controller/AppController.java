@@ -1,21 +1,14 @@
 package com.techelevator.controller;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.techelevator.dao.AccountDao;
 import com.techelevator.dao.GameDao;
 import com.techelevator.dao.StocksDao;
 import com.techelevator.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.RestTemplate;
 
-import java.lang.reflect.Array;
-import java.math.BigDecimal;
-import java.util.ArrayList;
+
 import java.util.List;
 
 @RestController
@@ -76,6 +69,11 @@ public class AppController {
             stocksDao.updateStockValue(accountIdList, pricesList);
         }
         return stocksDao.retrieveSavedPrices();
+    }
+
+    @RequestMapping(path = "/leaderboard", method = RequestMethod.GET)
+    public List<Account> getLeaderboard(@RequestBody int gameId) {
+        return accountDao.getAccountsWithinGame(gameId);
     }
 
 
