@@ -37,8 +37,8 @@
            </tr>
         </thead>
         <tbody>
-          <td rowspan="1">Enter stock ticker<input type="text"></td>
-          <td rowspan="1">Enter number of shares<input type="text"></td>
+          <td rowspan="1" class='ticker'>Enter stock ticker<input type="text"></td>
+          <td rowspan="1" class='shares'>Enter number of shares<input type="text"></td>
           <tr> Buy </tr>
           <tr>Sell</tr>
           
@@ -59,7 +59,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="stock in this.$store.state.stockPrices" v-bind:key="stock.stockSymbol">
+          <tr v-for="stock in this.$store.state.stockPrices" v-bind:key="stock.stockSymbol" v-on:click="populateFields()">
             <td colspan="2">{{ stock.stockSymbol }}</td>
             <td>${{ parseFloat(stock.currentPrice).toFixed(2)}}</td>
 
@@ -152,6 +152,10 @@ export default {
       GameService.getPortfolio(accountId).then((response) => {
         this.assets = response.data;
       });
+    },
+    populateFields(){
+      
+
     },
     getTime() {
       let currentTime = new Date()

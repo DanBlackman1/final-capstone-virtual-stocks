@@ -70,12 +70,13 @@ export default new Vuex.Store({
           stockSymbol: '',
           numberOfShares: ''
         };
-        accountId = updatedPortfolio[i].accountId,
-        stockSymbol = updatedPortfolio[i].stockSymbol,
-        numberOfShares = updatedPortfolio[i].numberOfShares
+        tempItem.accountId = updatedPortfolio[i].accountId,
+        tempItem.stockSymbol = updatedPortfolio[i].stockSymbol,
+        tempItem.numberOfShares = updatedPortfolio[i].numberOfShares
         state.portfolio.push(tempItem);
       }
 
     }
+
     }
   })
