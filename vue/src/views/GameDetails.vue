@@ -71,15 +71,15 @@ export default {
     },
     // CHANGE TO SOME KIND OF UPDATE TO SPECIFIC PAGE PUSH OR PORTFOLIO WILL NOT HAVE ACCESS TO INFO 
     beforeDestroy() {
-        this.game = {};
-        this.account = {};
-        this.$store.commit('SET_GAME', this.game);
-        this.$store.commit('SET_ACCOUNT', this.account)
+      //  this.game = {};
+       // this.account = {};
+       // this.$store.commit('SET_GAME', this.game);
+       // this.$store.commit('SET_ACCOUNT', this.account)
     }
 }
 </script>
 
-<style>
+<style scoped>
 #leaderboard {
   display: flex;
   justify-content: space-evenly;
