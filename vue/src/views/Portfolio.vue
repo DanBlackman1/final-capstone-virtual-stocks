@@ -1,9 +1,9 @@
 <template>
   <div class="main">
     <div class="overview">
-    <h2 class="gameTitle">{{ game.gameName + " ENDS ON " + game.endDate }}</h2>
+<!--   <h2 class="gameTitle">{{ game.gameName + " ENDS ON " + game.endDate }}</h2>
     <h2>make a trade</h2>
-    <h2>Stocks to buy</h2>
+    <h2>Stocks to buy</h2> -->
     </div>
     <div section id="tables">
       <table class="money">
@@ -24,29 +24,27 @@
         </tbody>
         <tfoot>
           <tr>
-            <th colspan="2">Funds for Purchase</th>
-            <th>{{ fundsForPurchase }}</th>
+            <th colspan="2"></th>
+            <th>{{ Total }}</th>
           </tr>
         </tfoot>
       </table>
       <table class="trade">
         <thead>
           <tr>
-            <th>Buy  Sell</th>
-            <th>Shares</th>
-            <th></th>
-          </tr>
+            <th colspan="2"></th>
+           </tr>
         </thead>
         <tbody>
-          <tr v-for="stock in assets" v-bind:key="stock.stockSymbol">
-            <td>{{ stock.stockSymbol }}</td>
-            <td>{{ stock.numberOfShares }}</td>
-            <td>{{ stock.numberOfShares * stock.price }}</td>
-          </tr>
+          <td rowspan="1">Enter stock ticker<input type="text"></td>
+          <td rowspan="1">Enter number of shares<input type="text"></td>
+          <tr> Buy </tr>
+          <tr>Sell</tr>
+          
         </tbody>
         <tfoot>
           <tr>
-            <th colspan="2">Funds for Purchase</th>
+            <th colspan="1">Funds for Purchase </th>
             <th>{{ fundsForPurchase }}</th>
           </tr>
         </tfoot>
@@ -61,14 +59,13 @@
         </thead>
         <tbody>
           <tr v-for="stock in assets" v-bind:key="stock.stockSymbol">
-            <td>{{ stock.stockSymbol }}</td>
-            <td></td>
+            <td colspan="2">{{ stock.stockSymbol }}</td>
             <td>{{ stock.numberOfShares * stock.price }}</td>
           </tr>
         </tbody>
         <tfoot>
           <tr>
-            <th colspan="3">    Make It Rain !    </th>
+            <th colspan="3">   </th>
           </tr>
         </tfoot>
       </table>
@@ -167,7 +164,7 @@ export default {
 <style scoped>
 .overview{
   display: flex;
-  justify-content: space-between;
+  justify-content: space-evenly;
 }
 .gameTitle{
   border: black solid;
@@ -175,14 +172,14 @@ export default {
 #tables {
   display: flex;
   justify-content: space-evenly;
-  align-items: stretch;
+  align-items: stretch,
 }
 /* spacing */
 table {
   table-layout: flex;
   width: 33%;
   border-collapse: collapse;
-  border: 3 px solid rgb(135, 156, 135);
+  border: 3 px solid rgb(22, 29, 22);
   margin: 5px;
 }
 thead th:nth-child(1) {
@@ -194,12 +191,18 @@ thead th:nth-child(2) {
 thead th:nth-child(3) {
   width: 25%;
 }
-thead th:nth-child(4) {
-  width: 20%;
-}
+
 th,
 td {
   padding: 5px;
+}
+td
+{
+  font-size:75%;
+} 
+th
+{
+  font-size:100%;
 }
 /* typography */
 /*
@@ -219,6 +222,11 @@ td {
 }
 tbody td {
   text-align: center;
+  border: burlywood solid;
+}
+tbody tr {
+  text-align: center;
+  border: burlywood solid;
 }
 tfoot th {
   text-align: center;
@@ -228,28 +236,28 @@ tfoot th {
 .money tfoot {
   background: url("../images/m.png");
   width: 75px;
-  height: 80px;
+  height: 50px;
   background-repeat: round; /* Makes money lie flat as if on a tabletop */
-  color: rgb(201, 223, 181);
-  text-shadow: 2px 2px 2px rgb(5, 88, 121);
+  color: rgb(232, 236, 228);
+  text-shadow: 2px 3px 2px rgb(5, 42, 56);
 }
 .trade thead,
 .trade tfoot {
   background: url("../images/m.png");
   width: 75px;
-  height: 80px;
+  height: 50px;
   /*background-repeat: round; /* Makes money lie flat as if on a tabletop */
-  color: rgb(201, 223, 181);
-  text-shadow: 2px 2px 2px rgb(5, 88, 121);
+  color: rgb(232, 236, 228);
+  text-shadow: 2px 3px 2px rgb(5, 88, 121);
 }
 .options thead,
 .options tfoot {
   background: url("../images/m.png");
   width: 75px;
-  height: 80px;
+  height: 50px;
   background-repeat: round; /* Makes money lie flat as if on a tabletop */
-  color: rgb(201, 223, 181);
-  text-shadow: 2px 2px 2px rgb(5, 88, 121);
+  color: rgb(232, 236, 228);
+  text-shadow: 2px 3px 2px rgb(6, 42, 56);
 }
 thead th,
 tfoot th,
@@ -270,9 +278,9 @@ money.tfoot td {
   background-color: rgb(211, 206, 206);
 }
 .options tbody tr:nth-child(odd) {
-  background-color: rgb(211, 206, 206);
+  background-color: rgba(77, 149, 35, 0.534);
 }
 .options tbody tr:nth-child(even) {
-  background-color: rgb(177, 182, 184);
+  background-color: rgba(13, 70, 92, 0.589);
 }
 </style>
