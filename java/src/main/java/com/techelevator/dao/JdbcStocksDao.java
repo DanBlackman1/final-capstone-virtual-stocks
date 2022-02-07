@@ -108,7 +108,7 @@ public class JdbcStocksDao implements StocksDao{
     @Override
     public void updateStockValue(List<Integer> accountIdList, List<Stock> stockPrices) {
         String sqlQuery = "SELECT * FROM stock_amount WHERE account_id = ?;";
-        String sqlUpdate = "UPDATE account SET stock_value = ? WHERE account_id = ?;";
+        String sqlUpdate = "UPDATE account SET stock_value = ?, user_balance = dollar_amount + stock_value WHERE account_id = ?;";
         for(Integer accountId : accountIdList) {
             BigDecimal updatedStockValue = new BigDecimal("0");
             List<Stock> accountStocks = new ArrayList<>();
