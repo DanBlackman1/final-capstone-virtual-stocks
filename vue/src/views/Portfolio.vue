@@ -93,14 +93,8 @@ export default {
         stockValue: this.$store.state.account.stockValue,
         userBalance: this.$store.state.account.userBalance,
       },
-<<<<<<< HEAD
       
       lastRefreshed: '',
-=======
-
-      lastRefreshed: '',
-      
->>>>>>> main
 
       assets: [
         {
