@@ -25,7 +25,8 @@ export default new Vuex.Store({
     game: currentGame || {},
     account: currentAccount || {},
     stockPrices: [],
-    portfolio: []
+    portfolio: [],
+    leaderBoard: []
   },
   mutations: {
     SET_AUTH_TOKEN(state, token) {
@@ -70,10 +71,28 @@ export default new Vuex.Store({
           stockSymbol: '',
           numberOfShares: ''
         };
-        accountId = updatedPortfolio[i].accountId,
-        stockSymbol = updatedPortfolio[i].stockSymbol,
-        numberOfShares = updatedPortfolio[i].numberOfShares
+        tempItem.accountId = updatedPortfolio[i].accountId,
+        tempItem.stockSymbol = updatedPortfolio[i].stockSymbol,
+        tempItem.numberOfShares = updatedPortfolio[i].numberOfShares
         state.portfolio.push(tempItem);
+      }
+
+    },
+    SET_LEADERBOARD(state, accountList) {
+      state.leaderBoard = [];
+      for(let i = 0; i < accountList.length; i++) {
+        let tempAccount = {
+          accountId: '',
+          userBalance: '',
+          stockValue: '',
+          dollarAmount: ''
+        };
+        tempAccount.accountId = accountList[i].accountId,
+        tempAccount.userBalance = accountList[i].userBalance,
+        tempAccount.stockValue = accountList[i].stockValue,
+        tempAccount.dollarAmount = accountList[i].dollarAmount,
+        
+        state.leaderBoard.push(tempAccount);
       }
 
     }

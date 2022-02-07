@@ -11,7 +11,7 @@ export default {
         return axios.get('/gameDetails', userId, gameId)
     },
     getPortfolio(accountId) {
-        return axios.get('/portfolio', accountId)
+        return axios.get(`/portfolio/${accountId}`)
     }, 
     buyNewStock(accountId, stockSymbol, stockPrice, sharesPurchased){
         return axios.post('/stocks/buyNew', accountId, stockSymbol, stockPrice, sharesPurchased)

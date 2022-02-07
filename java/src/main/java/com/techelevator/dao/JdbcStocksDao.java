@@ -32,14 +32,16 @@ public class JdbcStocksDao implements StocksDao{
     }
 
     @Override
-    public List<Stock> listStocks(int userId, int gameId) {
+    public List<Stock> listStocks(int accountId) {
         List<Stock> stockList = new ArrayList<>();
-        String sql = "SELECT sa.account_id, sa.stock_symbol, sa.total_shares FROM game_data gd JOIN" +
-                " account a ON gd.account_id = a.account_id JOIN stock_amount sa ON a.account_id" +
-                " = sa.account_id WHERE gd.user_id = ? AND gd.game_id = ?;";
-        SqlRowSet results = template.queryForRowSet(sql, userId, gameId);
+        String sql = "SELECT account_id, stock_symbol, total_shares FROM stock_amount" +
+                " WHERE account_id = ?;";
+        SqlRowSet results = template.queryForRowSet(sql, accountId);
         while(results.next()) {
-            Stock stock = mapRowToStock(results);
+            Stock stock = new Stock();
+            stock.setAccountId(results.getInt("account_id"));
+            stock.setNumberOfShares(results.getDouble("total_shares"));
+            stock.setStockSymbol(results.getString("stock_symbol"));
             stockList.add(stock);
         }
         return stockList;
@@ -76,7 +78,7 @@ public class JdbcStocksDao implements StocksDao{
             ObjectMapper objectMapper = new ObjectMapper();
             JsonNode jsonNode = objectMapper.readTree(response.getBody());
             String lastPrice = jsonNode.path("data").path(0).path("last").asText();
-            if (lastPrice != null) {
+            if (lastPrice != "null") {
                 BigDecimal stockPrice = new BigDecimal(lastPrice);
                 Stock stock = new Stock();
                 stock.setCurrentPrice(stockPrice);

@@ -26,7 +26,7 @@
         <tfoot>
           <tr>
             <th colspan="2"></th>
-            <th>{{ Total }}</th>
+            <th> </th>
           </tr>
         </tfoot>
       </table>
@@ -97,7 +97,7 @@ export default {
       lastRefreshed: '',
 
       assets: [
-        {
+       /* {
           stockSymbol: "BX",
           numberOfShares: 311.8,
           price: 132.25,
@@ -141,7 +141,7 @@ export default {
           stockSymbol: "CSCO",
           numberOfShares: 68.155,
           price: 55.15,
-        },
+        }, */
       ],
     };
   },
@@ -149,8 +149,11 @@ export default {
   computed: {},
   methods: {
     getAssets(accountId) {
+      console.log("get assets")
       GameService.getPortfolio(accountId).then((response) => {
-        this.assets = response.data;
+        console.log(response.data);
+        this.$store.commit('SET_PORTFOLIO', response.data.stockList);
+      this.assets = this.$store.state.portfolio;
       });
     },
     getTime() {
@@ -158,8 +161,9 @@ export default {
       this.lastRefreshed = currentTime.toTimeString
     }
   },
-  beforeMount() {
-    this.getAssets(this.$store.state.account.accountId);
+  created() {
+    console.log("before mount");
+    this.getAssets(this.account.accountId);
     this.getTime();
   },
   

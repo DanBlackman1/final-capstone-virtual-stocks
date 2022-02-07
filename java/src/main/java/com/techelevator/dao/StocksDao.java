@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface StocksDao {
 
-    public List<Stock> listStocks(int userId, int gameId);
+    public List<Stock> listStocks(int accountId);
 
     public void buyNewStock(BuyOrder buyOrder);
 

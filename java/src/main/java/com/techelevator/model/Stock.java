@@ -40,4 +40,14 @@ public class Stock {
     public void setCurrentPrice(BigDecimal currentPrice) {
         this.currentPrice = currentPrice;
     }
+
+    @Override
+    public String toString() {
+        return "Stock{" +
+                "accountId=" + accountId +
+                ", stockSymbol='" + stockSymbol + '\'' +
+                ", numberOfShares=" + numberOfShares +
+                ", currentPrice=" + currentPrice +
+                '}';
+    }
 }

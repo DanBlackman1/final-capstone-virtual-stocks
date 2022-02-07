@@ -5,7 +5,6 @@ import java.util.List;
 public class Portfolio {
 
     private List<Stock> stockList;
-    private Account account;
 
     public List<Stock> getStockList() {
         return stockList;
@@ -15,11 +14,5 @@ public class Portfolio {
         this.stockList = stockList;
     }
 
-    public Account getAccount() {
-        return account;
-    }
 
-    public void setAccount(Account account) {
-        this.account = account;
-    }
 }

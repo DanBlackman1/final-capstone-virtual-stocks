@@ -42,11 +42,12 @@ public class AppController {
         return gameDao.saveGame(newGame, id);
     }
 
-    @RequestMapping(path = "/stocks/{userId}/{gameId}", method = RequestMethod.GET)
-    public Portfolio getPortfolio(@PathVariable("userId") int userId, @PathVariable("gameId") int gameId) {
+    @RequestMapping(path = "/portfolio/{id}", method = RequestMethod.GET)
+    public Portfolio getPortfolio(@PathVariable("id") int accountId) {
         Portfolio portfolio = new Portfolio();
-        portfolio.setAccount(accountDao.getAccount(userId, gameId));
-        portfolio.setStockList(stocksDao.listStocks(userId, gameId));
+        System.out.println(accountId);
+        portfolio.setStockList(stocksDao.listStocks(accountId));
+        System.out.println(portfolio.getStockList());
         return portfolio;
     }
 

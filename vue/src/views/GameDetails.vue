@@ -35,7 +35,8 @@ export default {
                 gameName: this.$store.state.game.gameName,
                 endDate: this.$store.state.game.endDate,
                 startDate: this.$store.state.game.startDate,
-                organizerId: this.$store.state.game.organizerId
+                organizerId: this.$store.state.game.organizerId,
+                gameId: this.$store.state.game.gameId
             },
             account:{
                 accountId: this.$store.state.account.accountId,
@@ -48,7 +49,7 @@ export default {
     },
     methods:{
         viewDetails(){
-            GameService.viewDetailsByGameId(this.user.id, this.game.id).then((response) =>{
+            GameService.viewDetailsByGameId(this.user.id, this.game.gameId).then((response) =>{
                 this.game.endDate= response.data.endDate;
                 this.game.startDate= response.data.startDate;
                 this.game.gameName= this.$store.state.game.gameName;
@@ -65,17 +66,10 @@ export default {
             })
         }
     },
-    beforeMount(userId, gameId) {
-        this.refresh();
-        this.viewDetailsByGameId(userId, gameId);
-    },
-    // CHANGE TO SOME KIND OF UPDATE TO SPECIFIC PAGE PUSH OR PORTFOLIO WILL NOT HAVE ACCESS TO INFO 
-    beforeDestroy() {
-      //  this.game = {};
-       // this.account = {};
-       // this.$store.commit('SET_GAME', this.game);
-       // this.$store.commit('SET_ACCOUNT', this.account)
-    }
+    beforeMount() {
+     this.refresh();
+     this.viewDetails();
+     },
 }
 </script>
 
