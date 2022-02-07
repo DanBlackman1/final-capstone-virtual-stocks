@@ -16,7 +16,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="stock in assets" v-bind:key="stock.stockSymbol">
+          <tr v-for="stock in assets" v-bind:key="stock.stockSymbol" v-on:click="populateFields(stock.stockSymbol, stock.numberOfShares)">
             <td>{{ stock.stockSymbol }}</td>
             <td>{{ stock.numberOfShares }}</td>
             <td>${{ parseFloat(stock.numberOfShares * stock.price).toFixed(2)}}</td>
@@ -37,8 +37,8 @@
            </tr>
         </thead>
         <tbody>
-          <td rowspan="1" class='ticker'>Enter stock ticker<input type="text"></td>
-          <td rowspan="1" class='shares'>Enter number of shares<input type="text"></td>
+          <td rowspan="1">Enter stock ticker<input type="text" id='tickerInput'></td>
+          <td rowspan="1">Enter number of shares<input type="text" id='sharesInput'></td>
           <tr> Buy </tr>
           <tr>Sell</tr>
           
@@ -59,7 +59,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="stock in this.$store.state.stockPrices" v-bind:key="stock.stockSymbol" v-on:click="populateFields()">
+          <tr v-for="stock in this.$store.state.stockPrices" v-bind:key="stock.stockSymbol" v-on:click="populateFields(stock.stockSymbol, 10)">
             <td colspan="2">{{ stock.stockSymbol }}</td>
             <td>${{ parseFloat(stock.currentPrice).toFixed(2)}}</td>
 
@@ -153,13 +153,14 @@ export default {
         this.assets = response.data;
       });
     },
-    populateFields(){
-      
+    populateFields(stockSymbol, numberOfShares){
+      document.getElementById('tickerInput').setAttribute("value", stockSymbol);
+      document.getElementById('sharesInput').setAttribute("value", numberOfShares);
 
     },
     getTime() {
-      let currentTime = new Date()
-      this.lastRefreshed = currentTime.toTimeString
+      let currentTime = new Date();
+      this.lastRefreshed = currentTime.toTimeString;
     }
   },
   beforeMount() {
