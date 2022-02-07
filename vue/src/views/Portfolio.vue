@@ -41,6 +41,7 @@
           <td rowspan="1">Enter number of shares<input type="text"></td>
           <tr> Buy </tr>
           <tr>Sell</tr>
+          
         </tbody>
         <tfoot>
           <tr>
@@ -58,10 +59,14 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="stock in assets" v-bind:key="stock.stockSymbol">
+          <tr v-for="stock in this.$store.state.stockPrices" v-bind:key="stock.stockSymbol">
             <td colspan="2">{{ stock.stockSymbol }}</td>
+<<<<<<< HEAD
             <td>${{ parseFloat(stock.numberOfShares * stock.price).toFixed(2)}}</td>
 
+=======
+            <td>{{ stock.currentPrice }}</td>
+>>>>>>> main
           </tr>
         </tbody>
         <tfoot>

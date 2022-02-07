@@ -6,7 +6,7 @@ public class Stock {
 
     private int accountId;
     private String stockSymbol;
-    private int numberOfShares;
+    private double numberOfShares;
     private BigDecimal currentPrice;
 
     public int getAccountId() {
@@ -25,11 +25,11 @@ public class Stock {
         this.stockSymbol = stockSymbol;
     }
 
-    public int getNumberOfShares() {
+    public double getNumberOfShares() {
         return numberOfShares;
     }
 
-    public void setNumberOfShares(int numberOfShares) {
+    public void setNumberOfShares (double numberOfShares) {
         this.numberOfShares = numberOfShares;
     }
 

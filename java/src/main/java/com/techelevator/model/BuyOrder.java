@@ -1,11 +1,14 @@
 package com.techelevator.model;
 
+import java.math.BigDecimal;
+
 public class BuyOrder {
 
     private int sharesToAdd;
     private String stockSymbol;
     private int accountId;
    // private boolean isOwned;
+    private BigDecimal cost;
 
     public int getSharesToAdd() {
         return sharesToAdd;
@@ -31,7 +34,15 @@ public class BuyOrder {
         this.accountId = accountId;
     }
 
-  //  public boolean isOwned() {
+    public BigDecimal getCost() {
+        return cost;
+    }
+
+    public void setCost(BigDecimal cost) {
+        this.cost = cost;
+    }
+
+    //  public boolean isOwned() {
   //      return isOwned;
  //   }
 

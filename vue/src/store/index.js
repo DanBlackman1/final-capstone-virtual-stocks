@@ -50,14 +50,14 @@ export default new Vuex.Store({
       state.account = account;
     },
     SET_STOCK_PRICES(state, stockList) {
+      state.stockPrices = [];
       for(let i = 0; i < stockList.length; i++) {
-        state.stockPrices = [];
         let tempStock = {
           stockSymbol: '',
           currentPrice: ''
         };
         tempStock.stockSymbol = stockList[i].stockSymbol;
-        tempStock.stockSymbol = stockList[i].currentPrice;
+        tempStock.currentPrice = stockList[i].currentPrice;
         state.stockPrices.push(tempStock);
       }
     }
