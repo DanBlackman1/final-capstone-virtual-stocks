@@ -66,5 +66,8 @@ export default {
   text-decoration: underline;
   font: bold;
 }
+main{
+  font-family: 'Times New Roman', Times, serif;
+}
 
 </style>
