@@ -40,6 +40,7 @@
           <td rowspan="1">Enter number of shares<input type="text"></td>
           <tr> Buy </tr>
           <tr>Sell</tr>
+          
         </tbody>
         <tfoot>
           <tr>
