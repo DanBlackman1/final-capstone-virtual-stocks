@@ -48,8 +48,8 @@
           </td>
          
           <tr>
-            
-           
+            <td><button v-on:click="buyStock(generateBuyOrder())"> Buy </button></td>
+            <td><button> Sell </button></td>
           </tr>
           
         </tbody>
@@ -105,53 +105,7 @@ export default {
       
       lastRefreshed: '',
 
-      assets: [
-       /* {
-          stockSymbol: "BX",
-          numberOfShares: 311.8,
-          price: 132.25,
-        },
-        {
-          stockSymbol: "FRGSX",
-          numberOfShares: 90.07,
-          price: 118.44,
-        },
-        {
-          stockSymbol: "FNMA",
-          numberOfShares: 700,
-          price: 0.8406,
-        },
-        {
-          stockSymbol: "ABT",
-          numberOfShares: 40,
-          price: 129.71,
-        },
-        {
-          stockSymbol: "VTI",
-          numberOfShares: 132.13,
-          price: 225.47,
-        },
-        {
-          stockSymbol: " LEN",
-          numberOfShares: 14.706,
-          price: 90.3,
-        },
-        {
-          stockSymbol: "LUCID",
-          numberOfShares: 227,
-          price: 27.55,
-        },
-        {
-          stockSymbol: "BRK-B",
-          numberOfShares: 53,
-          price: 314.99,
-        },
-        {
-          stockSymbol: "CSCO",
-          numberOfShares: 68.155,
-          price: 55.15,
-        }, */
-      ],
+      assets: [],
     };
   },
 
@@ -169,6 +123,36 @@ export default {
       document.getElementById('tickerInput').setAttribute("value", stockSymbol);
       document.getElementById('sharesInput').setAttribute("value", numberOfShares);
 
+    },
+    generateBuyOrder(){
+      console.log("generate buy order")
+      let price = 0;
+      let stockSymbol = document.getElementById('tickerInput').value;
+      let pricesArr = this.$store.state.stockPrices;
+          for(let i = 0; i < pricesArr.length; i++) {
+        if(stockSymbol === pricesArr[i].stockSymbol) {
+       price = pricesArr[i].currentPrice;}}
+      let buyOrder = {sharesToAdd: document.getElementById('sharesInput').value,
+      stockSymbol: stockSymbol, accountId: this.account.accountId, currentPrice: price}
+      return buyOrder;
+    },
+    buyStock(buyOrder){
+      console.log("buy function")
+      let isFound = false;
+      // let stocksOwned = this.assets;
+      for(let i = 0; i < this.assets.length; i++){
+        if(buyOrder.stockSymbol === this.assets[i].stockSymbol){
+          isFound = true;
+        }
+      }
+      if(isFound){
+        GameService.buyStock(buyOrder);
+        console.log("executed current buy")
+      }
+      else{
+        GameService.buyNewStock(buyOrder);
+        console.log("executed new buy")
+      }
     },
     getTime() {
       let currentTime = new Date();

@@ -1,8 +1,13 @@
 <template>
   <div class="main">
-    <h1>{{ game.gameName + " ENDS ON " + game.endDate }}</h1>
     <div id="layout">
         <div id="leaderboard">
+            <th>
+              <div class="title">{{ game.gameName }}</div>
+            </th>
+            <th class="gametime"> 
+              <div class="end">{{ " Ends on " + game.endDate }}</div>
+            </th>
             <table>
                 <thead>
                 <tr>
@@ -13,9 +18,9 @@
                 </thead>
                 <tr v-for='(place, index) in leaderboard' v-bind:key="place.accountId">
 
-                <td>{{ index + 1 }}</td>
-                <td>{{ place.username }}</td>
-                <td>{{ place.userBalance }}</td>
+                <td class="data">{{ index + 1 }}</td>
+                <td class="data">{{ place.username }}</td>
+                <td class="data">{{ place.userBalance }}</td>
                 </tr>
             </table>
             <button v-on:click="goToPortfolio()">View My Portfolio</button>
@@ -106,7 +111,30 @@ export default {
 
 
 <style scoped>
-button{}
+tr, td, th {
+  height: 30px;
+}
+.data {
+  text-align: center;
+}
+.title{
+font-size: 30px;
+text-transform:uppercase;
+letter-spacing: 10px;
+height: 7px;
+
+}
+.end {
+height: 22px;
+font-size:17px;
+border: rgb(17, 16, 16) solid;
+border-bottom:black solid 3px;
+width:210px;
+}
+.gametime {
+  display:flex ;
+  justify-content:center ;
+}
 
 #layout {
 display:flex;
@@ -139,7 +167,9 @@ label {
   margin: 5px;
   align-items: stretch;
   border: black solid;
-  padding: 5px;
+  padding: 10px;
+  /* height: 400px; */
+  width:550px;
 }
 thead th:nth-child(1) {
   width: 25%;
@@ -184,7 +214,7 @@ tfoot th {
   text-align: left;
   padding: 20px;
 }
-h1{
+h1,h2{
   text-align: center;
 }
 @media only screen and (max-width: 600px) {
