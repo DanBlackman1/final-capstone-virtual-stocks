@@ -91,6 +91,8 @@ public class AppController {
     @RequestMapping(path = "/confirm", method = RequestMethod.PUT)
     public void confirmInvite(@RequestBody Invite invite) {
         inviteDao.confirmInvite(invite.getUserId(), invite.getGameId());
+        int accountId = accountDao.createAccount();
+        gameDao.addUser(invite.getGameId(), invite.getUserId(), accountId);
     }
 
 
