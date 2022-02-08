@@ -26,7 +26,7 @@ export default new Vuex.Store({
     account: currentAccount || {},
     stockPrices: [],
     portfolio: [],
-    leaderBoard: []
+    leaderboard: []
   },
   mutations: {
     SET_AUTH_TOKEN(state, token) {
@@ -92,7 +92,7 @@ export default new Vuex.Store({
         tempAccount.stockValue = accountList[i].stockValue,
         tempAccount.dollarAmount = accountList[i].dollarAmount,
         
-        state.leaderBoard.push(tempAccount);
+        state.leaderboard.push(tempAccount);
       }
 
     }

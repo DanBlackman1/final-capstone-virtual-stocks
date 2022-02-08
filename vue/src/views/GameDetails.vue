@@ -11,9 +11,10 @@
                     <th>Portfolio Value</th>
                 </tr>
                 </thead>
-                <tr v-for="(place, index) in leaderboard" v-bind:key="place.userId">
+                <tr v-for='(place, index) in leaderboard' v-bind:key="place.accountId">
+                 <!-- <tr v-for='place in leaderboard' v-bind:key='place.accountId'> -->
                 <td>{{ index + 1 }}</td>
-                <td>{{ place.userName }}</td>
+                <td>{{ place.stockValue }}</td>
                 <td>{{ place.userBalance }}</td>
                 </tr>
             </table>
@@ -64,13 +65,13 @@ export default {
                 stockValue: this.$store.state.account.stockValue,
                 userBalance: this.$store.state.account.userBalance
             },
-            leaderboard: [],
+            leaderboard: this.$store.state.leaderboard,
         }
       
     },
     methods:{
         viewDetails(){
-            GameService.viewDetailsByGameId(this.user.id, this.game.gameId).then((response) =>{
+            GameService.viewDetailsByGameId(this.$store.state.user.id, this.game.gameId).then((response) =>{
                 this.game.endDate= response.data.endDate;
                 this.game.startDate= response.data.startDate;
                 this.game.gameName= this.$store.state.game.gameName;
@@ -86,17 +87,20 @@ export default {
                 }
             })
         },
-        setLeaderBoard(gameId){
-            GameService.viewLeaderBoard(gameId).then((response)=>{
+        setLeaderBoard(){
+          console.log("method called")
+            GameService.viewLeaderBoard(this.$store.state.game.gameId).then((response)=>{
+                console.log(response);
                 this.$store.commit('SET_LEADERBOARD', response.data);
-                this.leaderboard = this.$store.state.leaderboard;
+               // this.leaderboard = this.$store.state.leaderboard;
+               // console.log(this.leaderboard);
             })
         }
     },
     beforeMount() {
+     this.setLeaderBoard();
      this.refresh();
      this.viewDetails();
-     this.setLeaderBoard(this.game.gameId);
      },
 }
 </script>

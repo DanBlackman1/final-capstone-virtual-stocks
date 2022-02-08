@@ -72,8 +72,8 @@ public class AppController {
         return stocksDao.retrieveSavedPrices();
     }
 
-    @RequestMapping(path = "/leaderboard", method = RequestMethod.GET)
-    public List<Account> getLeaderboard(@RequestBody int gameId) {
+    @RequestMapping(path = "/leaderboard/{id}", method = RequestMethod.GET)
+    public List<Account> getLeaderboard(@PathVariable("id") int gameId) {
         return accountDao.getAccountsWithinGame(gameId);
     }
 
