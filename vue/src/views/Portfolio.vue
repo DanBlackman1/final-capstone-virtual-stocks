@@ -44,7 +44,7 @@
             <button v-on:click="buyStock(generateBuyOrder())"> Buy </button>
           </td >
             <td class="midSpacing">Enter number of shares:<br><br><input type="text" id='sharesInput' style="width: 50px"><br>
-            <button> Sell </button>
+            <button v-on:click="sellStock(generateSellOrder())"> Sell </button>
           </td>
           
         </tbody>
@@ -149,6 +149,27 @@ export default {
         GameService.buyNewStock(buyOrder);
         console.log("executed new buy")
       }
+    },
+    generateSellOrder(){
+      console.log("generate sales order")
+      let price = 0;
+      let maxSharesToSubtract = 0;
+      let sellQuantity = 0;
+      let stockSymbol = document.getElementById('tickerInput').value;
+      let portfolioArr = this.assets;
+          for(let i = 0; i < portfolioArr.length; i++) {
+        if(stockSymbol === portfolioArr[i].stockSymbol) {
+       price = portfolioArr[i].currentPrice;
+       maxSharesToSubtract = portfolioArr[i].numberOfShares}}
+       if(document.getElementById('sharesInput').value < maxSharesToSubtract){
+       sellQuantity = document.getElementById('sharesInput').value;}
+      else{ sellQuantity = maxSharesToSubtract;}
+        let sellOrder = {sharesToSubtract: sellQuantity,
+      stockSymbol: stockSymbol, accountId: this.account.accountId, currentPrice: price}
+      return sellOrder;
+    },
+    sellStock(sellOrder){
+      GameService.sellStock(sellOrder);
     },
     getTime() {
     let allOfTime = new Date();
