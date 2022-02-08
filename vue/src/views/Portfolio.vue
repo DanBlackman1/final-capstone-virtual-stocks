@@ -4,7 +4,7 @@
 <!--   <h2 class="gameTitle">{{ game.gameName + " ENDS ON " + game.endDate }}</h2>
     <h2>make a trade</h2>
     <h2>Stocks to buy</h2> -->
-    <input type="search" placeholder="Search">
+     Stock search: <input type="search" placeholder="Search">
     </div>
     <div section id="tables">
       <table class="money">
@@ -17,7 +17,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="stock in assets" v-bind:key="stock.stockSymbol" v-on:click="populateFields(stock.stockSymbol, stock.numberOfShares)">
+          <tr class="clickable" v-for="stock in assets" v-bind:key="stock.stockSymbol" v-on:click="populateFields(stock.stockSymbol, stock.numberOfShares)">
             <td class="leftTable">{{ stock.stockSymbol }}</td>
             <td class="leftTable">{{ stock.numberOfShares }}</td>
             <td class="leftTable">${{ getAssetLineValue(stock) }}</td>
@@ -27,31 +27,35 @@
         </tbody>
         <tfoot>
           <tr>
-            <th colspan="2"></th>
+            <th colspan="2">Total Portfolio Value</th>
             <th> </th>
           </tr>
         </tfoot>
       </table>
       <table class="trade">
         <thead>
-          <tr>
-            <th>Funds for Purchase</th>
-            <th> {{ account.dollarAmount }} </th>
+          <tr >
+            <th colspan="2">Funds for Purchase: {{ account.dollarAmount }} </th>
            </tr>
         </thead>
-        <tbody>
-          <td>Enter stock ticker<br><input type="text" id='tickerInput' max="50px" style="width: 50px"></td>
-          <td>Enter number of shares<br><input type="text" id='sharesInput' style="width: 50px"></td>
+        <tbody class="middleColumns">
+          <td class="midSpacing">Enter stock ticker<br>
+            <input type="text" id='tickerInput' max="50px" style="width: 50px"><br>
+            <button > Buy </button>
+          </td >
+            <td class="midSpacing">Enter number of shares<br><input type="text" id='sharesInput' style="width: 50px"><br>
+            <button> Sell </button>
+          </td>
+         
           <tr>
-            <td><button> Buy </button></td>
-            <td><button> Sell </button></td>
+            
+           
           </tr>
           
         </tbody>
         <tfoot>
           <tr>
-            <th colspan="1">Funds for Purchase </th>
-            <th>{{ account.dollarAmount }}</th>
+            <th colspan="1">Funds for Purchase: {{ account.dollarAmount }}</th>
           </tr>
         </tfoot>
       </table>
@@ -64,7 +68,7 @@
           </tr>
         </thead>
         <tbody id="rightTable">
-          <tr v-for="stock in this.$store.state.stockPrices" v-bind:key="stock.stockSymbol" v-on:click="populateFields(stock.stockSymbol, 10)">
+          <tr class="clickable" v-for="stock in this.$store.state.stockPrices" v-bind:key="stock.stockSymbol" v-on:click="populateFields(stock.stockSymbol, 10)">
             <td colspan="2" class="rowCheck">{{ stock.stockSymbol }}</td>
             <td class="rowCheck">${{ parseFloat(stock.currentPrice).toFixed(2)}}</td>
 
@@ -194,12 +198,21 @@ export default {
   
 } */
 
+.midSpacing{
+  margin: 5px;
+}
+.middleColumns{
+  display: flex;
+  justify-content: center;
+  padding: 10px;
+}
+
 .leftTable{
   border: burlywood solid;
 }
 .overview{
   display: flex;
-  justify-content: space-evenly;
+  justify-content: center;
 }
 .gameTitle{
   border: black solid;
@@ -216,6 +229,7 @@ table {
   border-collapse: collapse;
   border: 3 px solid rgb(22, 29, 22);
   margin: 5px;
+  
 }
 thead th:nth-child(1) {
   width: 25%;
@@ -239,6 +253,7 @@ td {
 th
 {
   font-size:100%;
+  letter-spacing: 2px;
 }
 /* typography */
 /*
@@ -250,44 +265,48 @@ thead th, tfoot th {
   font-family: 'Rock Salt', cursive;
 }*/
 
-th {
-  letter-spacing: 2px;
-}
-
 .rowCheck {
   text-align: center;
   border: burlywood solid;
+  
 }
 tfoot th {
   text-align: center;
+  border: 2px solid gold;
 }
 /* graphic and colors */
 .money thead,
 .money tfoot {
   background: url("../images/m.png");
-  width: 75px;
-  height: 50px;
+
   background-repeat: round; /* Makes money lie flat as if on a tabletop */
   color: rgb(232, 236, 228);
   text-shadow: 2px 3px 2px rgb(5, 42, 56);
+   width: 75px;
+  height: 50px;
 }
 .trade thead,
 .trade tfoot {
   background: url("../images/m.png");
-  width: 75px;
-  height: 50px;
+  
+
   /*background-repeat: round; /* Makes money lie flat as if on a tabletop */
   color: rgb(232, 236, 228);
   text-shadow: 2px 3px 2px rgb(5, 88, 121);
+  width: 75px;
+  height: 50px;
 }
 .options thead,
 .options tfoot {
   background: url("../images/m.png");
-  width: 75px;
-  height: 50px;
+
   background-repeat: round; /* Makes money lie flat as if on a tabletop */
   color: rgb(232, 236, 228);
   text-shadow: 2px 3px 2px rgb(6, 42, 56);
+   width: 75px;
+  height: 50px;
+  
+  
 }
 thead th,
 tfoot th,
@@ -304,14 +323,38 @@ money.tfoot td {
 .money tbody tr:nth-child(odd) {
   background-color: rgb(177, 182, 184);
 }
+.money tbody tr:nth-child(odd):hover {
+   background-color:lightcoral;
+}
+
+
 .money tbody tr:nth-child(even) {
   background-color: rgb(211, 206, 206);
 }
+.money tbody tr:nth-child(even):hover {
+ background-color:lightcoral;
+}
+
+
 .options tbody tr:nth-child(odd) {
   background-color: rgba(77, 149, 35, 0.534);
 }
+.options tbody tr:nth-child(odd):hover {
+  background-color:green;
+}
+
+
 .options tbody tr:nth-child(even) {
   background-color: rgba(13, 70, 92, 0.589);
+}
+.options tbody tr:nth-child(even):hover {
+  background-color: green;
+}
+
+.clickable:hover{
+    cursor: pointer;
+    transform: scale(1.1);
+    transition: all .2s ease-in-out;
 }
 @media only screen and (max-width: 600px) {
   #tables{
