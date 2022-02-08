@@ -127,7 +127,7 @@ export default {
   grid-area: create;
   color: #2c3e50;
   margin-top: 15px;
-  color:goldenrod;
+  color:black;
 }
 
 .alert{

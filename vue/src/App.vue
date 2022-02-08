@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <div id="nav">
-      <router-link id="navBarLinkImage" v-bind:to="{ name: 'home' }"> <img id="homeImage" src="../images/homeImage.jpg" alt="Home" style="width:40px;height:40px;"></router-link>&nbsp;&nbsp;
+      <router-link id="navBarLinkImage" v-bind:to="{ name: 'home' }"> <img id="homeImage" src="../images/homeImage.jpg" alt="Home" style="width:40px;height:40px; border-radius:10px;"></router-link>&nbsp;&nbsp;
      
       <router-link id="navBarLinkLogout" v-bind:to="{ name: 'logout' }" v-if="$store.state.token != ''">Logout</router-link>
     </div>
@@ -37,7 +37,16 @@ cursor: pointer;
 
 html{
   font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  
+  background-blend-mode: soft-light;
+  /* background-blend-mode: overlay; */
+  /* background-blend-mode: lighten; */
+  /* background-blend-mode: color-dodge; */
+  /* background-blend-mode: color-burn; */
+  background-image: url('../images/stockBackground.jpg');
   background-color: lightblue;
+  background-size: cover;
+  
 }
 
 </style>
