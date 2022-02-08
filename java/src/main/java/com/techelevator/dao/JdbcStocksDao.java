@@ -63,7 +63,7 @@ public class JdbcStocksDao implements StocksDao{
     @Override
     public void buyExistingStock(BuyOrder buyOrder) {
         String sqlStock = "UPDATE stock_amount SET total_shares = total_shares + ? WHERE account_id = ? AND stock_symbol = ?;";
-        template.update(sqlStock, buyOrder.getSharesToAdd(), buyOrder.getAccountId());
+        template.update(sqlStock, buyOrder.getSharesToAdd(), buyOrder.getAccountId(), buyOrder.getStockSymbol());
         String sqlAccount = "UPDATE account SET dollar_amount = dollar_amount - ? WHERE account_id = ?;";
         String sharesString = buyOrder.getSharesToAdd() + "";
         BigDecimal shares = new BigDecimal(sharesString);
@@ -155,10 +155,14 @@ public class JdbcStocksDao implements StocksDao{
         template.update(sqlAccount, sellOrder.getCurrentPrice().multiply(shares), sellOrder.getAccountId());
 
         String sqlStock = "UPDATE stock_amount SET total_shares = total_shares - ? WHERE account_id = ? AND stock_symbol = ?;";
-        template.update(sqlStock, sellOrder.getSharesToSubtract(), sellOrder.getAccountId());
+        template.update(sqlStock, sellOrder.getSharesToSubtract(), sellOrder.getAccountId(), sellOrder.getStockSymbol());
 
-        String sqlDel = "DELETE account_id, stock_symbol, total_shares FROM stock_amount WHERE total_shares = 0;";
-        template.update(sqlDel);
+        if (sellOrder.isAllShares()) {
+            String sqlDel = "DELETE FROM stock_amount WHERE total_shares = 0;";
+            template.update(sqlDel);
+        }
+
+
 }
 
 
