@@ -8,6 +8,7 @@ public class SellOrder {
     private String stockSymbol;
     private int accountId;
     private BigDecimal currentPrice;
+    private boolean allShares;
 
     public int getSharesToSubtract() {
         return sharesToSubtract;
@@ -39,5 +40,13 @@ public class SellOrder {
 
     public void setCurrentPrice(BigDecimal currentPrice) {
         this.currentPrice = currentPrice;
+    }
+
+    public boolean isAllShares() {
+        return allShares;
+    }
+
+    public void setAllShares(boolean allShares) {
+        this.allShares = allShares;
     }
 }

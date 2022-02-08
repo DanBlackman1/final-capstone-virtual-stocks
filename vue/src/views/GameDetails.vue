@@ -31,11 +31,14 @@
                 <th class="inviteUser">Invite User with Email</th>
             </tr>
             </thead>
+            
             <form action="" method="get" class="form-example">
             <div class="form-example">
             <label for="name">Enter User Email: </label>
             <input type="text" name="name" id="name" required>
          </div>
+
+
   <div class="form-example">
     <label for="email">Enter User Email: </label>
     <input type="email" name="email" id="email" required>
