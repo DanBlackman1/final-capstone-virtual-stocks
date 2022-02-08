@@ -14,4 +14,8 @@ div#nav{
 display: flex;
 justify-content: space-between;
 }
+
+html{
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
 </style>
