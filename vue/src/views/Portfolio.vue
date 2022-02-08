@@ -155,6 +155,7 @@ export default {
       let price = 0;
       let maxSharesToSubtract = 0;
       let sellQuantity = 0;
+      let allShares = false;
       let stockSymbol = document.getElementById('tickerInput').value;
       let portfolioArr = this.assets;
           for(let i = 0; i < portfolioArr.length; i++) {
@@ -163,12 +164,14 @@ export default {
        maxSharesToSubtract = portfolioArr[i].numberOfShares}}
        if(document.getElementById('sharesInput').value < maxSharesToSubtract){
        sellQuantity = document.getElementById('sharesInput').value;}
-      else{ sellQuantity = maxSharesToSubtract;}
+      else{ sellQuantity = maxSharesToSubtract;
+      allShares = true;}
         let sellOrder = {sharesToSubtract: sellQuantity,
-      stockSymbol: stockSymbol, accountId: this.account.accountId, currentPrice: price}
+      stockSymbol: stockSymbol, accountId: this.account.accountId, currentPrice: price, allShares: allShares}
       return sellOrder;
     },
     sellStock(sellOrder){
+      console.log("sell function")
       GameService.sellStock(sellOrder);
     },
     getTime() {
