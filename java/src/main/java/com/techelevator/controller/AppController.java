@@ -2,6 +2,7 @@ package com.techelevator.controller;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.techelevator.dao.AccountDao;
 import com.techelevator.dao.GameDao;
+import com.techelevator.dao.InviteDao;
 import com.techelevator.dao.StocksDao;
 import com.techelevator.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,8 @@ public class AppController {
     AccountDao accountDao;
     @Autowired
     StocksDao stocksDao;
+    @Autowired
+    InviteDao inviteDao;
 
     // CHECK ABOUT PATHS AND WHETHER BEST PRACTICE
 
@@ -74,6 +77,23 @@ public class AppController {
     public List<Account> getLeaderboard(@PathVariable("id") int gameId) {
         return accountDao.getAccountsWithinGame(gameId);
     }
+
+    @RequestMapping(path = "/invite", method = RequestMethod.POST)
+    public void invitePlayer(@RequestBody Invite invite) {
+        inviteDao.invitePlayer(invite.getUserId(), invite.getUserId());
+    }
+
+    @RequestMapping(path = "/displayUsers/{gameId}", method = RequestMethod.GET)
+    public List<User> displayUsers(@PathVariable("gameId") int gameId) {
+        return inviteDao.displayUsers(gameId);
+    }
+
+    @RequestMapping(path = "/confirm", method = RequestMethod.PUT)
+    public void confirmInvite(@RequestBody Invite invite) {
+        inviteDao.confirmInvite(invite.getUserId(), invite.getGameId());
+    }
+
+
 
 
 

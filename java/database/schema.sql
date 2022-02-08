@@ -2,6 +2,7 @@ BEGIN TRANSACTION;
 
 DROP TABLE IF EXISTS users ;
 DROP TABLE IF EXISTS game ;
+DROP TABLE IF EXISTS invite;
 DROP TABLE IF EXISTS game_data ;
 DROP TABLE IF EXISTS account ;
 DROP TABLE IF EXISTS stock_amount ;
@@ -37,6 +38,15 @@ CREATE TABLE game (
     -- May not need below.
     -- CONSTRAINT FK_game_users FOREIGN KEY organizer_id REFERENCES users(user_id)
 );
+
+CREATE TABLE invite (
+    user_id int NOT NULL,
+    game_id int NOT NULL,
+    accepted boolean DEFAULT false,
+    CONSTRAINT FK_invite_users FOREIGN KEY (user_id) REFERENCES users(user_id),
+    CONSTRAINT FK_invite_game FOREIGN KEY (game_id) REFERENCES game(game_id)
+);
+
 CREATE TABLE account (
     account_id serial,
     stock_value DECIMAL(19,2) NOT NULL,
