@@ -4,6 +4,7 @@
 <!--   <h2 class="gameTitle">{{ game.gameName + " ENDS ON " + game.endDate }}</h2>
     <h2>make a trade</h2>
     <h2>Stocks to buy</h2> -->
+    <input type="search" placeholder="Search">
     </div>
     <div section id="tables">
       <table class="money">
@@ -17,9 +18,9 @@
         </thead>
         <tbody>
           <tr v-for="stock in assets" v-bind:key="stock.stockSymbol" v-on:click="populateFields(stock.stockSymbol, stock.numberOfShares)">
-            <td>{{ stock.stockSymbol }}</td>
-            <td>{{ stock.numberOfShares }}</td>
-            <td>${{ parseFloat(stock.numberOfShares * stock.price).toFixed(2)}}</td>
+            <td class="leftTable">{{ stock.stockSymbol }}</td>
+            <td class="leftTable">{{ stock.numberOfShares }}</td>
+            <td class="leftTable">${{ parseFloat(stock.numberOfShares * stock.price).toFixed(2)}}</td>
 
           </tr>
         </tbody>
@@ -33,14 +34,17 @@
       <table class="trade">
         <thead>
           <tr>
-            <th colspan="2"></th>
+            <th>Funds for Purchase</th>
+            <th> {{ account.dollarAmount }} </th>
            </tr>
         </thead>
         <tbody>
-          <td rowspan="1">Enter stock ticker<input type="text" id='tickerInput'></td>
-          <td rowspan="1">Enter number of shares<input type="text" id='sharesInput'></td>
-          <tr> Buy </tr>
-          <tr>Sell</tr>
+          <td>Enter stock ticker<br><input type="text" id='tickerInput' max="50px" style="width: 50px"></td>
+          <td>Enter number of shares<br><input type="text" id='sharesInput' style="width: 50px"></td>
+          <tr>
+            <td><button> Buy </button></td>
+            <td><button> Sell </button></td>
+          </tr>
           
         </tbody>
         <tfoot>
@@ -58,10 +62,10 @@
             <th >Price</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody id="rightTable">
           <tr v-for="stock in this.$store.state.stockPrices" v-bind:key="stock.stockSymbol" v-on:click="populateFields(stock.stockSymbol, 10)">
-            <td colspan="2">{{ stock.stockSymbol }}</td>
-            <td>${{ parseFloat(stock.currentPrice).toFixed(2)}}</td>
+            <td colspan="2" class="rowCheck">{{ stock.stockSymbol }}</td>
+            <td class="rowCheck">${{ parseFloat(stock.currentPrice).toFixed(2)}}</td>
 
           </tr>
         </tbody>
@@ -175,6 +179,15 @@ export default {
 };
 </script>
 <style scoped>
+/* .rightTable{
+  height: 50px;
+  overflow: auto;
+  
+} */
+
+.leftTable{
+  border: burlywood solid;
+}
 .overview{
   display: flex;
   justify-content: space-evenly;
@@ -208,11 +221,12 @@ thead th:nth-child(3) {
 th,
 td {
   padding: 5px;
-}
-td
-{
   font-size:75%;
-} 
+  letter-spacing: 1px;
+  text-align: center;
+ 
+}
+
 th
 {
   font-size:100%;
@@ -230,14 +244,8 @@ thead th, tfoot th {
 th {
   letter-spacing: 2px;
 }
-td {
-  letter-spacing: 1px;
-}
-tbody td {
-  text-align: center;
-  border: burlywood solid;
-}
-tbody tr {
+
+.rowCheck {
   text-align: center;
   border: burlywood solid;
 }
@@ -295,5 +303,8 @@ money.tfoot td {
 }
 .options tbody tr:nth-child(even) {
   background-color: rgba(13, 70, 92, 0.589);
+}
+@media only screen and (max-width: 600px) {
+  
 }
 </style>
