@@ -19,6 +19,9 @@ export default {
     buyStock(buyOrder){
         return axios.put('/stocks/buy', buyOrder)
     },
+    sellStock(sellOrder){
+        return axios.put('/stocks/sell', sellOrder)
+    },
     updateStockPrices() {
         return axios.get('/currentPrices');
     },

@@ -32,6 +32,9 @@ export default {
 </script>
 
 <style scoped>
+h1{
+  cursor: default;
+}
 .splitTables{
   display: flex;
   justify-content: space-around;

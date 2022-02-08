@@ -220,7 +220,7 @@ tfoot th {
 h1,h2{
   text-align: center;
 }
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 915px) {
     #leaderBoard{
         display: grid;
         width: 100%;
