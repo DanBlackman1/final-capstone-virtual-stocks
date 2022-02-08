@@ -9,6 +9,7 @@ public class Account {
     private BigDecimal stockValue;
     private BigDecimal dollarAmount;
     private int gameId;
+    private String username;
 
     public int getAccountId() {
         return accountId;
@@ -48,5 +49,13 @@ public class Account {
 
     public void setGameId(int gameId) {
         this.gameId = gameId;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 }

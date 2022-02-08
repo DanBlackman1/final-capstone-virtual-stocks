@@ -30,7 +30,7 @@ export default {
     methods:{
         addGame(){
             if (this.game.gameName != ""){
-                // if(!(this.game.gameName.equals(this.$store.state.game.gameName))){
+                // if(!(this.game.gameName.equals(this.game.gameName))){
                     if (Date.parse(this.game.startDate) < Date.parse(this.game.endDate)){
                     GameService.createGame(this.game, this.$store.state.user.id).then(() =>{
                         
@@ -42,12 +42,12 @@ export default {
                 
                 
             })
-            // }else{
-            //         alert("Invalid Date Range")
-            //     }
-                }else{
-                alert("This name is already taken, please create a new name")
-            }
+            }else{
+                    alert("Invalid Date Range")
+                }
+            //     }else{
+            //     alert("This name is already taken, please create a new name")
+            // }
             }else if(this.game.gameName == ""){
                 alert("Enter in a game name");
             }

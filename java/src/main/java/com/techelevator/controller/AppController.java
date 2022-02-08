@@ -45,9 +45,7 @@ public class AppController {
     @RequestMapping(path = "/portfolio/{id}", method = RequestMethod.GET)
     public Portfolio getPortfolio(@PathVariable("id") int accountId) {
         Portfolio portfolio = new Portfolio();
-        System.out.println(accountId);
         portfolio.setStockList(stocksDao.listStocks(accountId));
-        System.out.println(portfolio.getStockList());
         return portfolio;
     }
 
