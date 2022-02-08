@@ -69,28 +69,32 @@ export default new Vuex.Store({
         let tempItem = {
           accountId: '',
           stockSymbol: '',
-          numberOfShares: ''
+          numberOfShares: '',
+          currentPrice: ''
         };
         tempItem.accountId = updatedPortfolio[i].accountId,
         tempItem.stockSymbol = updatedPortfolio[i].stockSymbol,
-        tempItem.numberOfShares = updatedPortfolio[i].numberOfShares
+        tempItem.numberOfShares = updatedPortfolio[i].numberOfShares,
+        tempItem.currentPrice = updatedPortfolio[i].currentPrice
         state.portfolio.push(tempItem);
       }
 
     },
     SET_LEADERBOARD(state, accountList) {
-      state.leaderBoard = [];
+      state.leaderboard = [];
       for(let i = 0; i < accountList.length; i++) {
         let tempAccount = {
           accountId: '',
           userBalance: '',
           stockValue: '',
-          dollarAmount: ''
+          dollarAmount: '',
+          username: ''
         };
         tempAccount.accountId = accountList[i].accountId,
         tempAccount.userBalance = accountList[i].userBalance,
         tempAccount.stockValue = accountList[i].stockValue,
         tempAccount.dollarAmount = accountList[i].dollarAmount,
+        tempAccount.username = accountList[i].username
         
         state.leaderboard.push(tempAccount);
       }

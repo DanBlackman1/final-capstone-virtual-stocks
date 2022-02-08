@@ -34,7 +34,8 @@ public class JdbcStocksDao implements StocksDao{
     @Override
     public List<Stock> listStocks(int accountId) {
         List<Stock> stockList = new ArrayList<>();
-        String sql = "SELECT account_id, stock_symbol, total_shares FROM stock_amount" +
+        String sql = "SELECT sa.account_id, sa.stock_symbol, sa.total_shares, sp.stock_price" +
+                " FROM stock_amount sa JOIN stock_price sp ON sa.stock_symbol = sp.stock_symbol" +
                 " WHERE account_id = ?;";
         SqlRowSet results = template.queryForRowSet(sql, accountId);
         while(results.next()) {
@@ -42,6 +43,7 @@ public class JdbcStocksDao implements StocksDao{
             stock.setAccountId(results.getInt("account_id"));
             stock.setNumberOfShares(results.getDouble("total_shares"));
             stock.setStockSymbol(results.getString("stock_symbol"));
+            stock.setCurrentPrice(results.getBigDecimal("stock_price"));
             stockList.add(stock);
         }
         return stockList;

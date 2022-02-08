@@ -20,7 +20,8 @@
           <tr v-for="stock in assets" v-bind:key="stock.stockSymbol" v-on:click="populateFields(stock.stockSymbol, stock.numberOfShares)">
             <td class="leftTable">{{ stock.stockSymbol }}</td>
             <td class="leftTable">{{ stock.numberOfShares }}</td>
-            <td class="leftTable">${{ parseFloat(stock.numberOfShares * stock.price).toFixed(2)}}</td>
+            <td class="leftTable">${{ getAssetLineValue(stock) }}</td>
+            <!--<td class="leftTable">${{ parseFloat(getAssetLineValue(stock)).toFixed(2)}}</td>-->
 
           </tr>
         </tbody>
@@ -168,6 +169,14 @@ export default {
     getTime() {
       let currentTime = new Date();
       this.lastRefreshed = currentTime.toTimeString;
+    },
+    getAssetLineValue(stock) {
+      let pricesArr = this.$store.state.stockPrices;
+      for(let i = 0; i < pricesArr.length; i++) {
+        if(stock.stockSymbol === pricesArr[i].stockSymbol) {
+          return stock.numberOfShares * pricesArr[i].currentPrice;
+        }
+      }
     }
   },
   created() {
