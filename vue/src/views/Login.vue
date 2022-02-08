@@ -152,10 +152,7 @@ grid-area: username;
   background-color: rgb(233, 233, 233);
   
 }
-body{
-background-color: lightblue;
-/* background: url("../images/stockBackground.jpg"); */
-}
+
 #login{
   display: grid;
   display: flex;

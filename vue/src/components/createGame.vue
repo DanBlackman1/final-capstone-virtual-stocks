@@ -3,9 +3,9 @@
       <form class="form" v-on:submit='addGame()'>
         <div class="aligning">
             <div class="space">Name: <input type="text" v-model='game.gameName'/></div>
-            <div class="space">Start date: <input type="date" min="2022-02-07"  v-model='game.startDate'></div>
-            <div class="space">End date: <input type="date" min="2022-02-08" v-model='game.endDate'></div>
-            <div class="space" id="createGame"><button type="submit" value="save">Create Game</button></div>
+            <div class="space">Start date: <input type="date" min="2022-02-07"  v-model='game.startDate' class="dateCursor"></div>
+            <div class="space">End date: <input type="date" min="2022-02-08" v-model='game.endDate' class="dateCursor"></div>
+            <div class="space" id="createGame"><button type="submit" value="save" class="dateCursor">Create Game</button></div>
         </div>
         
         </form>
@@ -68,10 +68,13 @@ export default {
     }
 .space{
      margin: 5px;
+     cursor: default;
 }
 #createGame{
     align-self: center;
 }
-
+.dateCursor{
+cursor: pointer;
+}
 
 </style>
