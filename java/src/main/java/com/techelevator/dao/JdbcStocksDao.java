@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.techelevator.model.BuyOrder;
+import com.techelevator.model.SellOrder;
 import com.techelevator.model.Stock;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
@@ -145,6 +146,20 @@ public class JdbcStocksDao implements StocksDao{
             template.update(sqlUpdate, updatedStockValue, accountId);
         }
     }
+
+    @Override
+    public void sellStock(SellOrder sellOrder) {
+        String sqlAccount = "UPDATE account SET dollar_amount = dollar_amount + ? WHERE account_id = ?;";
+        String sharesString = sellOrder.getSharesToSubtract() + "";
+        BigDecimal shares = new BigDecimal(sharesString);
+        template.update(sqlAccount, sellOrder.getCurrentPrice().multiply(shares), sellOrder.getAccountId());
+
+        String sqlStock = "UPDATE stock_amount SET total_shares = total_shares - ? WHERE account_id = ? AND stock_symbol = ?;";
+        template.update(sqlStock, sellOrder.getSharesToSubtract(), sellOrder.getAccountId());
+
+        String sqlDel = "DELETE account_id, stock_symbol, total_shares FROM stock_amount WHERE total_shares = 0;";
+        template.update(sqlDel);
+}
 
 
     private Stock mapRowToStock(SqlRowSet results) {
