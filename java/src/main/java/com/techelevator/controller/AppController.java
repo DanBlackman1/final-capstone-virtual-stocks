@@ -80,7 +80,8 @@ public class AppController {
 
     @RequestMapping(path = "/invite", method = RequestMethod.POST)
     public void invitePlayer(@RequestBody Invite invite) {
-        inviteDao.invitePlayer(invite.getUserId(), invite.getUserId());
+        User user = inviteDao.getUserByEmail(invite.getUserEmail());
+        inviteDao.invitePlayer(user.getId(), invite.getGameId());
     }
 
     @RequestMapping(path = "/displayUsers/{gameId}", method = RequestMethod.GET)
@@ -93,6 +94,11 @@ public class AppController {
         inviteDao.confirmInvite(invite.getUserId(), invite.getGameId());
         int accountId = accountDao.createAccount();
         gameDao.addUser(invite.getGameId(), invite.getUserId(), accountId);
+    }
+
+    @RequestMapping(path = "/stocks/sell", method = RequestMethod.PUT)
+    public void sellStock(@RequestBody SellOrder sellOrder) {
+        stocksDao.sellStock(sellOrder);
     }
 
 

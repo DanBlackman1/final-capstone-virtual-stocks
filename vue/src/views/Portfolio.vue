@@ -112,6 +112,7 @@ export default {
         console.log(response.data);
         this.$store.commit('SET_PORTFOLIO', response.data.stockList);
       this.assets = this.$store.state.portfolio;
+      this.getTime();
       });
     },
     populateFields(stockSymbol, numberOfShares){
@@ -150,8 +151,9 @@ export default {
       }
     },
     getTime() {
-      let currentTime = new Date();
-      this.lastRefreshed = currentTime.toTimeString;
+    let allOfTime = new Date();
+    this.lastRefreshed = (allOfTime.getMinutes() < 10) ? allOfTime.getHours() + ":0" + allOfTime.getMinutes() + ":" + allOfTime.getSeconds()
+     : allOfTime.getHours() + ":" + allOfTime.getMinutes() + ":" + allOfTime.getSeconds();               
     },
     getAssetLineValue(stock) {
       let pricesArr = this.$store.state.stockPrices;
@@ -163,9 +165,7 @@ export default {
     }
   },
   created() {
-    console.log("before mount");
     this.getAssets(this.account.accountId);
-    this.getTime();
   },
   
 };
