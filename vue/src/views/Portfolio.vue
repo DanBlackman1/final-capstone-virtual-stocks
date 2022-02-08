@@ -105,53 +105,7 @@ export default {
       
       lastRefreshed: '',
 
-      assets: [
-       /* {
-          stockSymbol: "BX",
-          numberOfShares: 311.8,
-          price: 132.25,
-        },
-        {
-          stockSymbol: "FRGSX",
-          numberOfShares: 90.07,
-          price: 118.44,
-        },
-        {
-          stockSymbol: "FNMA",
-          numberOfShares: 700,
-          price: 0.8406,
-        },
-        {
-          stockSymbol: "ABT",
-          numberOfShares: 40,
-          price: 129.71,
-        },
-        {
-          stockSymbol: "VTI",
-          numberOfShares: 132.13,
-          price: 225.47,
-        },
-        {
-          stockSymbol: " LEN",
-          numberOfShares: 14.706,
-          price: 90.3,
-        },
-        {
-          stockSymbol: "LUCID",
-          numberOfShares: 227,
-          price: 27.55,
-        },
-        {
-          stockSymbol: "BRK-B",
-          numberOfShares: 53,
-          price: 314.99,
-        },
-        {
-          stockSymbol: "CSCO",
-          numberOfShares: 68.155,
-          price: 55.15,
-        }, */
-      ],
+      assets: [],
     };
   },
 
