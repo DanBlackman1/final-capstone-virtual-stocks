@@ -80,7 +80,7 @@ public class AppController {
 
     @RequestMapping(path = "/invite", method = RequestMethod.POST)
     public void invitePlayer(@RequestBody Invite invite) {
-        inviteDao.invitePlayer(invite.getUserId(), invite.getUserId());
+        inviteDao.invitePlayer(invite.getUserId(), invite.getGameId());
     }
 
     @RequestMapping(path = "/displayUsers/{gameId}", method = RequestMethod.GET)
