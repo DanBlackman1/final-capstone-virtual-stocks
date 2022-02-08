@@ -305,6 +305,8 @@ money.tfoot td {
   background-color: rgba(13, 70, 92, 0.589);
 }
 @media only screen and (max-width: 600px) {
-  
+  #tables{
+    display: grid;
+  }
 }
 </style>

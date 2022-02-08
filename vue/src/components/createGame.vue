@@ -72,4 +72,6 @@ export default {
 #createGame{
     align-self: center;
 }
+
+
 </style>

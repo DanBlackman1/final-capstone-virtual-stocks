@@ -2,34 +2,34 @@
   <div class="main">
     <h1>{{ game.gameName + " ENDS ON " + game.endDate }}</h1>
     <div id="layout">
-    <div section id="leaderboard">
-      <table>
-        <thead>
-          <tr>
-            <th>Place</th>
-            <th>Username</th>
-            <th>Portfolio Value</th>
-          </tr>
-        </thead>
-        <tr v-for="(place, index) in leaderboard" v-bind:key="place.userId">
-          <td>{{ index + 1 }}</td>
-          <td>{{ place.userName }}</td>
-          <td>{{ place.userBalance }}</td>
-        </tr>
-      </table>
-      <button v-on:click="goToPortfolio()">View My Portfolio</button>
+        <div id="leaderboard">
+            <table>
+                <thead>
+                <tr>
+                    <th>Place</th>
+                    <th>Username</th>
+                    <th>Portfolio Value</th>
+                </tr>
+                </thead>
+                <tr v-for="(place, index) in leaderboard" v-bind:key="place.userId">
+                <td>{{ index + 1 }}</td>
+                <td>{{ place.userName }}</td>
+                <td>{{ place.userBalance }}</td>
+                </tr>
+            </table>
+            <button v-on:click="goToPortfolio()">View My Portfolio</button>
         </div>
-        <div section id="invite">
-        <thead>
-          <tr>
-            <th class="inviteUser">Invite User with Email</th>
-          </tr>
-        </thead>
-      <form action="" method="get" class="form-example">
-  <div class="form-example">
-    <label for="name">Enter User Email: </label>
-    <input type="text" name="name" id="name" required>
-  </div>
+            <div id="invite">
+            <thead>
+            <tr>
+                <th class="inviteUser">Invite User with Email</th>
+            </tr>
+            </thead>
+            <form action="" method="get" class="form-example">
+            <div class="form-example">
+            <label for="name">Enter User Email: </label>
+            <input type="text" name="name" id="name" required>
+         </div>
   <div class="form-example">
     <label for="email">Enter User Email: </label>
     <input type="email" name="email" id="email" required>
@@ -103,16 +103,17 @@ export default {
 
 
 <style scoped>
+button{}
 
 #layout {
 display:flex;
 justify-content: space-around;
+}
 
-}
-.invite
-   form.form-example {
-    display: table;
-}
+/* #invite{
+     border: black solid;
+     padding: 5px;
+} */
 
 div.form-example {
     display: table-row;
@@ -129,11 +130,13 @@ label {
 /* spacing */
 #leaderboard {
   display:grid;
-  width: 33%;
+  /* width: 33%; */
   border-collapse: collapse;
   border: 3 px solid rgb(22, 29, 22);
   margin: 5px;
   align-items: stretch;
+  border: black solid;
+  padding: 5px;
 }
 thead th:nth-child(1) {
   width: 25%;
@@ -180,5 +183,17 @@ tfoot th {
 }
 h1{
   text-align: center;
+}
+@media only screen and (max-width: 600px) {
+    #leaderBoard{
+        display: grid;
+        width: 100%;
+    }
+    #invite{
+        display: grid;
+    }
+    #layout{
+        display: grid;
+    }
 }
 </style>

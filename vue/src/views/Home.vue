@@ -39,5 +39,10 @@ export default {
 .box{
   border: black solid;
 }
+@media only screen and (max-width: 600px) {
+  .splitTables{
+    display: grid;    
+  }
 
+}
 </style>
