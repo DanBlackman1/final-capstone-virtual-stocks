@@ -3,7 +3,7 @@
    <div class="table">
     <table>
     <thead>
-      <tr>
+      <tr id="textForCursor">
         <th>Game Name</th>
         <th>Portfolio Value</th>
         <th>Game End Date</th>
@@ -57,7 +57,9 @@ export default {
 </script>
 
 <style scoped>
-
+#textForCursor{
+  cursor: default;
+}
 .hover:hover{
   cursor: pointer;
 }

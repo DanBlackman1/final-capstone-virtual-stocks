@@ -18,7 +18,7 @@ public class JdbcInviteDao implements InviteDao{
     }
 
     @Override
-    public void invitePlayer(int userId, int gameId) {
+    public void invitePlayer(Long userId, int gameId) {
         String sql = "INSERT INTO invite (user_id, game_id) VALUES (?, ?);";
         template.update(sql, userId, gameId);
     }
@@ -42,5 +42,16 @@ public class JdbcInviteDao implements InviteDao{
             userList.add(user);
         }
         return userList;
+    }
+
+    @Override
+    public User getUserByEmail(String email) {
+        String sql = "SELECT user_id FROM users WHERE email = ?;";
+        SqlRowSet results = template.queryForRowSet(sql, email);
+        User user = new User();
+        while(results.next()) {
+            user.setId(results.getLong("user_id"));
+        }
+        return user;
     }
 }

@@ -2,6 +2,7 @@ package com.techelevator.dao;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.techelevator.model.BuyOrder;
+import com.techelevator.model.SellOrder;
 import com.techelevator.model.Stock;
 
 import java.util.List;
@@ -21,5 +22,7 @@ public interface StocksDao {
     public List<Stock> retrieveSavedPrices();
 
     public void updateStockValue(List<Integer> accountIdList, List<Stock> stockPrices);
+
+    public void sellStock(SellOrder sellOrder);
 
 }
