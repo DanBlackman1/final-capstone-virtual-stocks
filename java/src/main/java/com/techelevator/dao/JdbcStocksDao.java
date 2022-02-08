@@ -52,7 +52,9 @@ public class JdbcStocksDao implements StocksDao{
         String sqlStock = "INSERT INTO stock_amount (account_id, stock_symbol, total_shares) VALUES (?, ?, ?);";
         template.update(sqlStock, buyOrder.getAccountId(), buyOrder.getStockSymbol(), buyOrder.getSharesToAdd());
         String sqlAccount = "UPDATE account SET dollar_amount = dollar_amount - ? WHERE account_id = ?;";
-        template.update(sqlAccount, buyOrder.getCost(), buyOrder.getAccountId());
+        String sharesString = buyOrder.getSharesToAdd() + "";
+        BigDecimal shares = new BigDecimal(sharesString);
+        template.update(sqlAccount, buyOrder.getCurrentPrice().multiply(shares), buyOrder.getAccountId());
     }
 
     @Override
@@ -60,7 +62,9 @@ public class JdbcStocksDao implements StocksDao{
         String sqlStock = "UPDATE stock_amount SET total_shares = total_shares + ? WHERE account_id = ? AND stock_symbol = ?;";
         template.update(sqlStock, buyOrder.getSharesToAdd(), buyOrder.getAccountId());
         String sqlAccount = "UPDATE account SET dollar_amount = dollar_amount - ? WHERE account_id = ?;";
-        template.update(sqlAccount, buyOrder.getCost(), buyOrder.getAccountId());
+        String sharesString = buyOrder.getSharesToAdd() + "";
+        BigDecimal shares = new BigDecimal(sharesString);
+        template.update(sqlAccount, buyOrder.getCurrentPrice().multiply(shares), buyOrder.getAccountId());
     }
 
     @Override

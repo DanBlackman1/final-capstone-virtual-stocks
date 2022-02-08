@@ -13,16 +13,17 @@ export default {
     getPortfolio(accountId) {
         return axios.get(`/portfolio/${accountId}`)
     }, 
-    buyNewStock(accountId, stockSymbol, stockPrice, sharesPurchased){
-        return axios.post('/stocks/buyNew', accountId, stockSymbol, stockPrice, sharesPurchased)
+    buyNewStock(buyOrder){
+        return axios.post('/stocks/buyNew', buyOrder)
     },
-    buyStock(accountId, stockSymbol, stockPrice, sharesPurchased){
-        return axios.put('/stocks/buy', accountId, stockSymbol, stockPrice, sharesPurchased)
+    buyStock(buyOrder){
+        return axios.put('/stocks/buy', buyOrder)
     },
     updateStockPrices() {
         return axios.get('/currentPrices');
     },
     viewLeaderBoard(gameId){
-        return axios.get('/leaderboard', gameId)
+        console.log("axios run")
+        return axios.get(`/leaderboard/${gameId}`)
     }
 }

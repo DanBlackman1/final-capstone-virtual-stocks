@@ -7,8 +7,8 @@ public class BuyOrder {
     private int sharesToAdd;
     private String stockSymbol;
     private int accountId;
+    private BigDecimal currentPrice;
    // private boolean isOwned;
-    private BigDecimal cost;
 
     public int getSharesToAdd() {
         return sharesToAdd;
@@ -34,12 +34,12 @@ public class BuyOrder {
         this.accountId = accountId;
     }
 
-    public BigDecimal getCost() {
-        return cost;
+    public BigDecimal getCurrentPrice() {
+        return currentPrice;
     }
 
-    public void setCost(BigDecimal cost) {
-        this.cost = cost;
+    public void setCurrentPrice(BigDecimal currentPrice) {
+        this.currentPrice = currentPrice;
     }
 
     //  public boolean isOwned() {
