@@ -48,8 +48,8 @@
           </td>
          
           <tr>
-            
-           
+            <td><button v-on:click="buyStock(generateBuyOrder())"> Buy </button></td>
+            <td><button> Sell </button></td>
           </tr>
           
         </tbody>
@@ -123,6 +123,36 @@ export default {
       document.getElementById('tickerInput').setAttribute("value", stockSymbol);
       document.getElementById('sharesInput').setAttribute("value", numberOfShares);
 
+    },
+    generateBuyOrder(){
+      console.log("generate buy order")
+      let price = 0;
+      let stockSymbol = document.getElementById('tickerInput').value;
+      let pricesArr = this.$store.state.stockPrices;
+          for(let i = 0; i < pricesArr.length; i++) {
+        if(stockSymbol === pricesArr[i].stockSymbol) {
+       price = pricesArr[i].currentPrice;}}
+      let buyOrder = {sharesToAdd: document.getElementById('sharesInput').value,
+      stockSymbol: stockSymbol, accountId: this.account.accountId, currentPrice: price}
+      return buyOrder;
+    },
+    buyStock(buyOrder){
+      console.log("buy function")
+      let isFound = false;
+      // let stocksOwned = this.assets;
+      for(let i = 0; i < this.assets.length; i++){
+        if(buyOrder.stockSymbol === this.assets[i].stockSymbol){
+          isFound = true;
+        }
+      }
+      if(isFound){
+        GameService.buyStock(buyOrder);
+        console.log("executed current buy")
+      }
+      else{
+        GameService.buyNewStock(buyOrder);
+        console.log("executed new buy")
+      }
     },
     getTime() {
       let currentTime = new Date();
