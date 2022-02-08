@@ -4,7 +4,7 @@
 <!--   <h2 class="gameTitle">{{ game.gameName + " ENDS ON " + game.endDate }}</h2>
     <h2>make a trade</h2>
     <h2>Stocks to buy</h2> -->
-     Stock search: <input type="search" placeholder="Search">
+     <!-- Stock search: <input type="search" placeholder="Search"> -->
     </div>
     <div section id="tables">
       <table class="money">
@@ -20,7 +20,7 @@
           <tr class="clickable" v-for="stock in assets" v-bind:key="stock.stockSymbol" v-on:click="populateFields(stock.stockSymbol, stock.numberOfShares)">
             <td class="leftTable">{{ stock.stockSymbol }}</td>
             <td class="leftTable">{{ stock.numberOfShares }}</td>
-            <td class="leftTable">${{ getAssetLineValue(stock) }}</td>
+            <td class="leftTable">${{ parseFloat(getAssetLineValue(stock)).toFixed(2)}}</td>
             <!--<td class="leftTable">${{ parseFloat(getAssetLineValue(stock)).toFixed(2)}}</td>-->
 
           </tr>
@@ -35,27 +35,22 @@
       <table class="trade">
         <thead>
           <tr >
-            <th colspan="2">Funds for Purchase: {{ account.dollarAmount }} </th>
+            <th colspan="2">Funds for Purchase: ${{ Number(account.dollarAmount).toLocaleString() }} </th>
            </tr>
         </thead>
         <tbody class="middleColumns">
-          <td class="midSpacing">Enter stock ticker<br>
+          <td class="midSpacing">Enter stock ticker:<br><br>
             <input type="text" id='tickerInput' max="50px" style="width: 50px"><br>
-            <button > Buy </button>
+            <button v-on:click="buyStock(generateBuyOrder())"> Buy </button>
           </td >
-            <td class="midSpacing">Enter number of shares<br><input type="text" id='sharesInput' style="width: 50px"><br>
+            <td class="midSpacing">Enter number of shares:<br><br><input type="text" id='sharesInput' style="width: 50px"><br>
             <button> Sell </button>
           </td>
-         
-          <tr>
-            <td><button v-on:click="buyStock(generateBuyOrder())"> Buy </button></td>
-            <td><button> Sell </button></td>
-          </tr>
           
         </tbody>
         <tfoot>
           <tr>
-            <th colspan="1">Funds for Purchase: {{ account.dollarAmount }}</th>
+            <th colspan="1">Funds for Purchase: ${{ Number(account.dollarAmount).toLocaleString() }}</th>
           </tr>
         </tfoot>
       </table>
@@ -181,9 +176,16 @@ export default {
   overflow: auto;
   
 } */
+button{
+  margin-top: 5px;
+  padding: 3px;
+  width: 75px;
+}
 
 .midSpacing{
   margin: 5px;
+  font-weight: bold;
+  font-size: 13px;
 }
 .middleColumns{
   display: flex;
