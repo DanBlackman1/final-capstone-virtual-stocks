@@ -3,8 +3,8 @@
       <form class="form" v-on:submit='addGame()'>
         <div class="aligning">
             <div class="space">Name: <input type="text" v-model='game.gameName'/></div>
-            <div class="space">Start date: <input type="date" v-model='game.startDate'></div>
-            <div class="space">End date: <input type="date" v-model='game.endDate'></div>
+            <div class="space">Start date: <input type="date" min="2022-02-07"  v-model='game.startDate'></div>
+            <div class="space">End date: <input type="date" min="2022-02-08" v-model='game.endDate'></div>
             <div class="space" id="createGame"><button type="submit" value="save">Create Game</button></div>
         </div>
         
@@ -29,13 +29,31 @@ export default {
     },
     methods:{
         addGame(){
-            GameService.createGame(this.game, this.$store.state.user.id).then(() =>{
-                this.game.endDate="";
-                this.game.startDate="";
-                this.game.gameName="";
-                this.$router.push({name:'home'});
+            if (this.game.gameName != ""){
+                // if(!(this.game.gameName.equals(this.$store.state.game.gameName))){
+                    if (Date.parse(this.game.startDate) < Date.parse(this.game.endDate)){
+                    GameService.createGame(this.game, this.$store.state.user.id).then(() =>{
+                        
+                            
+                            this.game.endDate="";
+                            this.game.startDate="";
+                            this.game.gameName="";
+                            this.$router.push({name:'home'});
+                
+                
             })
-        }
+            // }else{
+            //         alert("Invalid Date Range")
+            //     }
+                }else{
+                alert("This name is already taken, please create a new name")
+            }
+            }else if(this.game.gameName == ""){
+                alert("Enter in a game name");
+            }
+        },
+        
+
     }
 }
 </script>
