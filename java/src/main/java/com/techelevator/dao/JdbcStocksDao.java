@@ -155,10 +155,14 @@ public class JdbcStocksDao implements StocksDao{
         template.update(sqlAccount, sellOrder.getCurrentPrice().multiply(shares), sellOrder.getAccountId());
 
         String sqlStock = "UPDATE stock_amount SET total_shares = total_shares - ? WHERE account_id = ? AND stock_symbol = ?;";
-        template.update(sqlStock, sellOrder.getSharesToSubtract(), sellOrder.getAccountId());
+        template.update(sqlStock, sellOrder.getSharesToSubtract(), sellOrder.getAccountId(), sellOrder.getStockSymbol());
 
-        String sqlDel = "DELETE account_id, stock_symbol, total_shares FROM stock_amount WHERE total_shares = 0;";
-        template.update(sqlDel);
+        if (sellOrder.isAllShares()) {
+            String sqlDel = "DELETE account_id, stock_symbol, total_shares FROM stock_amount WHERE total_shares = 0;";
+            template.update(sqlDel);
+        }
+
+
 }
 
 
