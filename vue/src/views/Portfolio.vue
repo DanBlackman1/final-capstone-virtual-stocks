@@ -132,7 +132,7 @@ export default {
        if((price * document.getElementById('sharesInput').value) > this.account.dollarAmount){
         sharesToAdd = (this.account.dollarAmount/price)-1 ;
        }
-      let buyOrder = {sharesToAdd: sharesToAdd,stockSymbol: stockSymbol, accountId: this.account.accountId, currentPrice: price}
+      let buyOrder = {sharesToAdd: sharesToAdd, stockSymbol: stockSymbol, accountId: this.account.accountId, currentPrice: price}
       return buyOrder;
     },
     buyStock(buyOrder){

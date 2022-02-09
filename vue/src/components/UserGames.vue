@@ -23,6 +23,24 @@
       </tr>
     </tbody>
   </table>
+  <table>
+    <thead>
+      <tr id="textForCursor">
+        <th>Game Name</th>
+        <th>Start Date</th>
+        <th>End Date</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr v-for='invite in myInvites' v-bind:key="invite.gameId">
+        <td>{{ invite.gameName }}</td>
+        <td>{{ invite.startDate }}</td>
+        <td>{{ invite.endDate }}</td>
+        <td><button v-on:click.prevent="acceptInvite(invite.gameId)">Accept</button><button>Decline</button></td>
+      </tr>
+    </tbody>
+  </table>
    </div>
   </div>
 </template>
@@ -34,6 +52,7 @@ export default {
     return { 
       accountList: [],
       gameList: [],
+      myInvites: []
     }
   },
   methods: {
@@ -47,10 +66,28 @@ export default {
       this.$store.commit('SET_GAME', game);
       this.$store.commit('SET_ACCOUNT', account)
       this.$router.push('/gameDetails');
-    } 
-      },
+    },
+    getInvitesList() {
+      GameService.seeMyInvites(this.$store.state.user.id).then((response) => {
+        this.myInvites = response.data;
+      })
+    },
+    declineInvite() {
+
+    },
+    acceptInvite(gameId) {
+      let invite = {
+        gameId: gameId,
+        userId: this.$store.state.user.id,
+      }
+      GameService.confirmInvite(invite);
+      this.$router.go();
+
+    }
+    },
     beforeMount(){
       this.getGameList(this.$store.state.user.id);
+      this.getInvitesList();
     },
 
 }

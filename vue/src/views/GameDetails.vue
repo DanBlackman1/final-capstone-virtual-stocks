@@ -96,7 +96,7 @@ export default {
         sendInvite() {
           let invite = {
             userId: '',
-            gameId: this.gameId,
+            gameId: this.game.gameId,
             userEmail: this.email
           }
           GameService.invitePlayer(invite);
