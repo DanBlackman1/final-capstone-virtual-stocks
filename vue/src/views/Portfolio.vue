@@ -1,14 +1,10 @@
 <template>
   <div class="main">
     <div class="overview">
-<!--   <h2 class="gameTitle">{{ game.gameName + " ENDS ON " + game.endDate }}</h2>
-    <h2>make a trade</h2>
-    <h2>Stocks to buy</h2> -->
      <!-- Stock search: <input type="search" placeholder="Search"> -->
     </div>
     <div section id="tables">
       <table class="money">
-        <!--<caption>{{Username_Portfolio}}{{UserID}}{{GameName}}</caption> Needed? -->
         <thead>
           <tr>
             <th>Stock Ticker</th>
@@ -22,7 +18,6 @@
             <td class="leftTable">{{ stock.numberOfShares }}</td>
             <td class="leftTable">${{ parseFloat(getAssetLineValue(stock)).toFixed(2)}}</td>
             <!--<td class="leftTable">${{ parseFloat(getAssetLineValue(stock)).toFixed(2)}}</td>-->
-
           </tr>
         </tbody>
         <tfoot>
@@ -45,8 +40,12 @@
           </td >
             <td class="midSpacing">Enter number of shares:<br><br><input type="text" id='sharesInput' style="width: 50px"><br>
             <button class="btnSell" v-on:click="sellStock(generateSellOrder())"> Sell </button>
+            </td >
+        </tbody>
+        <tbody>
+          <td class="seeLeader">
+            <button class="btnleaderboard" v-on:click="sellStock(generateSellOrder())">View Leaderboard: </button>
           </td>
-          
         </tbody>
         <tfoot>
           <tr>
@@ -72,6 +71,7 @@
         <tfoot>
           <tr>
             <th colspan="3"> Current as of: {{ lastRefreshed }}</th>
+            
           </tr>
         </tfoot>
       </table>
@@ -123,7 +123,7 @@ export default {
     generateBuyOrder(){
       console.log("generate buy order")
       let price = 0;
-      let stockSymbol = document.getElementById('tickerInput').value;
+      let stockSymbol = (document.getElementById('tickerInput').value).toUpperCase();
       let sharesToAdd = 0;
       let pricesArr = this.$store.state.stockPrices;
           for(let i = 0; i < pricesArr.length; i++) {
@@ -131,6 +131,8 @@ export default {
        price = pricesArr[i].currentPrice;}}
        if((price * document.getElementById('sharesInput').value) > this.account.dollarAmount){
         sharesToAdd = (this.account.dollarAmount/price)-1 ;
+       }else{
+         sharesToAdd = document.getElementById('sharesInput').value;
        }
       let buyOrder = {sharesToAdd: sharesToAdd, stockSymbol: stockSymbol, accountId: this.account.accountId, currentPrice: price}
       return buyOrder;
@@ -163,7 +165,7 @@ export default {
       let maxSharesToSubtract = 0;
       let sellQuantity = 0;
       let allShares = false;
-      let stockSymbol = document.getElementById('tickerInput').value;
+      let stockSymbol = (document.getElementById('tickerInput').value).toUpperCase();
       let portfolioArr = this.assets;
           for(let i = 0; i < portfolioArr.length; i++) {
         if(stockSymbol === portfolioArr[i].stockSymbol) {
@@ -212,13 +214,12 @@ export default {
 thead, tfoot{
   cursor: default;
 }
-button{
+
+.btnBuy, .btnSell{
+  cursor: pointer;
   margin-top: 5px;
   padding: 3px;
   width: 75px;
-}
-.btnBuy, .btnSell{
-  cursor: pointer;
 }
 
 .midSpacing{
@@ -232,17 +233,27 @@ button{
   justify-content: center;
   padding: 10px;
 }
-
-.leftTable{
-  border: burlywood solid;
-}
-.overview{
+.seeLeader{
   display: flex;
   justify-content: center;
+  padding: 30px;
 }
-.gameTitle{
+.btnleaderboard{
+  cursor: pointer;
+  width: 180px;
+  height: 40px;
+}
+
+/* .leftTable{
+  border: burlywood solid;
+} */
+/* .overview{
+  display: flex;
+  justify-content: center;
+} */
+/* .gameTitle{
   border: black solid;
-}
+} */
 #tables {
   display: flex;
   justify-content: space-evenly;
@@ -273,7 +284,6 @@ td {
   font-size:75%;
   letter-spacing: 1px;
   text-align: center;
- 
 }
 
 th
@@ -282,24 +292,15 @@ th
   letter-spacing: 2px;
 }
 /* typography */
-/*
-html {
-  font-family: 'helvetica neue', helvetica, arial, sans-serif;
-}*/
-/*
-thead th, tfoot th {
-  font-family: 'Rock Salt', cursive;
-}*/
-
-.rowCheck {
+/* .rowCheck {
   text-align: center;
   border: burlywood solid;
   
-}
-tfoot th {
+} */
+/* tfoot th {
   text-align: center;
   border: 2px solid gold;
-}
+} */
 /* graphic and colors */
 .money thead,
 .money tfoot {
@@ -315,9 +316,8 @@ tfoot th {
 .trade tfoot {
   background: url("../images/m.png");
   
-
   /*background-repeat: round; /* Makes money lie flat as if on a tabletop */
-  color: rgb(232, 236, 228);
+  color:rgba(255, 251, 0, 0.993);
   text-shadow: 2px 3px 2px rgb(5, 88, 121);
   width: 75px;
   height: 50px;
@@ -327,22 +327,23 @@ tfoot th {
   background: url("../images/m.png");
 
   background-repeat: round; /* Makes money lie flat as if on a tabletop */
-  color: rgb(232, 236, 228);
+  color:rgba(255, 251, 0, 0.993);
   text-shadow: 2px 3px 2px rgb(6, 42, 56);
-   width: 75px;
+  width: 75px;
   height: 50px;
-  
-  
 }
 thead th,
 tfoot th,
 money.tfoot td {
+  
   background: linear-gradient(
     to bottom,
-    rgba(39, 217, 223, 0.1),
-    rgba(6, 83, 88, 0.5)
+    rgba(99, 197, 200, 0.1),
+    rgba(105, 134, 136, 0.5)
   );
-  border: 2px solid gold;
+  color:rgba(255, 251, 0, 0.993);
+  text-shadow: 2px 3px 2px rgb(6, 42, 56);
+  /* border: 2px solid gold; */
 }
 /* zebra striping */
 
