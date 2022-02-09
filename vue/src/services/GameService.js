@@ -40,6 +40,9 @@ export default {
     },
     declineInvite(invite) {
         return axios.delete('/declineInvite', invite)
+    },
+    endGame(gameId){
+        return axios.put('/endGame', gameId)
     }
 
 }
