@@ -43,7 +43,7 @@ export default {
     },
     endGame(gameId){
         console.log('axios end call')
-        return axios.put('/endGame', gameId)
+        return axios.put(`/endGame/${gameId}`)
     }
 
 }
