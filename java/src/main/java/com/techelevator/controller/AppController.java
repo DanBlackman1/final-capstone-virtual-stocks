@@ -133,8 +133,4 @@ public class AppController {
         stocksDao.closeAll(accountList);
     }
 
-
-
-
-
 }
