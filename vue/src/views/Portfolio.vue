@@ -41,10 +41,10 @@
         <tbody class="middleColumns">
           <td class="midSpacing">Enter stock ticker:<br><br>
             <input type="text" id='tickerInput' max="50px" style="width: 50px"><br>
-            <button v-on:click="buyStock(generateBuyOrder())"> Buy </button>
+            <button class="btnBuy" v-on:click="buyStock(generateBuyOrder())"> Buy </button>
           </td >
             <td class="midSpacing">Enter number of shares:<br><br><input type="text" id='sharesInput' style="width: 50px"><br>
-            <button v-on:click="sellStock(generateSellOrder())"> Sell </button>
+            <button class="btnSell" v-on:click="sellStock(generateSellOrder())"> Sell </button>
           </td>
           
         </tbody>
@@ -200,16 +200,23 @@ export default {
   overflow: auto;
   
 } */
+thead, tfoot{
+  cursor: default;
+}
 button{
   margin-top: 5px;
   padding: 3px;
   width: 75px;
+}
+.btnBuy, .btnSell{
+  cursor: pointer;
 }
 
 .midSpacing{
   margin: 5px;
   font-weight: bold;
   font-size: 13px;
+  cursor: default;
 }
 .middleColumns{
   display: flex;

@@ -32,19 +32,18 @@
             </tr>
             </thead>
             
+            <!-- Two forms for inviting -->
             <form action="" method="get" class="form-example">
+              <div class="form-example">
+                <label for="name">Enter User Email: </label>
+                <input type="text" name="name" id="name" required>
+              </div>
             <div class="form-example">
-            <label for="name">Enter User Email: </label>
-            <input type="text" name="name" id="name" required>
-         </div>
-
-
-  <div class="form-example">
-    <label for="email">Enter User Email: </label>
-    <input type="email" name="email" id="email" required>
-  </div>
-  <div class="form-example">
-    <input type="submit" value="Invite!">
+              <label for="email">Enter User Email: </label>
+              <input type="email" name="email" id="email" required>
+            </div>
+            <div class="form-example">
+            <input type="submit" value="Invite!" class="submit">
   </div>
 </form>
   </div>
@@ -116,6 +115,13 @@ export default {
 <style scoped>
 tr, td, th {
   height: 30px;
+  cursor: default;
+}
+button{
+  cursor: pointer;
+}
+.submit{
+  cursor: pointer;
 }
 .data {
   text-align: center;
