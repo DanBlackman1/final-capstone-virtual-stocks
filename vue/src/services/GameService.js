@@ -38,8 +38,8 @@ export default {
     confirmInvite(invite) {
         return axios.put('/confirm', invite)
     },
-    declineInvite(invite) {
-        return axios.delete('/declineInvite', invite)
+    declineInvite(userId, gameId) {
+        return axios.delete(`/declineInvite/${userId}/${gameId}`)
     }
 
 }

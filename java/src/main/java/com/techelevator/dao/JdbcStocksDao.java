@@ -3,6 +3,7 @@ package com.techelevator.dao;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.techelevator.model.Account;
 import com.techelevator.model.BuyOrder;
 import com.techelevator.model.SellOrder;
 import com.techelevator.model.Stock;
@@ -193,6 +194,36 @@ public class JdbcStocksDao implements StocksDao{
                 }
             }
             template.update(sqlUpdate, updatedStockValue, accountId);
+        }
+    }
+
+    @Override
+    public void closeAll(List<Account> accountList) {
+        List<Stock> stockList = new ArrayList<>();
+        for(Account account : accountList) {
+            String sql = "SELECT sa.account_id, sa.stock_symbol, sa.total_shares, sp.stock_price" +
+                    " FROM stock_amount sa JOIN stock_price sp ON sa.stock_symbol = sp.stock_symbol" +
+                    " WHERE account_id = ?;";
+            SqlRowSet results = template.queryForRowSet(sql, account.getAccountId());
+            while(results.next()) {
+                Stock stock = new Stock();
+                stock.setAccountId(results.getInt("account_id"));
+                stock.setNumberOfShares(results.getDouble("total_shares"));
+                stock.setStockSymbol(results.getString("stock_symbol"));
+                stock.setCurrentPrice(results.getBigDecimal("stock_price"));
+                stockList.add(stock);
+            }
+            for(Stock stock : stockList) {
+                String sqlAccount = "UPDATE account SET dollar_amount = dollar_amount + ? WHERE account_id = ?;";
+                String sharesString = stock.getNumberOfShares() + "";
+                BigDecimal shares = new BigDecimal(sharesString);
+                template.update(sqlAccount, stock.getCurrentPrice().multiply(shares), stock.getAccountId());
+
+                String sqlStock = "UPDATE stock_amount SET total_shares = total_shares - ? WHERE account_id = ? AND stock_symbol = ?;";
+                template.update(sqlStock, stock.getNumberOfShares(), stock.getAccountId(), stock.getStockSymbol());
+            }
+            String sqlDel = "DELETE FROM stock_amount WHERE total_shares = 0;";
+               template.update(sqlDel);
         }
     }
 

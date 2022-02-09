@@ -60,7 +60,8 @@ public class JdbcInviteDao implements InviteDao{
     }
 
     @Override
-    public void declineInvite() {
-
+    public void declineInvite(int userId, int gameId) {
+        String sql = "DELETE FROM invite WHERE user_id = ? AND game_id = ?";
+        template.update(sql, userId, gameId);
     }
 }
