@@ -26,29 +26,19 @@
             <button v-on:click="goToPortfolio()">View My Portfolio</button>
         </div>
             <div id="invite">
-            <thead>
+            <h2>
             <tr>
                 <th class="inviteUser">Invite User with Email</th>
             </tr>
-            </thead>
-            
-            <!-- Two forms for inviting -->
-            <form action="" method="get" class="form-example">
-              <div class="form-example">
-                <label for="name">Enter User Email: </label>
-                <input type="text" name="name" id="name" required>
-              </div>
-            <div class="form-example">
-              <label for="email">Enter User Email: </label>
-              <input type="email" name="email" id="email" required>
-            </div>
-            <div class="form-example">
-            <input type="submit" value="Invite!" class="submit">
-  </div>
-</form>
-  </div>
+            </h2>
+             <form class="form-example">
+                <label for="email">Enter User Email: </label>
+                <input type="email" name="email" id="email" required v-model="email">
+                <input type="submit" value="Invite!" v-on:click.prevent="sendInvite()">
+                </form>
+                </div>
    
-  </div>
+    </div>
   </div>
 </template>
 
@@ -73,6 +63,7 @@ export default {
                 userBalance: this.$store.state.account.userBalance
             },
             leaderboard: [],
+            email: ''
         }
       
     },
@@ -101,6 +92,15 @@ export default {
                 this.$store.commit('SET_LEADERBOARD', response.data);
                 this.leaderboard = this.$store.state.leaderboard
             })
+        },
+        sendInvite() {
+          let invite = {
+            userId: '',
+            gameId: this.gameId,
+            userEmail: this.email
+          }
+          GameService.invitePlayer(invite);
+          this.email = '';
         }
     },
     beforeMount() {
@@ -115,13 +115,6 @@ export default {
 <style scoped>
 tr, td, th {
   height: 30px;
-  cursor: default;
-}
-button{
-  cursor: pointer;
-}
-.submit{
-  cursor: pointer;
 }
 .data {
   text-align: center;
@@ -155,7 +148,7 @@ justify-content: space-around;
      padding: 5px;
 } */
 
-div.form-example {
+form.form-example {
     display: table-row;
 }
 

@@ -25,4 +25,6 @@ public interface StocksDao {
 
     public void sellStock(SellOrder sellOrder);
 
+    public void updateForTransaction(List<Stock> stockList, List<Integer> accountIdList);
+
 }

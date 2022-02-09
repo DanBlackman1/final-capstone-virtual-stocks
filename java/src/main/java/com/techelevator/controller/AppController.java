@@ -54,12 +54,23 @@ public class AppController {
 
     @RequestMapping(path = "/stocks/buyNew", method = RequestMethod.POST)
     public void buyNewStock(@RequestBody BuyOrder buyOrder) {
+
         stocksDao.buyNewStock(buyOrder);
+
+        List<Stock> stockList = stocksDao.retrieveSavedPrices();
+        List<Integer> accountIdList = accountDao.getActiveAccounts();
+        stocksDao.updateForTransaction(stockList, accountIdList);
     }
 
     @RequestMapping(path = "/stocks/buy", method = RequestMethod.PUT)
     public void buyStock(@RequestBody BuyOrder buyOrder) {
+
         stocksDao.buyExistingStock(buyOrder);
+
+        List<Stock> stockList = stocksDao.retrieveSavedPrices();
+        List<Integer> accountIdList = accountDao.getActiveAccounts();
+        stocksDao.updateForTransaction(stockList, accountIdList);
+
     }
 
     @RequestMapping(path = "/currentPrices", method = RequestMethod.GET)
@@ -98,7 +109,13 @@ public class AppController {
 
     @RequestMapping(path = "/stocks/sell", method = RequestMethod.PUT)
     public void sellStock(@RequestBody SellOrder sellOrder) {
+
         stocksDao.sellStock(sellOrder);
+
+        List<Stock> stockList = stocksDao.retrieveSavedPrices();
+        List<Integer> accountIdList = accountDao.getActiveAccounts();
+        stocksDao.updateForTransaction(stockList, accountIdList);
+
     }
 
 

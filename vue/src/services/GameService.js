@@ -29,15 +29,6 @@ export default {
         console.log("axios run")
         return axios.get(`/leaderboard/${gameId}`)
     },
-
-
-
-
-
-
-
-
-    
     seePlayersToInvite(gameId){
         return axios.get(`/displayUsers/${gameId}`)
     },

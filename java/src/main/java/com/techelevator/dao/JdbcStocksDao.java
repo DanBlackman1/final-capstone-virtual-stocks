@@ -147,6 +147,8 @@ public class JdbcStocksDao implements StocksDao{
         }
     }
 
+
+
     @Override
     public void sellStock(SellOrder sellOrder) {
         String sqlAccount = "UPDATE account SET dollar_amount = dollar_amount + ? WHERE account_id = ?;";
@@ -164,6 +166,35 @@ public class JdbcStocksDao implements StocksDao{
 
 
 }
+
+    @Override
+    public void updateForTransaction(List<Stock> stockList, List<Integer> accountIdList) {
+        String sqlQuery = "SELECT * FROM stock_amount WHERE account_id = ?;";
+        String sqlUpdate = "UPDATE account SET stock_value = ?, user_balance = dollar_amount + stock_value WHERE account_id = ?;";
+        for (Integer accountId : accountIdList) {
+            BigDecimal updatedStockValue = new BigDecimal("0");
+            List<Stock> accountStocks = new ArrayList<>();
+            SqlRowSet results = template.queryForRowSet(sqlQuery, accountId);
+            while (results.next()) {
+                Stock stock = new Stock();
+                stock.setNumberOfShares(results.getDouble("total_shares"));
+                stock.setAccountId(results.getInt("account_id"));
+                stock.setStockSymbol(results.getString("stock_symbol"));
+                accountStocks.add(stock);
+            }
+            for (Stock stockDetails : accountStocks) {
+                for (Stock price : stockList) {
+                    if (stockDetails.getStockSymbol().equals(price.getStockSymbol())) {
+                        String shares = stockDetails.getNumberOfShares() + "";
+                        BigDecimal sharesNumber = new BigDecimal(shares);
+                        BigDecimal multiplied = price.getCurrentPrice().multiply(sharesNumber);
+                        updatedStockValue = updatedStockValue.add(multiplied);
+                    }
+                }
+            }
+            template.update(sqlUpdate, updatedStockValue, accountId);
+        }
+    }
 
 
     private Stock mapRowToStock(SqlRowSet results) {
