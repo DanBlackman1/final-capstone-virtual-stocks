@@ -15,5 +15,5 @@ public interface InviteDao {
 
     public User getUserByEmail(String email);
 
-    public void declineInvite();
+    public void declineInvite(int userId, int gameId);
 }

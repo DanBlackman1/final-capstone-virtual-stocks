@@ -6,6 +6,7 @@ import com.techelevator.dao.InviteDao;
 import com.techelevator.dao.StocksDao;
 import com.techelevator.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -108,9 +109,11 @@ public class AppController {
         gameDao.addUser(invite.getGameId(), invite.getUserId(), accountId);
     }
 
-    @RequestMapping(path = "/declineInvite", method = RequestMethod.DELETE)
-    public void declineInvite(@RequestBody Invite invite) {
-
+    @RequestMapping(path = "/declineInvite/{userId}/{gameId}", method = RequestMethod.DELETE)
+    public void declineInvite(@PathVariable("userId") int userId,
+                              @PathVariable("gameId") int gameId) {
+        System.out.println("test line");
+        inviteDao.declineInvite(userId, gameId);
     }
 
     @RequestMapping(path = "/stocks/sell", method = RequestMethod.PUT)
@@ -122,6 +125,12 @@ public class AppController {
         List<Integer> accountIdList = accountDao.getActiveAccounts();
         stocksDao.updateForTransaction(stockList, accountIdList);
 
+    }
+
+    @RequestMapping(path = "/endGame", method = RequestMethod.PUT)
+    public void closeOut(@RequestBody int gameId) {
+        List<Account> accountList = accountDao.getAccountsWithinGame(gameId);
+        stocksDao.closeAll(accountList);
     }
 
 

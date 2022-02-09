@@ -37,7 +37,12 @@
         <td>{{ invite.gameName }}</td>
         <td>{{ invite.startDate }}</td>
         <td>{{ invite.endDate }}</td>
-        <td><button v-on:click.prevent="acceptInvite(invite.gameId)">Accept</button><button>Decline</button></td>
+        <td>
+            <button v-on:click.prevent="acceptInvite(invite.gameId)">Accept</button>
+        </td>
+         <td>
+            <button v-on:click.prevent="declineInvite(invite.gameId)">Decline</button>
+        </td>
       </tr>
     </tbody>
   </table>
@@ -72,8 +77,15 @@ export default {
         this.myInvites = response.data;
       })
     },
-    declineInvite() {
-
+    declineInvite(gameId) {
+      let inviteGameId = gameId;
+      let inviteUserId = this.$store.state.user.id;
+      console.log("whether tis nobler in the mind to delete such invites...")
+      GameService.declineInvite(inviteUserId, inviteGameId).then((response) => {
+        if (response.status === 204 || response.status === 202 || response.status === 200) {
+          this.$router.go();
+        }
+      });
     },
     acceptInvite(gameId) {
       let invite = {
@@ -82,7 +94,6 @@ export default {
       }
       GameService.confirmInvite(invite);
       this.$router.go();
-
     }
     },
     beforeMount(){
