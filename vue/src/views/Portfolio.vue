@@ -1,5 +1,6 @@
 <template>
   <div class="main">
+     <loading-image v-if="$store.state.isLoading"></loading-image>
     <div class="overview">
      <!-- Stock search: <input type="search" placeholder="Search"> -->
     </div>
@@ -17,8 +18,11 @@
             <td class="leftTable">{{ stock.stockSymbol }}</td>
             <td class="leftTable">{{ stock.numberOfShares }}</td>
             <td class="leftTable">${{ parseFloat(getAssetLineValue(stock)).toFixed(2)}}</td>
+
             <!--<td class="leftTable">${{ parseFloat(getAssetLineValue(stock)).toFixed(2)}}</td>-->
           </tr>
+          <!-- adds a bottom space that flexes -->
+          <tr><td></td><td></td><td></td></tr>
         </tbody>
         <tfoot>
           <tr>
@@ -44,7 +48,7 @@
         </tbody>
         <tbody>
           <td class="seeLeader">
-            <button class="btnleaderboard" v-on:click="sellStock(generateSellOrder())">View Leaderboard: </button>
+            <button class="btnleaderboard" v-on:click="goToLeaderBoard">View Leaderboard: </button>
           </td>
         </tbody>
         <tfoot>
@@ -61,6 +65,7 @@
             <th >Price</th>
           </tr>
         </thead>
+       
         <tbody id="rightTable">
           <tr class="clickable" v-for="stock in this.$store.state.stockPrices" v-bind:key="stock.stockSymbol" v-on:click="populateFields(stock.stockSymbol, 10)">
             <td colspan="2" class="rowCheck">{{ stock.stockSymbol }}</td>
@@ -81,10 +86,15 @@
 
 <script>
 import GameService from "../services/GameService.js";
+import LoadingImage from "../components/LoadingImage";
 export default {
   name: "portfolio",
+  components:{
+    LoadingImage
+  },
   data() {
     return {
+      isLoading: true,
       game: {
         gameName: this.$store.state.game.gameName,
         endDate: this.$store.state.game.endDate,
@@ -108,17 +118,19 @@ export default {
   methods: {
     getAssets(accountId) {
       console.log("get assets")
+      // if(accountId != 'undefined')
       GameService.getPortfolio(accountId).then((response) => {
         console.log(response.data);
         this.$store.commit('SET_PORTFOLIO', response.data.stockList);
       this.assets = this.$store.state.portfolio;
       this.getTime();
+      
       });
     },
     populateFields(stockSymbol, numberOfShares){
       document.getElementById('tickerInput').setAttribute("value", stockSymbol);
       document.getElementById('sharesInput').setAttribute("value", numberOfShares);
-
+      
     },
     generateBuyOrder(){
       console.log("generate buy order")
@@ -197,7 +209,11 @@ export default {
           return stock.numberOfShares * pricesArr[i].currentPrice;
         }
       }
-    }
+    },
+     goToLeaderBoard() {
+            this.$router.push('/gameDetails');
+        },
+        
   },
   created() {
     this.getAssets(this.account.accountId);
@@ -211,6 +227,7 @@ export default {
   overflow: auto;
   
 } */
+
 thead, tfoot{
   cursor: default;
 }
@@ -257,7 +274,15 @@ thead, tfoot{
 #tables {
   display: flex;
   justify-content: space-evenly;
-  align-items: stretch,
+  height: 400px;
+
+}
+.clickable{
+  height: 20px;
+}
+.leftSpace{
+  display: flex;
+  align-self: stretch;
 }
 /* spacing */
 table {

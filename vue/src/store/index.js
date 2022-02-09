@@ -11,8 +11,8 @@ Vue.use(Vuex)
  */
 const currentToken = localStorage.getItem('token')
 const currentUser = JSON.parse(localStorage.getItem('user'));
-let currentGame = {};
-let currentAccount = {};
+// let currentGame = {};
+// let currentAccount = {};
 
 if(currentToken != null) {
   axios.defaults.headers.common['Authorization'] = `Bearer ${currentToken}`;
@@ -20,15 +20,19 @@ if(currentToken != null) {
 
 export default new Vuex.Store({
   state: {
+    isLoading : true,
     token: currentToken || '',
     user: currentUser || {},
-    game: currentGame || {},
-    account: currentAccount || {},
+    game: {},
+    account: {},
     stockPrices: [],
     portfolio: [],
     leaderboard: []
   },
   mutations: {
+    TOGGLE_IS_LOADING(state) {
+      state.isLoading = !state.isLoading;
+    },
     SET_AUTH_TOKEN(state, token) {
       state.token = token;
       localStorage.setItem('token', token);
