@@ -146,7 +146,7 @@ export default {
        }else{
          sharesToAdd = document.getElementById('sharesInput').value;
        }
-      let buyOrder = {sharesToAdd: sharesToAdd,stockSymbol: stockSymbol, accountId: this.account.accountId, currentPrice: price}
+      let buyOrder = {sharesToAdd: sharesToAdd, stockSymbol: stockSymbol, accountId: this.account.accountId, currentPrice: price}
       return buyOrder;
     },
     buyStock(buyOrder){

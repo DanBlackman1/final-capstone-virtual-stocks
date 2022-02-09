@@ -6,6 +6,7 @@ import com.techelevator.dao.InviteDao;
 import com.techelevator.dao.StocksDao;
 import com.techelevator.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -95,9 +96,10 @@ public class AppController {
         inviteDao.invitePlayer(user.getId(), invite.getGameId());
     }
 
-    @RequestMapping(path = "/displayUsers/{gameId}", method = RequestMethod.GET)
-    public List<User> displayUsers(@PathVariable("gameId") int gameId) {
-        return inviteDao.displayUsers(gameId);
+    @RequestMapping(path = "/displayInvites/{userId}", method = RequestMethod.GET)
+    public List<Invite> displayUsers(@PathVariable("userId") int userId) {
+
+        return inviteDao.displayInvites(userId);
     }
 
     @RequestMapping(path = "/confirm", method = RequestMethod.PUT)
@@ -105,6 +107,13 @@ public class AppController {
         inviteDao.confirmInvite(invite.getUserId(), invite.getGameId());
         int accountId = accountDao.createAccount();
         gameDao.addUser(invite.getGameId(), invite.getUserId(), accountId);
+    }
+
+    @RequestMapping(path = "/declineInvite/{userId}/{gameId}", method = RequestMethod.DELETE)
+    public void declineInvite(@PathVariable("userId") int userId,
+                              @PathVariable("gameId") int gameId) {
+        System.out.println("test line");
+        inviteDao.declineInvite(userId, gameId);
     }
 
     @RequestMapping(path = "/stocks/sell", method = RequestMethod.PUT)
@@ -116,6 +125,12 @@ public class AppController {
         List<Integer> accountIdList = accountDao.getActiveAccounts();
         stocksDao.updateForTransaction(stockList, accountIdList);
 
+    }
+
+    @RequestMapping(path = "/endGame", method = RequestMethod.PUT)
+    public void closeOut(@RequestBody int gameId) {
+        List<Account> accountList = accountDao.getAccountsWithinGame(gameId);
+        stocksDao.closeAll(accountList);
     }
 
 

@@ -5,11 +5,24 @@
             <th>
               <div class="title">{{ game.gameName }}</div>
             </th>
-            <th class="gametime"> 
+            <th v-if="yetToStart" class="gametime"> 
+              <div class="end">{{ " Starts on " + game.startDate }}</div>
+            </th>
+            <th v-if="gameOver" class="gametime"> 
+              <div class="end">{{ " Ended on " + game.endDate }}</div>
+            </th>
+            <th v-else class="gametime"> 
               <div class="end">{{ " Ends on " + game.endDate }}</div>
             </th>
             <table>
-                <thead>
+               <thead v-if="gameOver">
+                <tr>
+                    <th>Final Standing</th>
+                    <th>Username</th>
+                    <th>Final Portfolio Value</th>
+                </tr>
+                </thead>
+                <thead v-else>
                 <tr>
                     <th>Place</th>
                     <th>Username</th>
@@ -23,7 +36,7 @@
                 <td class="data">{{ place.userBalance }}</td>
                 </tr>
             </table>
-            <button v-on:click="goToPortfolio()">View My Portfolio</button>
+            <button v-if="isActive" v-on:click="goToPortfolio()">View My Portfolio</button>
         </div>
             <div id="invite">
             <h2>
@@ -63,7 +76,10 @@ export default {
                 userBalance: this.$store.state.account.userBalance
             },
             leaderboard: [],
-            email: ''
+            email: '',
+            isActive: true,
+            isOver: false,
+            yetToStart: false
         }
       
     },
@@ -99,11 +115,40 @@ export default {
         sendInvite() {
           let invite = {
             userId: '',
-            gameId: this.gameId,
+            gameId: this.game.gameId,
             userEmail: this.email
           }
           GameService.invitePlayer(invite);
           this.email = '';
+        },
+        checkActiveDate(){
+          let currentTimeStamp = new Date();
+          let endDate = new Date(this.game.endDate);
+          let startDate = new Date(this.game.startDate);
+          if(currentTimeStamp > endDate || currentTimeStamp < startDate){
+           this.isActive = false;
+          }else{
+            this.isActive = true;
+          }
+        },
+        checkGameOver(){
+         let currentTimeStamp = new Date();
+         let endDate = new Date(this.game.endDate);
+         if(currentTimeStamp > endDate){
+           this.gameOver = true;
+          GameService.endGame(this.game.gameId);
+         }else{
+           this.gameOver = false;
+         }
+        },
+        checkGameYetToStart(){
+         let currentTimeStamp = new Date();
+         let startDate = new Date(this.game.startDate);
+         if(currentTimeStamp < startDate){
+           this.yetToStart = true;
+         }else{
+           this.yetToStart = false;
+         }
         }
     },
     beforeMount() {
@@ -111,6 +156,11 @@ export default {
      this.refresh();
      this.viewDetails();
      },
+     created(){
+        this.checkActiveDate();
+        this.checkGameOver();
+        this.checkGameYetToStart();
+     }
 }
 </script>
 

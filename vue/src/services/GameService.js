@@ -29,14 +29,20 @@ export default {
         console.log("axios run")
         return axios.get(`/leaderboard/${gameId}`)
     },
-    seePlayersToInvite(gameId){
-        return axios.get(`/displayUsers/${gameId}`)
+    seeMyInvites(userId){
+        return axios.get(`/displayInvites/${userId}`)
     },
     invitePlayer(invite) {
         return axios.post('/invite', invite)
     },
     confirmInvite(invite) {
         return axios.put('/confirm', invite)
+    },
+    declineInvite(userId, gameId) {
+        return axios.delete(`/declineInvite/${userId}/${gameId}`)
+    },
+    endGame(gameId){
+        return axios.put('/endGame', gameId)
     }
 
 }
