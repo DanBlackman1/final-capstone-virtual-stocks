@@ -124,12 +124,15 @@ export default {
       console.log("generate buy order")
       let price = 0;
       let stockSymbol = document.getElementById('tickerInput').value;
+      let sharesToAdd = 0;
       let pricesArr = this.$store.state.stockPrices;
           for(let i = 0; i < pricesArr.length; i++) {
         if(stockSymbol === pricesArr[i].stockSymbol) {
        price = pricesArr[i].currentPrice;}}
-      let buyOrder = {sharesToAdd: document.getElementById('sharesInput').value,
-      stockSymbol: stockSymbol, accountId: this.account.accountId, currentPrice: price}
+       if((price * document.getElementById('sharesInput').value) > this.account.dollarAmount){
+        sharesToAdd = (this.account.dollarAmount/price)-1 ;
+       }
+      let buyOrder = {sharesToAdd: sharesToAdd,stockSymbol: stockSymbol, accountId: this.account.accountId, currentPrice: price}
       return buyOrder;
     },
     buyStock(buyOrder){
@@ -141,13 +144,17 @@ export default {
           isFound = true;
         }
       }
+        // gamedetails for now, should refresh portfolio page
       if(isFound){
         GameService.buyStock(buyOrder);
-        console.log("executed current buy")
+        console.log("executed current buy");
+        this.$router.push('/gameDetails');
       }
+      // gamedetails for now, should refresh portfolio page
       else{
         GameService.buyNewStock(buyOrder);
-        console.log("executed new buy")
+        console.log("executed new buy");
+        this.$router.push('/gameDetails');
       }
     },
     generateSellOrder(){
@@ -170,9 +177,11 @@ export default {
       stockSymbol: stockSymbol, accountId: this.account.accountId, currentPrice: price, allShares: allShares}
       return sellOrder;
     },
+    // gamedetails for now, should refresh portfolio page
     sellStock(sellOrder){
       console.log("sell function")
       GameService.sellStock(sellOrder);
+      this.$router.push('/gameDetails');
     },
     getTime() {
     let allOfTime = new Date();
