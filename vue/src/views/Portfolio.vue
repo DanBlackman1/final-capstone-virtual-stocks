@@ -123,7 +123,7 @@ export default {
     generateBuyOrder(){
       console.log("generate buy order")
       let price = 0;
-      let stockSymbol = document.getElementById('tickerInput').value;
+      let stockSymbol = (document.getElementById('tickerInput').value).toUpperCase();
       let sharesToAdd = 0;
       let pricesArr = this.$store.state.stockPrices;
           for(let i = 0; i < pricesArr.length; i++) {
@@ -131,6 +131,8 @@ export default {
        price = pricesArr[i].currentPrice;}}
        if((price * document.getElementById('sharesInput').value) > this.account.dollarAmount){
         sharesToAdd = (this.account.dollarAmount/price)-1 ;
+       }else{
+         sharesToAdd = document.getElementById('sharesInput').value;
        }
       let buyOrder = {sharesToAdd: sharesToAdd,stockSymbol: stockSymbol, accountId: this.account.accountId, currentPrice: price}
       return buyOrder;
@@ -163,7 +165,7 @@ export default {
       let maxSharesToSubtract = 0;
       let sellQuantity = 0;
       let allShares = false;
-      let stockSymbol = document.getElementById('tickerInput').value;
+      let stockSymbol = (document.getElementById('tickerInput').value).toUpperCase();
       let portfolioArr = this.assets;
           for(let i = 0; i < portfolioArr.length; i++) {
         if(stockSymbol === portfolioArr[i].stockSymbol) {
