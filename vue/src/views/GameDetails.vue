@@ -76,12 +76,15 @@ export default {
             })
         },
         goToPortfolio() {
+      // this.$store.commit('SET_GAME', this.game);
+      // this.$store.commit('SET_ACCOUNT', this.account)
             this.$router.push('/portfolio');
         },
         refresh() {
             GameService.updateStockPrices().then((response) => {
                 if (response.status === 200) {
                     this.$store.commit('SET_STOCK_PRICES', response.data);
+                    this.$store.commit('TOGGLE_IS_LOADING');
                 }
             })
         },
