@@ -42,7 +42,10 @@ CREATE TABLE game (
 CREATE TABLE invite (
     user_id int NOT NULL,
     game_id int NOT NULL,
-    accepted boolean DEFAULT false
+    accepted boolean DEFAULT false,
+    CONSTRAINT FK_invite_users FOREIGN KEY (user_id) REFERENCES users(user_id),
+    CONSTRAINT FK_invite_game FOREIGN KEY (game_id) REFERENCES game(game_id)
+
 );
 
 CREATE TABLE account (

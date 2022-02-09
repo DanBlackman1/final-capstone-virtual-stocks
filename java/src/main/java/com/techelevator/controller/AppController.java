@@ -95,9 +95,10 @@ public class AppController {
         inviteDao.invitePlayer(user.getId(), invite.getGameId());
     }
 
-    @RequestMapping(path = "/displayUsers/{gameId}", method = RequestMethod.GET)
-    public List<User> displayUsers(@PathVariable("gameId") int gameId) {
-        return inviteDao.displayUsers(gameId);
+    @RequestMapping(path = "/displayInvites/{userId}", method = RequestMethod.GET)
+    public List<Invite> displayUsers(@PathVariable("userId") int userId) {
+
+        return inviteDao.displayInvites(userId);
     }
 
     @RequestMapping(path = "/confirm", method = RequestMethod.PUT)
@@ -105,6 +106,11 @@ public class AppController {
         inviteDao.confirmInvite(invite.getUserId(), invite.getGameId());
         int accountId = accountDao.createAccount();
         gameDao.addUser(invite.getGameId(), invite.getUserId(), accountId);
+    }
+
+    @RequestMapping(path = "/declineInvite", method = RequestMethod.DELETE)
+    public void declineInvite(@RequestBody Invite invite) {
+
     }
 
     @RequestMapping(path = "/stocks/sell", method = RequestMethod.PUT)

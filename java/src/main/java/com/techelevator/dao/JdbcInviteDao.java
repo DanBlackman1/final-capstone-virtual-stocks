@@ -1,4 +1,5 @@
 package com.techelevator.dao;
+import com.techelevator.model.Invite;
 import com.techelevator.model.User;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
@@ -30,18 +31,21 @@ public class JdbcInviteDao implements InviteDao{
     }
 
     @Override
-    public List<User> displayUsers(int gameId) {
-        String sql = "SELECT u.username, u.user_id FROM users u LEFT JOIN invite" +
-                " i ON i.user_id = u.user_id WHERE i.game_id IS NULL OR i.game_id != ?;";
-        List<User> userList = new ArrayList<>();
-        SqlRowSet results = template.queryForRowSet(sql, gameId);
+    public List<Invite> displayInvites(int userId) {
+        String sql = "SELECT g.game_name, g.end_date, g.start_date, g.game_id" +
+                " FROM invite i JOIN game g ON g.game_id = i.game_id" +
+                " WHERE i.user_id = ? AND i.accepted = false";
+        List<Invite> inviteList = new ArrayList<>();
+        SqlRowSet results = template.queryForRowSet(sql, userId);
         while(results.next()) {
-            User user = new User();
-            user.setId(results.getLong("user_id"));
-            user.setUsername(results.getString("username"));
-            userList.add(user);
+            Invite invite = new Invite();
+            invite.setEndDate(results.getDate("end_date").toLocalDate());
+            invite.setStartDate(results.getDate("start_date").toLocalDate());
+            invite.setGameName(results.getString("game_name"));
+            invite.setGameId(results.getInt("game_id"));
+            inviteList.add(invite);
         }
-        return userList;
+        return inviteList;
     }
 
     @Override
@@ -53,5 +57,10 @@ public class JdbcInviteDao implements InviteDao{
             user.setId(results.getLong("user_id"));
         }
         return user;
+    }
+
+    @Override
+    public void declineInvite() {
+
     }
 }
