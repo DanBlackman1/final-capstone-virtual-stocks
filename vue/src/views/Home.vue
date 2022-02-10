@@ -49,7 +49,7 @@ h1{
   display: grid;
   grid-template-areas: 
   "splitTables addingInfo"
-  "invites addingInfo";
+  "invites invites";
 }
 .addingInfo{
   display: grid;
@@ -57,24 +57,22 @@ h1{
 }
 .invites{
   grid-area: invites;
-  justify-self: center;
+  justify-self: left;
   margin-top: 20px;
 }
 
-.box{
-  border: black solid;
-}
 
 
 
-@media only screen and (max-width: 635px) {
+@media only screen and (max-width: 790px) {
   .splitTables{
     display: grid; 
     grid-template: 
-    "splitTables"
-    "invites"
-    "addingInfo";   
+    "splitTables ."
+    "invites invites"
+    "addingInfo addingInfo";   
   }
+
 
 }
 </style>

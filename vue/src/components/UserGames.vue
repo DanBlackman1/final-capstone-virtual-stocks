@@ -1,80 +1,79 @@
 <template>
-  <div id="main">
-   <div class="table">
-    <table>
-    <thead>
-      <tr id="textForCursor">
-        <th>Game Name</th>
-        <th>Portfolio Value</th>
-        <th>Game End Date</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr v-for='(game, index) in gameList' v-bind:key="game.gameId" v-on:click="goToGameDetails(game, accountList[index])">
-        <td  class="hover" id="gameName">
-          {{game.gameName}}
-          </td>
-        <td class="hover">
-          {{Number(accountList[index].userBalance).toLocaleString()}}
-        </td>
-       <td class="hover">
-          {{game.endDate}}
-        </td>
-      </tr>
-    </tbody>
-  </table>
-  <!-- took out the table -->
-   </div>
-  </div>
+      <table class="table">
+        <thead>
+          <tr id="textForCursor">
+            <th colspan="1">Game Name</th>
+            <th colspan="2">Portfolio Value</th>
+            <th colspan="3">Game End Date</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="(game, index) in gameList"
+            v-bind:key="game.gameId"
+            v-on:click="goToGameDetails(game, accountList[index])">
+            <td colspan="1" class="hover" id="gameName" >
+              {{ game.gameName }}
+            </td>
+            <td colspan="2" class="hover" >
+              {{ Number(accountList[index].userBalance).toLocaleString() }}
+            </td>
+            <td colspan="3" class="hover" >
+              {{ game.endDate }}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <!-- took out the table -->
 </template>
 
 <script>
-import GameService from "../services/GameService.js"
+import GameService from "../services/GameService.js";
 export default {
   data() {
-    return { 
+    return {
       accountList: [],
       gameList: [],
       // took out invites
-    }
+    };
   },
   methods: {
-    getGameList(id){
-           GameService.viewGamesByUserId(id).then((response) =>{
-             this.accountList = response.data.accountsList;
-             this.gameList = response.data.gamesList;
-            })
-         },
+    getGameList(id) {
+      GameService.viewGamesByUserId(id).then((response) => {
+        this.accountList = response.data.accountsList;
+        this.gameList = response.data.gamesList;
+      });
+    },
     goToGameDetails(game, account) {
-      this.$store.commit('SET_GAME', game);
-      this.$store.commit('SET_ACCOUNT', account)
-      this.$router.push('/gameDetails');
+      this.$store.commit("SET_GAME", game);
+      this.$store.commit("SET_ACCOUNT", account);
+      this.$router.push("/gameDetails");
     },
     // took out invites
-    },
-    beforeMount(){
-      this.getGameList(this.$store.state.user.id);
-      //took out invites
-    },
-
-}
+  },
+  beforeMount() {
+    this.getGameList(this.$store.state.user.id);
+    //took out invites
+  },
+};
 </script>
 
 <style scoped>
-#textForCursor{
+#textForCursor {
   cursor: default;
-  text-align: center;
+  justify-content: center;
 }
-.hover:hover{
+
+.hover:hover {
   cursor: pointer;
 }
-#gameName{
+#gameName {
   color: darkblue;
   text-decoration: underline;
   font: bold;
 }
-main{
-  font-family: 'Times New Roman', Times, serif;
-}
-
+.table {
+  border: black solid;
+  width: 500px;
+  text-align: center;
+} 
 </style>
