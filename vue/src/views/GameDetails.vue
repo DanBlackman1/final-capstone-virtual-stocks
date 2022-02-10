@@ -96,6 +96,13 @@ export default {
       // this.$store.commit('SET_ACCOUNT', this.account)
             this.$router.push('/portfolio');
         },
+        getAccount() {
+          GameService.refreshAccount(this.$store.state.user.id, this.game.gameId).then((response) => {
+            if (response.status === 200) {
+              this.$store.commit('SET_ACCOUNT', response.data)
+            }
+          })
+        },
         refresh() {
             GameService.updateStockPrices().then((response) => {
                 if (response.status === 200) {
@@ -162,6 +169,7 @@ export default {
         this.checkActiveDate();
         this.checkGameOver();
         this.checkGameYetToStart();
+        this.getAccount();
      }
 }
 </script>

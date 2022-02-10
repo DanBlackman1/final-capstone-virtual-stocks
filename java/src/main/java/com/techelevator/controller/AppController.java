@@ -54,24 +54,30 @@ public class AppController {
     }
 
     @RequestMapping(path = "/stocks/buyNew", method = RequestMethod.POST)
-    public void buyNewStock(@RequestBody BuyOrder buyOrder) {
+    public Account buyNewStock(@RequestBody BuyOrder buyOrder) {
 
         stocksDao.buyNewStock(buyOrder);
 
         List<Stock> stockList = stocksDao.retrieveSavedPrices();
         List<Integer> accountIdList = accountDao.getActiveAccounts();
         stocksDao.updateForTransaction(stockList, accountIdList);
+
+        Account namedAccount = accountDao.getAccount(buyOrder.getUserId(), buyOrder.getGameId());
+        System.out.println("should activate AFTER tick and tock");
+        return namedAccount;
     }
 
     @RequestMapping(path = "/stocks/buy", method = RequestMethod.PUT)
-    public void buyStock(@RequestBody BuyOrder buyOrder) {
+    public Account buyStock(@RequestBody BuyOrder buyOrder) {
 
         stocksDao.buyExistingStock(buyOrder);
 
         List<Stock> stockList = stocksDao.retrieveSavedPrices();
         List<Integer> accountIdList = accountDao.getActiveAccounts();
         stocksDao.updateForTransaction(stockList, accountIdList);
-
+        Account namedAccount = accountDao.getAccount(buyOrder.getUserId(), buyOrder.getGameId());
+        System.out.println("should activate AFTER tick and tock");
+        return namedAccount;
     }
 
     @RequestMapping(path = "/currentPrices", method = RequestMethod.GET)
@@ -117,20 +123,29 @@ public class AppController {
     }
 
     @RequestMapping(path = "/stocks/sell", method = RequestMethod.PUT)
-    public void sellStock(@RequestBody SellOrder sellOrder) {
+    public Account sellStock(@RequestBody SellOrder sellOrder) {
 
         stocksDao.sellStock(sellOrder);
 
         List<Stock> stockList = stocksDao.retrieveSavedPrices();
         List<Integer> accountIdList = accountDao.getActiveAccounts();
         stocksDao.updateForTransaction(stockList, accountIdList);
-
+        Account namedAccount = accountDao.getAccount(sellOrder.getUserId(), sellOrder.getGameId());
+        System.out.println("should activate AFTER tick and tock");
+        return namedAccount;
     }
 
     @RequestMapping(path = "/endGame/{gameId}", method = RequestMethod.PUT)
     public void closeOut(@PathVariable("gameId") int gameId) {
         List<Account> accountList = accountDao.getAccountsWithinGame(gameId);
         stocksDao.closeAll(accountList);
+    }
+
+    @RequestMapping(path = "/ref/{userId}/{gameId}", method = RequestMethod.GET)
+    public Account refreshAccount(@PathVariable("userId") int userId,
+                                  @PathVariable("gameId") int gameId) {
+        System.out.println("firing");
+        return accountDao.getAccount(userId, gameId);
     }
 
 }

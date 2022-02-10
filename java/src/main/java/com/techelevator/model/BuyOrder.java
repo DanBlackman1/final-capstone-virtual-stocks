@@ -8,7 +8,9 @@ public class BuyOrder {
     private String stockSymbol;
     private int accountId;
     private BigDecimal currentPrice;
-   // private boolean isOwned;
+    private int userId;
+    private int gameId;
+
 
     public int getSharesToAdd() {
         return sharesToAdd;
@@ -42,11 +44,19 @@ public class BuyOrder {
         this.currentPrice = currentPrice;
     }
 
-    //  public boolean isOwned() {
-  //      return isOwned;
- //   }
+    public int getUserId() {
+        return userId;
+    }
 
-   // public void setOwned(boolean owned) {
-   //     isOwned = owned;
-  //  }
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
+
+    public int getGameId() {
+        return gameId;
+    }
+
+    public void setGameId(int gameId) {
+        this.gameId = gameId;
+    }
 }

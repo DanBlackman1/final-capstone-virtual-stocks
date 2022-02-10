@@ -165,19 +165,21 @@ public class JdbcStocksDao implements StocksDao{
             template.update(sqlDel);
         }
 
-
 }
+
 
     @Override
     public void updateForTransaction(List<Stock> stockList, List<Integer> accountIdList) {
         String sqlQuery = "SELECT * FROM stock_amount WHERE account_id = ?;";
-        String sqlUpdate = "UPDATE account SET stock_value = ?, user_balance = dollar_amount + stock_value WHERE account_id = ?;";
+        String sqlUpdateStock = "UPDATE account SET stock_value = ? WHERE account_id = ?;";
+        String sqlUpdateBalance = "UPDATE account SET user_balance = (stock_value + dollar_amount) WHERE account_id = ?;";
         for (Integer accountId : accountIdList) {
             BigDecimal updatedStockValue = new BigDecimal("0");
             List<Stock> accountStocks = new ArrayList<>();
             SqlRowSet results = template.queryForRowSet(sqlQuery, accountId);
             while (results.next()) {
                 Stock stock = new Stock();
+                System.out.println("tick");
                 stock.setNumberOfShares(results.getDouble("total_shares"));
                 stock.setAccountId(results.getInt("account_id"));
                 stock.setStockSymbol(results.getString("stock_symbol"));
@@ -185,6 +187,7 @@ public class JdbcStocksDao implements StocksDao{
             }
             for (Stock stockDetails : accountStocks) {
                 for (Stock price : stockList) {
+                    System.out.println("tock");
                     if (stockDetails.getStockSymbol().equals(price.getStockSymbol())) {
                         String shares = stockDetails.getNumberOfShares() + "";
                         BigDecimal sharesNumber = new BigDecimal(shares);
@@ -193,7 +196,8 @@ public class JdbcStocksDao implements StocksDao{
                     }
                 }
             }
-            template.update(sqlUpdate, updatedStockValue, accountId);
+            template.update(sqlUpdateStock, updatedStockValue, accountId);
+            template.update(sqlUpdateBalance, accountId);
         }
     }
 
