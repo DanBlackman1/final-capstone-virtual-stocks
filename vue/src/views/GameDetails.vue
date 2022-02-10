@@ -33,7 +33,7 @@
 
                 <td class="data">{{ index + 1 }}</td>
                 <td class="data">{{ place.username }}</td>
-                <td class="data">{{ place.userBalance }}</td>
+                <td class="data">${{ Number(place.userBalance).toLocaleString() }}</td>
                 </tr>
             </table>
             <button v-if="isActive" v-on:click="goToPortfolio()">View My Portfolio</button>

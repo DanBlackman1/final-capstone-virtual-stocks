@@ -21,7 +21,7 @@
           <tr class="clickable" v-for="stock in assets" v-bind:key="stock.stockSymbol" v-on:click="populateFields(stock.stockSymbol, stock.numberOfShares)">
             <td class="leftTable">{{ stock.stockSymbol }}</td>
             <td class="leftTable">{{ stock.numberOfShares }}</td>
-            <td class="leftTable">${{ parseFloat(getAssetLineValue(stock)).toFixed(2)}}</td>
+            <td class="leftTable">${{ Number(getAssetLineValue(stock)).toLocaleString()}}</td>
 
             <!--<td class="leftTable">${{ parseFloat(getAssetLineValue(stock)).toFixed(2)}}</td>-->
           </tr>
@@ -31,7 +31,7 @@
         <tfoot>
           <tr>
             <th colspan="2">Total Stock Value: </th>
-            <th>${{ parseFloat(account.stockValue).toFixed(2) }}</th>
+            <th>${{ Number(account.stockValue).toLocaleString() }}</th>
           </tr>
         </tfoot>
       </table>
@@ -57,7 +57,7 @@
         </tbody>
         <tfoot>
           <tr>
-            <th colspan="1">Total Portfolio Value: ${{ parseFloat(account.userBalance).toFixed(2) }}</th>
+            <th colspan="1">Total Portfolio Value: ${{ Number(account.userBalance).toLocaleString() }}</th>
           </tr>
         </tfoot>
       </table>
@@ -72,7 +72,7 @@
         <tbody id="rightTable">
           <tr class="clickable" v-for="stock in this.$store.state.stockPrices" v-bind:key="stock.stockSymbol" v-on:click="populateFields(stock.stockSymbol, 10)">
             <td colspan="2" class="rowCheck">{{ stock.stockSymbol }}</td>
-            <td class="rowCheck">${{ parseFloat(stock.currentPrice).toFixed(2)}}</td>
+            <td class="rowCheck">${{ Number(stock.currentPrice).toLocaleString()}}</td>
           </tr>
         </tbody>
         <tfoot>
