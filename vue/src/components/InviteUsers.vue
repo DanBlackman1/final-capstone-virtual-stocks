@@ -67,7 +67,6 @@ export default {
 <style scoped>
 table{
   width: 500px;
-  border: black solid;
   border-collapse:collapse;
   text-align: center;
 }

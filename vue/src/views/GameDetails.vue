@@ -17,16 +17,16 @@
             <table>
                <thead v-if="gameOver">
                 <tr>
-                    <th>Final Standing</th>
-                    <th>Username</th>
-                    <th>Final Portfolio Value</th>
+                    <th class="thSize">Final Standing</th>
+                    <th class="thSize">Username</th>
+                    <th class="thSize">Final Portfolio Value</th>
                 </tr>
                 </thead>
                 <thead v-else>
                 <tr>
-                    <th>Place</th>
-                    <th>Username</th>
-                    <th>Portfolio Value</th>
+                    <th class="thSize">Place</th>
+                    <th class="thSize">Username</th>
+                    <th class="thSize">Portfolio Value</th>
                 </tr>
                 </thead>
                 <tr v-for='(place, index) in leaderboard' v-bind:key="place.accountId">
@@ -39,11 +39,11 @@
             <button v-if="isActive" v-on:click="goToPortfolio()">View My Portfolio</button>
         </div>
             <div id="invite">
-            <h2>
-            <tr>
-                <th class="inviteUser">Invite User with Email</th>
-            </tr>
-            </h2>
+            <div>
+              <tr>
+                  <th class="inviteUser">Invite User with Email</th>
+              </tr>
+          </div>
              <form class="form-example">
                 <label for="email">Enter User Email: </label>
                 <input type="email" name="email" id="email" required v-model="email">
@@ -190,11 +190,19 @@ export default {
 
 
 <style scoped>
+.main{
+  margin-top: 70px;
+}
 tr, td, th {
   height: 30px;
 }
+.thSize{
+    font-weight: bolder;
+    font-size: 20px;
+}
 .data {
   text-align: center;
+  font-size: 17px;
 }
 .title{
 font-size: 30px;
@@ -206,9 +214,10 @@ height: 7px;
 .end {
 height: 22px;
 font-size:17px;
-border: rgb(17, 16, 16) solid;
-border-bottom:black solid 3px;
+/* border: rgb(17, 16, 16) solid; */
+border-bottom:black solid 2px;
 width:210px;
+
 }
 .gametime {
   display:flex ;
@@ -221,7 +230,9 @@ justify-content: space-around;
 }
 
 form.form-example {
+  
     display: table-row;
+    
 }
 
 label, input {
@@ -237,7 +248,6 @@ label {
   display:grid;
   border-collapse: collapse;
   border: 3 px solid rgb(22, 29, 22);
-  margin: 5px;
   align-items: stretch;
   border: black solid;
   padding: 10px;
@@ -281,12 +291,18 @@ tbody tr {
 tfoot th {
   text-align: center;
 }
-
-.inviteUser{
-  text-align: left;
-  padding: 20px;
+#invite{
+    background-color: rgb(233, 233, 233);
+    border: black solid;
+    padding: 10px;
 }
-h1,h2{
+.inviteUser{
+  padding-bottom: 50px;
+  
+  font-size: 28px;
+  /* padding: 20px; */
+}
+h1{
   text-align: center;
 }
 @media only screen and (max-width: 915px) {

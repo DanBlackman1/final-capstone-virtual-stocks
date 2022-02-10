@@ -1,30 +1,31 @@
 <template>
-  <div id="main">
-   <div class="table">
-    <table>
-    <thead>
-      <tr id="textForCursor">
-        <th>Game Name</th>
-        <th>Portfolio Value</th>
-        <th>Game End Date</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr v-for='(game, index) in gameList' v-bind:key="game.gameId" v-on:click="goToGameDetails(game, accountList[index])">
-        <td  class="hover" id="gameName">
-          {{game.gameName}}
-          </td>
-        <td class="hover">
-          ${{Number(accountList[index].userBalance).toLocaleString()}}
-        </td>
-       <td class="hover">
-          {{game.endDate}}
-        </td>
-      </tr>
-    </tbody>
-  </table>
-   </div>
-  </div>
+      <table class="table">
+        <thead>
+          <tr id="textForCursor">
+            <th colspan="1">Game Name</th>
+            <th colspan="2">Portfolio Value</th>
+            <th colspan="3">Game End Date</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="(game, index) in gameList"
+            v-bind:key="game.gameId"
+            v-on:click="goToGameDetails(game, accountList[index])">
+            <td colspan="1" class="hover" id="gameName" >
+              {{ game.gameName }}
+            </td>
+
+            <td colspan="2" class="hover">
+
+              ${{ Number(accountList[index].userBalance).toLocaleString() }}
+            </td>
+            <td colspan="3" class="hover" >
+              {{ game.endDate }}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <!-- took out the table -->
 </template>
 
 <script>
@@ -56,6 +57,7 @@ export default {
 </script>
 
 <style scoped>
+
 #textForCursor {
   cursor: default;
   justify-content: center;
@@ -70,9 +72,9 @@ export default {
   font: bold;
 }
 .table {
-  border: black solid;
   width: 500px;
   text-align: center;
   padding: 5px;
 } 
+
 </style>
