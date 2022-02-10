@@ -92,14 +92,23 @@ export default {
             })
         },
         goToPortfolio() {
-      // this.$store.commit('SET_GAME', this.game);
-      // this.$store.commit('SET_ACCOUNT', this.account)
             this.$router.push('/portfolio');
         },
         getAccount() {
           GameService.refreshAccount(this.$store.state.user.id, this.game.gameId).then((response) => {
             if (response.status === 200) {
               this.$store.commit('SET_ACCOUNT', response.data)
+            }
+          })
+        },
+        getGame() {
+          GameService.refreshGame(this.game.gameId).then((response) => {
+            if (response.status === 200) {
+              this.$store.commit('SET_GAME', response.data)
+              this.game = this.$store.state.game;
+              this.checkActiveDate();
+              this.checkGameOver();
+              this.setLeaderBoard();
             }
           })
         },
@@ -149,6 +158,7 @@ export default {
            this.gameOver = true;
            console.log('gameOver = true')
           GameService.endGame(this.game.gameId);
+          this.setLeaderBoard();
          }else{
            this.gameOver = false;
          }
@@ -169,10 +179,11 @@ export default {
      this.viewDetails();
      },
      created(){
+       this.getAccount();
+       this.getGame();
         this.checkActiveDate();
         this.checkGameOver();
         this.checkGameYetToStart();
-        this.getAccount();
      }
 }
 </script>
@@ -209,11 +220,6 @@ display:flex;
 justify-content: space-around;
 }
 
-/* #invite{
-     border: black solid;
-     padding: 5px;
-} */
-
 form.form-example {
     display: table-row;
 }
@@ -229,14 +235,12 @@ label {
 /* spacing */
 #leaderboard {
   display:grid;
-  /* width: 33%; */
   border-collapse: collapse;
   border: 3 px solid rgb(22, 29, 22);
   margin: 5px;
   align-items: stretch;
   border: black solid;
   padding: 10px;
-  /* height: 400px; */
   width:550px;
 }
 thead th:nth-child(1) {

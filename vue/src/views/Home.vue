@@ -16,7 +16,7 @@
     </div>
     
     <div class="invites">
-      <h1>Invited Users</h1>
+      <h1>My Invites</h1>
       <invite-users />
     </div>
     </div>

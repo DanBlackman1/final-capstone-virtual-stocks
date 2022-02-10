@@ -38,7 +38,13 @@ public class JdbcGameDAO implements GameDao{
 
     @Override
     public Game getGame(int gameId) {
-        return null;
+        String sql = "SELECT * FROM game WHERE game_id = ?;";
+        Game game = new Game();
+        SqlRowSet results = template.queryForRowSet(sql, gameId);
+        while(results.next()) {
+            game = mapRowToGame(results);
+        }
+        return game;
     }
 
     @Override

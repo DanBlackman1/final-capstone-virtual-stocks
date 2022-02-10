@@ -23,7 +23,6 @@
       </tr>
     </tbody>
   </table>
-  <!-- took out the table -->
    </div>
   </div>
 </template>
@@ -35,7 +34,6 @@ export default {
     return {
       accountList: [],
       gameList: [],
-      // took out invites
     };
   },
   methods: {
@@ -50,11 +48,9 @@ export default {
       this.$store.commit("SET_ACCOUNT", account);
       this.$router.push("/gameDetails");
     },
-    // took out invites
   },
   beforeMount() {
     this.getGameList(this.$store.state.user.id);
-    //took out invites
   },
 };
 </script>

@@ -150,4 +150,9 @@ public class AppController {
         return accountDao.getAccount(userId, gameId);
     }
 
+    @RequestMapping(path = "/game/{gameId}", method = RequestMethod.GET)
+    public Game refreshGame(@PathVariable("gameId") int gameId) {
+        return gameDao.getGame(gameId);
+    }
+
 }
