@@ -96,7 +96,6 @@ export default {
   },
   data() {
     return {
-      isLoading: true,
       game: {
         gameName: this.$store.state.game.gameName,
         endDate: this.$store.state.game.endDate,
