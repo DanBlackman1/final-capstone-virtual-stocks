@@ -12,7 +12,7 @@
 
       
       <label for="email" class="sr-only" id="email"></label>
-      Please enter a valid Email Address that may not include !:
+      <h4>Please enter a valid email: </h4>
       <div class="email">
       <input
         type="email" 

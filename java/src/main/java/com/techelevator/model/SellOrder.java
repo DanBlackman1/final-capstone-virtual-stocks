@@ -9,6 +9,8 @@ public class SellOrder {
     private int accountId;
     private BigDecimal currentPrice;
     private boolean allShares;
+    private int gameId;
+    private int userId;
 
     public int getSharesToSubtract() {
         return sharesToSubtract;
@@ -48,5 +50,21 @@ public class SellOrder {
 
     public void setAllShares(boolean allShares) {
         this.allShares = allShares;
+    }
+
+    public int getGameId() {
+        return gameId;
+    }
+
+    public void setGameId(int gameId) {
+        this.gameId = gameId;
+    }
+
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 }

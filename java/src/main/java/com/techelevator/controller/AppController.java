@@ -11,6 +11,9 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 
 @RestController
@@ -54,35 +57,43 @@ public class AppController {
     }
 
     @RequestMapping(path = "/stocks/buyNew", method = RequestMethod.POST)
-    public void buyNewStock(@RequestBody BuyOrder buyOrder) {
+    public Account buyNewStock(@RequestBody BuyOrder buyOrder) {
 
         stocksDao.buyNewStock(buyOrder);
 
         List<Stock> stockList = stocksDao.retrieveSavedPrices();
         List<Integer> accountIdList = accountDao.getActiveAccounts();
         stocksDao.updateForTransaction(stockList, accountIdList);
+
+        Account namedAccount = accountDao.getAccount(buyOrder.getUserId(), buyOrder.getGameId());
+        return namedAccount;
     }
 
     @RequestMapping(path = "/stocks/buy", method = RequestMethod.PUT)
-    public void buyStock(@RequestBody BuyOrder buyOrder) {
+    public Account buyStock(@RequestBody BuyOrder buyOrder) {
 
         stocksDao.buyExistingStock(buyOrder);
 
         List<Stock> stockList = stocksDao.retrieveSavedPrices();
         List<Integer> accountIdList = accountDao.getActiveAccounts();
         stocksDao.updateForTransaction(stockList, accountIdList);
-
+        Account namedAccount = accountDao.getAccount(buyOrder.getUserId(), buyOrder.getGameId());
+        return namedAccount;
     }
 
     @RequestMapping(path = "/currentPrices", method = RequestMethod.GET)
-    public List<Stock> getAndUpdateStockData() throws JsonProcessingException {
+    public Object[] getAndUpdateStockData() throws JsonProcessingException {
         List<Stock> pricesList = stocksDao.listCurrentPricesFromWeb();
+
         if (pricesList.size() > 0) {
             stocksDao.updateCurrentPrices(pricesList);
             List<Integer> accountIdList = accountDao.getActiveAccounts();
             stocksDao.updateStockValue(accountIdList, pricesList);
         }
-        return stocksDao.retrieveSavedPrices();
+        String updateTime = LocalTime.now().truncatedTo(ChronoUnit.SECONDS)
+                .format(DateTimeFormatter.ISO_LOCAL_TIME);
+        Object[] obj = new Object[]{updateTime, stocksDao.retrieveSavedPrices()};
+        return obj;
     }
 
     @RequestMapping(path = "/leaderboard/{id}", method = RequestMethod.GET)
@@ -112,25 +123,31 @@ public class AppController {
     @RequestMapping(path = "/declineInvite/{userId}/{gameId}", method = RequestMethod.DELETE)
     public void declineInvite(@PathVariable("userId") int userId,
                               @PathVariable("gameId") int gameId) {
-        System.out.println("test line");
         inviteDao.declineInvite(userId, gameId);
     }
 
     @RequestMapping(path = "/stocks/sell", method = RequestMethod.PUT)
-    public void sellStock(@RequestBody SellOrder sellOrder) {
+    public Account sellStock(@RequestBody SellOrder sellOrder) {
 
         stocksDao.sellStock(sellOrder);
 
         List<Stock> stockList = stocksDao.retrieveSavedPrices();
         List<Integer> accountIdList = accountDao.getActiveAccounts();
         stocksDao.updateForTransaction(stockList, accountIdList);
-
+        Account namedAccount = accountDao.getAccount(sellOrder.getUserId(), sellOrder.getGameId());
+        return namedAccount;
     }
 
     @RequestMapping(path = "/endGame/{gameId}", method = RequestMethod.PUT)
     public void closeOut(@PathVariable("gameId") int gameId) {
         List<Account> accountList = accountDao.getAccountsWithinGame(gameId);
         stocksDao.closeAll(accountList);
+    }
+
+    @RequestMapping(path = "/ref/{userId}/{gameId}", method = RequestMethod.GET)
+    public Account refreshAccount(@PathVariable("userId") int userId,
+                                  @PathVariable("gameId") int gameId) {
+        return accountDao.getAccount(userId, gameId);
     }
 
 }

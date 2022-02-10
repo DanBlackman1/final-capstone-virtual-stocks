@@ -44,6 +44,9 @@ export default {
     endGame(gameId){
         console.log('axios end call')
         return axios.put(`/endGame/${gameId}`)
+    },
+    refreshAccount(userId, gameId) {
+        return axios.get(`/ref/${userId}/${gameId}`)
     }
 
 }

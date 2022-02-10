@@ -2,7 +2,8 @@
 <body class="loginBody">
   <div id="login" class="text-center">
     <form class="form-signin" @submit.prevent="login">
-      <h1 class="h3 mb-3 font-weight-normal">Login to view your Games</h1>
+      <h1 id="loginTitle">Market 25</h1>
+      <h3 class="h3 mb-3 font-weight-normal">Login to view your Games</h3>
       <div
         class="alert alert-danger"
         role="alert"
@@ -17,6 +18,7 @@
       <div class="htmlUserName">
         <label for="username" class="sr-only">Username</label>
       </div>
+      
 
       <div class="username">
       <input
@@ -46,10 +48,13 @@
         <div class="submitButton">
           <button id="submitButton" type="submit">Sign in</button>
         </div>
-        <div class="register"> Not a member? &nbsp; 
-          &nbsp;<router-link id="register" :to="{ name: 'register' }"> Register</router-link>
-      </div>
+        <div class="register"> Not a member?  &nbsp;
+          <router-link id="register" :to="{ name: 'register' }"> Register</router-link>
+      </div><br>
+      <p><em>Learn the market with no danger to your bank account! Buy and sell stocks with your friends, 
+        then compare results to see how you fare. May the best trader win.</em></p>
     </form>
+    
   </div>
 </body>
 </template>
@@ -93,6 +98,10 @@ export default {
 </script>
 
 <style>
+#loginTitle{
+  font-size: 45px;
+  text-decoration: underline;
+}
 .form-signin{
   grid-area: form;
 }
