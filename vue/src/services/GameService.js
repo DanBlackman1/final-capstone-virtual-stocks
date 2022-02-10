@@ -42,7 +42,8 @@ export default {
         return axios.delete(`/declineInvite/${userId}/${gameId}`)
     },
     endGame(gameId){
-        return axios.put('/endGame', gameId)
+        console.log('axios end call')
+        return axios.put(`/endGame/${gameId}`)
     }
 
 }

@@ -127,14 +127,10 @@ public class AppController {
 
     }
 
-    @RequestMapping(path = "/endGame", method = RequestMethod.PUT)
-    public void closeOut(@RequestBody int gameId) {
+    @RequestMapping(path = "/endGame/{gameId}", method = RequestMethod.PUT)
+    public void closeOut(@PathVariable("gameId") int gameId) {
         List<Account> accountList = accountDao.getAccountsWithinGame(gameId);
         stocksDao.closeAll(accountList);
     }
-
-
-
-
 
 }

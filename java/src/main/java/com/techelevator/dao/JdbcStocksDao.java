@@ -200,11 +200,15 @@ public class JdbcStocksDao implements StocksDao{
     @Override
     public void closeAll(List<Account> accountList) {
         List<Stock> stockList = new ArrayList<>();
+        int counterOne = 0;
+        int counterTwo = 0;
         for(Account account : accountList) {
             String sql = "SELECT sa.account_id, sa.stock_symbol, sa.total_shares, sp.stock_price" +
                     " FROM stock_amount sa JOIN stock_price sp ON sa.stock_symbol = sp.stock_symbol" +
                     " WHERE account_id = ?;";
             SqlRowSet results = template.queryForRowSet(sql, account.getAccountId());
+            System.out.println("creating accounts " + counterOne);
+            counterOne++;
             while(results.next()) {
                 Stock stock = new Stock();
                 stock.setAccountId(results.getInt("account_id"));
@@ -214,17 +218,24 @@ public class JdbcStocksDao implements StocksDao{
                 stockList.add(stock);
             }
             for(Stock stock : stockList) {
-                String sqlAccount = "UPDATE account SET dollar_amount = dollar_amount + ? WHERE account_id = ?;";
+                String sqlAccount = "UPDATE account SET dollar_amount = (dollar_amount + ?) WHERE account_id = ?;";
                 String sharesString = stock.getNumberOfShares() + "";
                 BigDecimal shares = new BigDecimal(sharesString);
+                System.out.println("creating stocks " + counterTwo);
+                counterTwo++;
+                System.out.println(stock.getCurrentPrice().multiply(shares));
                 template.update(sqlAccount, stock.getCurrentPrice().multiply(shares), stock.getAccountId());
 
                 String sqlStock = "UPDATE stock_amount SET total_shares = total_shares - ? WHERE account_id = ? AND stock_symbol = ?;";
                 template.update(sqlStock, stock.getNumberOfShares(), stock.getAccountId(), stock.getStockSymbol());
             }
-            String sqlDel = "DELETE FROM stock_amount WHERE total_shares = 0;";
-               template.update(sqlDel);
+            System.out.println("now setting user balances");
+            String sqlUpdate = "UPDATE account SET user_balance = dollar_amount + stock_value WHERE account_id = ?;";
+            template.update(sqlUpdate, account.getAccountId());
+
         }
+        String sqlDel = "DELETE FROM stock_amount WHERE total_shares = 0;";
+        template.update(sqlDel);
     }
 
 

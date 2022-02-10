@@ -78,7 +78,7 @@ export default {
             leaderboard: [],
             email: '',
             isActive: true,
-            isOver: false,
+            gameOver: false,
             yetToStart: false
         }
       
@@ -132,10 +132,12 @@ export default {
           }
         },
         checkGameOver(){
+          console.log('check game over')
          let currentTimeStamp = new Date();
          let endDate = new Date(this.game.endDate);
          if(currentTimeStamp > endDate){
            this.gameOver = true;
+           console.log('gameOver = true')
           GameService.endGame(this.game.gameId);
          }else{
            this.gameOver = false;
