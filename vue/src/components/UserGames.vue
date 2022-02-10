@@ -1,5 +1,4 @@
 <template>
-<<<<<<< HEAD
       <table class="table">
         <thead>
           <tr id="textForCursor">
@@ -16,7 +15,7 @@
               {{ game.gameName }}
             </td>
             <td colspan="2" class="hover" >
-              {{ Number(accountList[index].userBalance).toLocaleString() }}
+              ${{ Number(accountList[index].userBalance).toLocaleString() }}
             </td>
             <td colspan="3" class="hover" >
               {{ game.endDate }}
@@ -25,35 +24,6 @@
         </tbody>
       </table>
       <!-- took out the table -->
-=======
-  <div id="main">
-   <div class="table">
-    <table>
-    <thead>
-      <tr id="textForCursor">
-        <th>Game Name</th>
-        <th>Portfolio Value</th>
-        <th>Game End Date</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr v-for='(game, index) in gameList' v-bind:key="game.gameId" v-on:click="goToGameDetails(game, accountList[index])">
-        <td  class="hover" id="gameName">
-          {{game.gameName}}
-          </td>
-        <td class="hover">
-          ${{Number(accountList[index].userBalance).toLocaleString()}}
-        </td>
-       <td class="hover">
-          {{game.endDate}}
-        </td>
-      </tr>
-    </tbody>
-  </table>
-  <!-- took out the table -->
-   </div>
-  </div>
->>>>>>> main
 </template>
 
 <script>
