@@ -21,7 +21,7 @@
           <tr class="clickable" v-for="stock in assets" v-bind:key="stock.stockSymbol" v-on:click="populateFields(stock.stockSymbol, stock.numberOfShares)">
             <td class="leftTable">{{ stock.stockSymbol }}</td>
             <td class="leftTable">{{ stock.numberOfShares }}</td>
-            <td class="leftTable">${{ parseFloat(getAssetLineValue(stock)).toFixed(2)}}</td>
+            <td class="leftTable">${{ Number(getAssetLineValue(stock)).toLocaleString()}}</td>
 
             <!--<td class="leftTable">${{ parseFloat(getAssetLineValue(stock)).toFixed(2)}}</td>-->
           </tr>
@@ -30,8 +30,8 @@
         </tbody>
         <tfoot>
           <tr>
-            <th colspan="2">Total Portfolio Value</th>
-            <th> </th>
+            <th colspan="2">Total Stock Value: </th>
+            <th>${{ Number(account.stockValue).toLocaleString() }}</th>
           </tr>
         </tfoot>
       </table>
@@ -57,7 +57,7 @@
         </tbody>
         <tfoot>
           <tr>
-            <th colspan="1">Funds for Purchase: ${{ Number(account.dollarAmount).toLocaleString() }}</th>
+            <th colspan="1">Total Portfolio Value: ${{ Number(account.userBalance).toLocaleString() }}</th>
           </tr>
         </tfoot>
       </table>
@@ -72,12 +72,12 @@
         <tbody id="rightTable">
           <tr class="clickable" v-for="stock in this.$store.state.stockPrices" v-bind:key="stock.stockSymbol" v-on:click="populateFields(stock.stockSymbol, 10)">
             <td colspan="2" class="rowCheck">{{ stock.stockSymbol }}</td>
-            <td class="rowCheck">${{ parseFloat(stock.currentPrice).toFixed(2)}}</td>
+            <td class="rowCheck">${{ Number(stock.currentPrice).toLocaleString()}}</td>
           </tr>
         </tbody>
         <tfoot>
           <tr>
-            <th colspan="3"> Current as of: {{ lastRefreshed }}</th>
+            <th colspan="3"> Current as of: {{ this.$store.state.lastRefreshed }}</th>
             
           </tr>
         </tfoot>
@@ -101,6 +101,7 @@ export default {
         endDate: this.$store.state.game.endDate,
         startDate: this.$store.state.game.startDate,
         organizerId: this.$store.state.game.organizerId,
+        gameId: this.$store.state.game.gameId
       },
       account: {
         accountId: this.$store.state.account.accountId,
@@ -109,7 +110,7 @@ export default {
         userBalance: this.$store.state.account.userBalance,
       },
       
-      lastRefreshed: '',
+      lastRefreshed: this.$store.state.lastRefreshed,
 
       assets: [],
     };
@@ -139,15 +140,26 @@ export default {
       let stockSymbol = (document.getElementById('tickerInput').value).toUpperCase();
       let sharesToAdd = 0;
       let pricesArr = this.$store.state.stockPrices;
-          for(let i = 0; i < pricesArr.length; i++) {
-        if(stockSymbol === pricesArr[i].stockSymbol) {
-       price = pricesArr[i].currentPrice;}}
+
+      for(let i = 0; i < pricesArr.length; i++){
+        if(stockSymbol === pricesArr[i].stockSymbol){
+       price = pricesArr[i].currentPrice;
+        }
+       }
        if((price * document.getElementById('sharesInput').value) > this.account.dollarAmount){
         sharesToAdd = (this.account.dollarAmount/price)-1 ;
-       }else{
+       } else {
          sharesToAdd = document.getElementById('sharesInput').value;
        }
-      let buyOrder = {sharesToAdd: sharesToAdd, stockSymbol: stockSymbol, accountId: this.account.accountId, currentPrice: price}
+
+      let buyOrder = {
+      sharesToAdd: (sharesToAdd <= 0) ? 1 : sharesToAdd, 
+      stockSymbol: stockSymbol, 
+      accountId: this.account.accountId, 
+      currentPrice: price,
+      userId: this.$store.state.user.id,
+      gameId: this.game.gameId
+      }
       return buyOrder;
     },
     buyStock(buyOrder){
@@ -161,13 +173,19 @@ export default {
       }
         // gamedetails for now, should refresh portfolio page
       if(isFound){
-        GameService.buyStock(buyOrder);
+        GameService.buyStock(buyOrder).then((response) => {
+          console.log(response.data)
+          this.$store.commit('SET_ACCOUNT', response.data)
+        });
         console.log("executed current buy");
         this.$router.push('/gameDetails');
       }
       // gamedetails for now, should refresh portfolio page
       else{
-        GameService.buyNewStock(buyOrder);
+        GameService.buyNewStock(buyOrder).then((response) => {
+          console.log(response.data);
+          this.$store.commit('SET_ACCOUNT', response.data)
+        });
         console.log("executed new buy");
         this.$router.push('/gameDetails');
       }
@@ -180,28 +198,49 @@ export default {
       let allShares = false;
       let stockSymbol = (document.getElementById('tickerInput').value).toUpperCase();
       let portfolioArr = this.assets;
-          for(let i = 0; i < portfolioArr.length; i++) {
-        if(stockSymbol === portfolioArr[i].stockSymbol) {
-       price = portfolioArr[i].currentPrice;
-       maxSharesToSubtract = portfolioArr[i].numberOfShares}}
-       if(document.getElementById('sharesInput').value < maxSharesToSubtract){
-       sellQuantity = document.getElementById('sharesInput').value;}
-      else{ sellQuantity = maxSharesToSubtract;
-      allShares = true;}
-        let sellOrder = {sharesToSubtract: sellQuantity,
-      stockSymbol: stockSymbol, accountId: this.account.accountId, currentPrice: price, allShares: allShares}
+
+      for(let i = 0; i < portfolioArr.length; i++) {
+        if(stockSymbol === portfolioArr[i].stockSymbol){
+        price = portfolioArr[i].currentPrice;
+        maxSharesToSubtract = portfolioArr[i].numberOfShares
+        }
+       }
+        if(document.getElementById('sharesInput').value < maxSharesToSubtract || 
+        isNaN(document.getElementById('sharesInput').value)){
+       sellQuantity = document.getElementById('sharesInput').value;
+       } else { 
+         sellQuantity = maxSharesToSubtract;
+         allShares = true;
+         }
+
+        let sellOrder = {
+        sharesToSubtract: sellQuantity,
+        stockSymbol: stockSymbol,
+        accountId: this.account.accountId, 
+        currentPrice: price, 
+        allShares: allShares,
+        userId: this.$store.state.user.id,
+        gameId: this.game.gameId
+      }
       return sellOrder;
     },
     // gamedetails for now, should refresh portfolio page
     sellStock(sellOrder){
       console.log("sell function")
-      GameService.sellStock(sellOrder);
-      this.$router.push('/gameDetails');
+      if(sellOrder.sharesToSubtract <= 0) {
+        this.$router.push('/gameDetails');
+      } else {
+        GameService.sellStock(sellOrder).then((response) => {
+          console.log(response.data);
+          this.$store.commit('SET_ACCOUNT', response.data);
+        });
+        this.$router.push('/gameDetails');
+      }
     },
     getTime() {
-    let allOfTime = new Date();
-    this.lastRefreshed = (allOfTime.getMinutes() < 10) ? allOfTime.getHours() + ":0" + allOfTime.getMinutes() + ":" + allOfTime.getSeconds()
-     : allOfTime.getHours() + ":" + allOfTime.getMinutes() + ":" + allOfTime.getSeconds();               
+    //let allOfTime = new Date();
+    //this.lastRefreshed = (allOfTime.getMinutes() < 10) ? allOfTime.getHours() + ":0" + allOfTime.getMinutes() + ":" + allOfTime.getSeconds()
+     //: allOfTime.getHours() + ":" + allOfTime.getMinutes() + ":" + allOfTime.getSeconds();               
     },
     getAssetLineValue(stock) {
       let pricesArr = this.$store.state.stockPrices;

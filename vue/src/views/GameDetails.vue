@@ -33,7 +33,7 @@
 
                 <td class="data">{{ index + 1 }}</td>
                 <td class="data">{{ place.username }}</td>
-                <td class="data">{{ place.userBalance }}</td>
+                <td class="data">${{ Number(place.userBalance).toLocaleString() }}</td>
                 </tr>
             </table>
             <button v-if="isActive" v-on:click="goToPortfolio()">View My Portfolio</button>
@@ -96,10 +96,18 @@ export default {
       // this.$store.commit('SET_ACCOUNT', this.account)
             this.$router.push('/portfolio');
         },
+        getAccount() {
+          GameService.refreshAccount(this.$store.state.user.id, this.game.gameId).then((response) => {
+            if (response.status === 200) {
+              this.$store.commit('SET_ACCOUNT', response.data)
+            }
+          })
+        },
         refresh() {
             GameService.updateStockPrices().then((response) => {
                 if (response.status === 200) {
-                    this.$store.commit('SET_STOCK_PRICES', response.data);
+                    this.$store.commit('SET_STOCK_PRICES', response.data[1]);
+                    this.$store.commit('SET_UPDATE_TIME', response.data[0]);
                     if(this.$store.state.isLoading === true){
                      this.$store.commit('TOGGLE_IS_LOADING');
                     }
@@ -164,6 +172,7 @@ export default {
         this.checkActiveDate();
         this.checkGameOver();
         this.checkGameYetToStart();
+        this.getAccount();
      }
 }
 </script>
