@@ -1,31 +1,4 @@
 <template>
-<<<<<<< HEAD
-      <table class="table">
-        <thead>
-          <tr id="textForCursor">
-            <th colspan="1">Game Name</th>
-            <th colspan="2">Portfolio Value</th>
-            <th colspan="3">Game End Date</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="(game, index) in gameList"
-            v-bind:key="game.gameId"
-            v-on:click="goToGameDetails(game, accountList[index])">
-            <td colspan="1" class="hover" id="gameName" >
-              {{ game.gameName }}
-            </td>
-            <td colspan="2" class="hover" >
-              {{ Number(accountList[index].userBalance).toLocaleString() }}
-            </td>
-            <td colspan="3" class="hover" >
-              {{ game.endDate }}
-            </td>
-          </tr>
-        </tbody>
-      </table>
-      <!-- took out the table -->
-=======
   <div id="main">
    <div class="table">
     <table>
@@ -53,7 +26,6 @@
   <!-- took out the table -->
    </div>
   </div>
->>>>>>> main
 </template>
 
 <script>
