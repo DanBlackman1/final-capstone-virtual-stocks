@@ -13,5 +13,9 @@ export default {
 
 
 <style scoped>
-.loading{height: 100px;}
+.loading{
+  position: absolute;
+  /* height: 847px;
+  display: flex; */
+}
 </style>

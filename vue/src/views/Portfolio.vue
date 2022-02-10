@@ -1,11 +1,14 @@
 <template>
   <div class="main">
-     <loading-image v-if="$store.state.isLoading"></loading-image>
+         <loading-image v-if="$store.state.isLoading"></loading-image>
+
     <div class="overview">
      <!-- Stock search: <input type="search" placeholder="Search"> -->
     </div>
+    
     <div section id="tables">
       <table class="money">
+        
         <thead>
           <tr>
             <th>Stock Ticker</th>
@@ -13,6 +16,7 @@
             <th>Total Value</th>
           </tr>
         </thead>
+        
         <tbody>
           <tr class="clickable" v-for="stock in assets" v-bind:key="stock.stockSymbol" v-on:click="populateFields(stock.stockSymbol, stock.numberOfShares)">
             <td class="leftTable">{{ stock.stockSymbol }}</td>
@@ -65,12 +69,10 @@
             <th >Price</th>
           </tr>
         </thead>
-       
         <tbody id="rightTable">
           <tr class="clickable" v-for="stock in this.$store.state.stockPrices" v-bind:key="stock.stockSymbol" v-on:click="populateFields(stock.stockSymbol, 10)">
             <td colspan="2" class="rowCheck">{{ stock.stockSymbol }}</td>
             <td class="rowCheck">${{ parseFloat(stock.currentPrice).toFixed(2)}}</td>
-
           </tr>
         </tbody>
         <tfoot>
@@ -222,12 +224,6 @@ export default {
 };
 </script>
 <style scoped>
-/* .rightTable{
-  height: 50px;
-  overflow: auto;
-  
-} */
-
 thead, tfoot{
   cursor: default;
 }
@@ -271,10 +267,28 @@ thead, tfoot{
 /* .gameTitle{
   border: black solid;
 } */
+/* #rightTable tbody{
+  height: 150px;
+  overflow: scroll;
+}
+.options tbody{
+  height: 150px;
+  
+  overflow: auto;
+}
+.money{
+  height: 150px;
+  overflow: scroll;
+}
+.trade{
+  height: 300px;
+  overflow: scroll;
+} */
 #tables {
   display: flex;
   justify-content: space-evenly;
-  height: 400px;
+  /* height: 700px; */
+  /* overflow: scroll; */
 
 }
 .clickable{
@@ -405,7 +419,7 @@ money.tfoot td {
 
 .clickable:hover{
     cursor: pointer;
-    transform: scale(1.1);
+    transform: scale(1.02);
     transition: all .2s ease-in-out;
 }
 @media only screen and (max-width: 600px) {
