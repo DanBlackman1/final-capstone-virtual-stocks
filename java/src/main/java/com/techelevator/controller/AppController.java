@@ -11,6 +11,9 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 
 @RestController
@@ -63,7 +66,6 @@ public class AppController {
         stocksDao.updateForTransaction(stockList, accountIdList);
 
         Account namedAccount = accountDao.getAccount(buyOrder.getUserId(), buyOrder.getGameId());
-        System.out.println("should activate AFTER tick and tock");
         return namedAccount;
     }
 
@@ -76,19 +78,22 @@ public class AppController {
         List<Integer> accountIdList = accountDao.getActiveAccounts();
         stocksDao.updateForTransaction(stockList, accountIdList);
         Account namedAccount = accountDao.getAccount(buyOrder.getUserId(), buyOrder.getGameId());
-        System.out.println("should activate AFTER tick and tock");
         return namedAccount;
     }
 
     @RequestMapping(path = "/currentPrices", method = RequestMethod.GET)
-    public List<Stock> getAndUpdateStockData() throws JsonProcessingException {
+    public Object[] getAndUpdateStockData() throws JsonProcessingException {
         List<Stock> pricesList = stocksDao.listCurrentPricesFromWeb();
+
         if (pricesList.size() > 0) {
             stocksDao.updateCurrentPrices(pricesList);
             List<Integer> accountIdList = accountDao.getActiveAccounts();
             stocksDao.updateStockValue(accountIdList, pricesList);
         }
-        return stocksDao.retrieveSavedPrices();
+        String updateTime = LocalTime.now().truncatedTo(ChronoUnit.SECONDS)
+                .format(DateTimeFormatter.ISO_LOCAL_TIME);
+        Object[] obj = new Object[]{updateTime, stocksDao.retrieveSavedPrices()};
+        return obj;
     }
 
     @RequestMapping(path = "/leaderboard/{id}", method = RequestMethod.GET)
@@ -118,7 +123,6 @@ public class AppController {
     @RequestMapping(path = "/declineInvite/{userId}/{gameId}", method = RequestMethod.DELETE)
     public void declineInvite(@PathVariable("userId") int userId,
                               @PathVariable("gameId") int gameId) {
-        System.out.println("test line");
         inviteDao.declineInvite(userId, gameId);
     }
 
@@ -131,7 +135,6 @@ public class AppController {
         List<Integer> accountIdList = accountDao.getActiveAccounts();
         stocksDao.updateForTransaction(stockList, accountIdList);
         Account namedAccount = accountDao.getAccount(sellOrder.getUserId(), sellOrder.getGameId());
-        System.out.println("should activate AFTER tick and tock");
         return namedAccount;
     }
 
@@ -144,7 +147,6 @@ public class AppController {
     @RequestMapping(path = "/ref/{userId}/{gameId}", method = RequestMethod.GET)
     public Account refreshAccount(@PathVariable("userId") int userId,
                                   @PathVariable("gameId") int gameId) {
-        System.out.println("firing");
         return accountDao.getAccount(userId, gameId);
     }
 

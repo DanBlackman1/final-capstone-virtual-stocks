@@ -27,7 +27,8 @@ export default new Vuex.Store({
     account: {},
     stockPrices: [],
     portfolio: [],
-    leaderboard: []
+    leaderboard: [],
+    lastRefreshed: ''
   },
   mutations: {
     TOGGLE_IS_LOADING(state) {
@@ -103,6 +104,9 @@ export default new Vuex.Store({
         state.leaderboard.push(tempAccount);
       }
 
+    },
+    SET_UPDATE_TIME(state, updateTime) {
+      state.lastRefreshed = updateTime;
     }
 
     }

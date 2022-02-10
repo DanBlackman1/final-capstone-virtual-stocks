@@ -2,7 +2,7 @@
 <body class="loginBody">
   <div id="login" class="text-center">
     <form class="form-signin" @submit.prevent="login">
-      <h1 id="loginTitle">Market Order 25</h1>
+      <h1 id="loginTitle">Market 25</h1>
       <h3 class="h3 mb-3 font-weight-normal">Login to view your Games</h3>
       <div
         class="alert alert-danger"
@@ -51,8 +51,8 @@
         <div class="register"> Not a member?  &nbsp;
           <router-link id="register" :to="{ name: 'register' }"> Register</router-link>
       </div><br>
-      <p><em>Learn the market with play money.  Buy and Sell Stocks, play with your friends, 
-        and check the leaderboard to see how you are doing!!</em></p>
+      <p><em>Learn the market with no danger to your bank account! Buy and sell stocks with your friends, 
+        then compare results to see how you fare. May the best trader win.</em></p>
     </form>
     
   </div>

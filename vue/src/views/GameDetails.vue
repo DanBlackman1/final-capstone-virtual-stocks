@@ -106,7 +106,8 @@ export default {
         refresh() {
             GameService.updateStockPrices().then((response) => {
                 if (response.status === 200) {
-                    this.$store.commit('SET_STOCK_PRICES', response.data);
+                    this.$store.commit('SET_STOCK_PRICES', response.data[1]);
+                    this.$store.commit('SET_UPDATE_TIME', response.data[0]);
                     if(this.$store.state.isLoading === true){
                      this.$store.commit('TOGGLE_IS_LOADING');
                     }

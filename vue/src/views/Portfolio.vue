@@ -77,7 +77,7 @@
         </tbody>
         <tfoot>
           <tr>
-            <th colspan="3"> Current as of: {{ lastRefreshed }}</th>
+            <th colspan="3"> Current as of: {{ this.$store.state.lastRefreshed }}</th>
             
           </tr>
         </tfoot>
@@ -110,7 +110,7 @@ export default {
         userBalance: this.$store.state.account.userBalance,
       },
       
-      lastRefreshed: '',
+      lastRefreshed: this.$store.state.lastRefreshed,
 
       assets: [],
     };
@@ -153,7 +153,7 @@ export default {
        }
 
       let buyOrder = {
-      sharesToAdd: sharesToAdd, 
+      sharesToAdd: (sharesToAdd <= 0) ? 1 : sharesToAdd, 
       stockSymbol: stockSymbol, 
       accountId: this.account.accountId, 
       currentPrice: price,
@@ -205,7 +205,8 @@ export default {
         maxSharesToSubtract = portfolioArr[i].numberOfShares
         }
        }
-        if(document.getElementById('sharesInput').value < maxSharesToSubtract){
+        if(document.getElementById('sharesInput').value < maxSharesToSubtract || 
+        isNaN(document.getElementById('sharesInput').value)){
        sellQuantity = document.getElementById('sharesInput').value;
        } else { 
          sellQuantity = maxSharesToSubtract;
@@ -226,16 +227,20 @@ export default {
     // gamedetails for now, should refresh portfolio page
     sellStock(sellOrder){
       console.log("sell function")
-      GameService.sellStock(sellOrder).then((response) => {
-        console.log(response.data);
-        this.$store.commit('SET_ACCOUNT', response.data);
-      });
-      this.$router.push('/gameDetails');
+      if(sellOrder.sharesToSubtract <= 0) {
+        this.$router.push('/gameDetails');
+      } else {
+        GameService.sellStock(sellOrder).then((response) => {
+          console.log(response.data);
+          this.$store.commit('SET_ACCOUNT', response.data);
+        });
+        this.$router.push('/gameDetails');
+      }
     },
     getTime() {
-    let allOfTime = new Date();
-    this.lastRefreshed = (allOfTime.getMinutes() < 10) ? allOfTime.getHours() + ":0" + allOfTime.getMinutes() + ":" + allOfTime.getSeconds()
-     : allOfTime.getHours() + ":" + allOfTime.getMinutes() + ":" + allOfTime.getSeconds();               
+    //let allOfTime = new Date();
+    //this.lastRefreshed = (allOfTime.getMinutes() < 10) ? allOfTime.getHours() + ":0" + allOfTime.getMinutes() + ":" + allOfTime.getSeconds()
+     //: allOfTime.getHours() + ":" + allOfTime.getMinutes() + ":" + allOfTime.getSeconds();               
     },
     getAssetLineValue(stock) {
       let pricesArr = this.$store.state.stockPrices;
