@@ -63,7 +63,6 @@ h1{
 
 
 
-
 @media only screen and (max-width: 790px) {
   .splitTables{
     display: grid; 

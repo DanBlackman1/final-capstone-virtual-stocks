@@ -82,9 +82,6 @@ table{
   justify-content: center; */
   padding: 5px;
 }
-th{
-  border-collapse:collapse;
-}
 .buttons:hover{
   cursor: pointer;
 }
