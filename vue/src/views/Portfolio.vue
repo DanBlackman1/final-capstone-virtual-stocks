@@ -420,7 +420,7 @@ money.tfoot td {
   );
   color:rgba(255, 251, 0, 0.993);
   text-shadow: 2px 3px 2px rgb(6, 42, 56);
-  /* border: 2px solid gold; */
+  border: 2px solid gold;
 }
 /* zebra striping */
 

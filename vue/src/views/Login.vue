@@ -48,9 +48,9 @@
         <div class="submitButton">
           <button id="submitButton" type="submit">Sign in</button>
         </div>
-        <div class="register"> Not a member?  &nbsp;
-          <router-link id="register" :to="{ name: 'register' }"> Register</router-link>
-      </div><br>
+        <div class="register"> Not a member?&nbsp;
+          &nbsp;<router-link id="register" :to="{ name: 'register' }"> &nbsp;Register</router-link>
+      </div>
       <p><em>Learn the market with no danger to your bank account! Buy and sell stocks with your friends, 
         then compare results to see how you fare. May the best trader win.</em></p>
     </form>
@@ -119,7 +119,7 @@ export default {
 .alert{
   grid-area: alertPopUp;
   background-color: rgb(240, 240, 240);
-  color: red;
+  color: green;
 }
 .htmlUsername{
 grid-area: username;
