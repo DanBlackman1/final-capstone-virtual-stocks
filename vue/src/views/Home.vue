@@ -1,17 +1,23 @@
 <template>
   <div class="home">
     <div class="splitTables">
-      <div>
-        <h1>Create New Game</h1>
+      <div class="createGame">
         <div>
+          <h1>Create New Game</h1>
           <createGame />
         </div>
       </div>
     <div class="addingInfo">
-      <h1>View Existing Games</h1>
+      
       <div class="box">
-      <userGames/>
+        <h1>View Existing Games</h1>
+        <userGames/>
       </div>
+    </div>
+    
+    <div class="invites">
+      <h1>Invited Users</h1>
+      <invite-users />
     </div>
     </div>
   </div>
@@ -20,13 +26,14 @@
 <script>
 import createGame from "@/components/createGame.vue"
 import userGames from "@/components/UserGames.vue"
+import InviteUsers from '../components/InviteUsers.vue';
 
 export default {
   name: "home",
   components:{
     createGame,
-    userGames
-    
+    userGames,
+    InviteUsers
   }
 };
 </script>
@@ -38,13 +45,35 @@ h1{
 .splitTables{
   display: flex;
   justify-content: space-around;
+  grid-area: createGame;
+  display: grid;
+  grid-template-areas: 
+  "splitTables addingInfo"
+  "invites addingInfo";
 }
+.addingInfo{
+  display: grid;
+  grid-area: addingInfo;
+}
+.invites{
+  grid-area: invites;
+  justify-self: center;
+  margin-top: 20px;
+}
+
 .box{
   border: black solid;
 }
-@media only screen and (max-width: 600px) {
+
+
+
+@media only screen and (max-width: 635px) {
   .splitTables{
-    display: grid;    
+    display: grid; 
+    grid-template: 
+    "splitTables"
+    "invites"
+    "addingInfo";   
   }
 
 }

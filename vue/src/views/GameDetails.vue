@@ -107,7 +107,9 @@ export default {
             GameService.updateStockPrices().then((response) => {
                 if (response.status === 200) {
                     this.$store.commit('SET_STOCK_PRICES', response.data);
-                    this.$store.commit('TOGGLE_IS_LOADING');
+                    if(this.$store.state.isLoading === true){
+                     this.$store.commit('TOGGLE_IS_LOADING');
+                    }
                 }
             })
         },

@@ -1,6 +1,6 @@
 <template>
       <div class="loading">
-        <img src="../../images/loader.gif" />
+        <img src="../../images/loader2.gif" />
       </div>
 </template>
 
@@ -13,5 +13,9 @@ export default {
 
 
 <style scoped>
-.loading{height: 100px;}
+.loading{
+  position: absolute;
+  height: 847px;
+  display: flex;
+}
 </style>
