@@ -36,10 +36,10 @@ export default {
     methods:{
         getInvitesList() {
             GameService.seeMyInvites(this.$store.state.user.id).then((response) => {
+              console.log("getting invites")
                 this.myInvites = response.data;
       })
     },
-    },   
     declineInvite(gameId) {
       let inviteGameId = gameId;
       let inviteUserId = this.$store.state.user.id;
@@ -58,6 +58,7 @@ export default {
       GameService.confirmInvite(invite);
       this.$router.go();
     },
+    },   
     beforeMount(){
             this.getInvitesList();
     }
