@@ -379,20 +379,18 @@ money.tfoot td {
  background-color:lightcoral;
 }
 
-
+/* The rows CSS color */
 .options tbody tr:nth-child(odd) {
-  background-color: rgba(77, 149, 35, 0.534);
+  background-color: rgba(204, 169, 189, 0.2);
 }
 .options tbody tr:nth-child(odd):hover {
-  background-color:green;
+  background-color:lightgreen;
 }
-
-
 .options tbody tr:nth-child(even) {
-  background-color: rgba(13, 70, 92, 0.589);
+  background-color: rgba(13, 70, 92, 0.1);
 }
 .options tbody tr:nth-child(even):hover {
-  background-color: green;
+  background-color: rgba(144, 238, 144, 0.9);
 }
 
 .clickable:hover{
