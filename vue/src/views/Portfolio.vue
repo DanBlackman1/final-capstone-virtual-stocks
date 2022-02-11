@@ -1,9 +1,7 @@
 <template>
   <div class="main">
          <loading-image v-if="$store.state.isLoading"></loading-image>
-
     <div class="overview">
-     <!-- Stock search: <input type="search" placeholder="Search"> -->
     </div>
     
     <div section id="tables">
@@ -18,12 +16,12 @@
         </thead>
         
         <tbody>
-          <tr class="clickable" v-for="stock in assets" v-bind:key="stock.stockSymbol" v-on:click="populateFields(stock.stockSymbol, stock.numberOfShares)">
+          <tr class="clickable" v-for="stock in assets" 
+          v-bind:key="stock.stockSymbol" 
+          v-on:click="populateFields(stock.stockSymbol, stock.numberOfShares)">
             <td class="leftTable">{{ stock.stockSymbol }}</td>
             <td class="leftTable">{{ stock.numberOfShares }}</td>
             <td class="leftTable">${{ Number(getAssetLineValue(stock)).toLocaleString()}}</td>
-
-            <!--<td class="leftTable">${{ parseFloat(getAssetLineValue(stock)).toFixed(2)}}</td>-->
           </tr>
           <!-- adds a bottom space that flexes -->
           <tr><td></td><td></td><td></td></tr>
@@ -62,7 +60,6 @@
         </tfoot>
       </table>
       <table class="options">
-        <!--<caption>{{Username_Portfolio}}{{UserID}}{{GameName}}</caption> Needed? -->
         <thead>
           <tr>
             <th colspan="2">Stock Ticker</th>
@@ -70,7 +67,10 @@
           </tr>
         </thead>
         <tbody id="rightTable">
-          <tr class="clickable" v-for="stock in this.$store.state.stockPrices" v-bind:key="stock.stockSymbol" v-on:click="populateFields(stock.stockSymbol, 10)">
+          <tr class="clickable" 
+          v-for="stock in this.$store.state.stockPrices" 
+          v-bind:key="stock.stockSymbol" 
+          v-on:click="populateFields(stock.stockSymbol, 10)">
             <td colspan="2" class="rowCheck">{{ stock.stockSymbol }}</td>
             <td class="rowCheck">${{ Number(stock.currentPrice).toLocaleString()}}</td>
           </tr>
@@ -78,7 +78,6 @@
         <tfoot>
           <tr>
             <th colspan="3"> Current as of: {{ this.$store.state.lastRefreshed }}</th>
-            
           </tr>
         </tfoot>
       </table>
@@ -119,23 +118,17 @@ export default {
   computed: {},
   methods: {
     getAssets(accountId) {
-      console.log("get assets")
-      // if(accountId != 'undefined')
       GameService.getPortfolio(accountId).then((response) => {
         console.log(response.data);
         this.$store.commit('SET_PORTFOLIO', response.data.stockList);
       this.assets = this.$store.state.portfolio;
-      this.getTime();
-      
       });
     },
     populateFields(stockSymbol, numberOfShares){
       document.getElementById('tickerInput').setAttribute("value", stockSymbol);
       document.getElementById('sharesInput').setAttribute("value", numberOfShares);
-      
     },
     generateBuyOrder(){
-      console.log("generate buy order")
       let price = 0;
       let stockSymbol = (document.getElementById('tickerInput').value).toUpperCase();
       let sharesToAdd = 0;
@@ -160,38 +153,31 @@ export default {
       userId: this.$store.state.user.id,
       gameId: this.game.gameId
       }
+      
       return buyOrder;
     },
     buyStock(buyOrder){
-      console.log("buy function")
       let isFound = false;
-      // let stocksOwned = this.assets;
       for(let i = 0; i < this.assets.length; i++){
         if(buyOrder.stockSymbol === this.assets[i].stockSymbol){
           isFound = true;
         }
       }
-        // gamedetails for now, should refresh portfolio page
       if(isFound){
         GameService.buyStock(buyOrder).then((response) => {
           console.log(response.data)
           this.$store.commit('SET_ACCOUNT', response.data)
         });
-        console.log("executed current buy");
         this.$router.push('/gameDetails');
-      }
-      // gamedetails for now, should refresh portfolio page
-      else{
+      } else {
         GameService.buyNewStock(buyOrder).then((response) => {
           console.log(response.data);
           this.$store.commit('SET_ACCOUNT', response.data)
         });
-        console.log("executed new buy");
         this.$router.push('/gameDetails');
       }
     },
     generateSellOrder(){
-      console.log("generate sales order")
       let price = 0;
       let maxSharesToSubtract = 0;
       let sellQuantity = 0;
@@ -224,9 +210,7 @@ export default {
       }
       return sellOrder;
     },
-    // gamedetails for now, should refresh portfolio page
     sellStock(sellOrder){
-      console.log("sell function")
       if(sellOrder.sharesToSubtract <= 0) {
         this.$router.push('/gameDetails');
       } else {
@@ -236,11 +220,6 @@ export default {
         });
         this.$router.push('/gameDetails');
       }
-    },
-    getTime() {
-    //let allOfTime = new Date();
-    //this.lastRefreshed = (allOfTime.getMinutes() < 10) ? allOfTime.getHours() + ":0" + allOfTime.getMinutes() + ":" + allOfTime.getSeconds()
-     //: allOfTime.getHours() + ":" + allOfTime.getMinutes() + ":" + allOfTime.getSeconds();               
     },
     getAssetLineValue(stock) {
       let pricesArr = this.$store.state.stockPrices;
@@ -295,39 +274,9 @@ thead, tfoot{
   height: 40px;
 }
 
-/* .leftTable{
-  border: burlywood solid;
-} */
-/* .overview{
-  display: flex;
-  justify-content: center;
-} */
-/* .gameTitle{
-  border: black solid;
-} */
-/* #rightTable tbody{
-  height: 150px;
-  overflow: scroll;
-}
-.options tbody{
-  height: 150px;
-  
-  overflow: auto;
-}
-.money{
-  height: 150px;
-  overflow: scroll;
-}
-.trade{
-  height: 300px;
-  overflow: scroll;
-} */
 #tables {
   display: flex;
   justify-content: space-evenly;
-  /* height: 700px; */
-  /* overflow: scroll; */
-
 }
 .clickable{
   height: 20px;
@@ -369,15 +318,6 @@ th
   letter-spacing: 2px;
 }
 /* typography */
-/* .rowCheck {
-  text-align: center;
-  border: burlywood solid;
-  
-} */
-/* tfoot th {
-  text-align: center;
-  border: 2px solid gold;
-} */
 /* graphic and colors */
 .money thead,
 .money tfoot {

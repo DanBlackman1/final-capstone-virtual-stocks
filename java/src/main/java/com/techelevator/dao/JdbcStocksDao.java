@@ -216,10 +216,12 @@ public class JdbcStocksDao implements StocksDao{
                 stockList.add(stock);
             }
             for(Stock stock : stockList) {
-                String sqlAccount = "UPDATE account SET dollar_amount = (dollar_amount + ?) WHERE account_id = ?;";
+                String sqlAccount = "UPDATE account SET dollar_amount = (dollar_amount + ?)," +
+                        " stock_value = (stock_value - ?) WHERE account_id = ?;";
                 String sharesString = stock.getNumberOfShares() + "";
                 BigDecimal shares = new BigDecimal(sharesString);
-                template.update(sqlAccount, stock.getCurrentPrice().multiply(shares), stock.getAccountId());
+                template.update(sqlAccount, stock.getCurrentPrice().multiply(shares),
+                        stock.getCurrentPrice().multiply(shares), stock.getAccountId());
 
                 String sqlStock = "UPDATE stock_amount SET total_shares = total_shares - ? WHERE account_id = ? AND stock_symbol = ?;";
                 template.update(sqlStock, stock.getNumberOfShares(), stock.getAccountId(), stock.getStockSymbol());

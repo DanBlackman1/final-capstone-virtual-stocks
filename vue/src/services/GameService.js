@@ -47,6 +47,9 @@ export default {
     },
     refreshAccount(userId, gameId) {
         return axios.get(`/ref/${userId}/${gameId}`)
+    },
+    refreshGame(gameId) {
+        return axios.get(`/game/${gameId}`)
     }
 
 }
