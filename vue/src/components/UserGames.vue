@@ -14,7 +14,6 @@
             <td colspan="1" class="hover" id="gameName" >
               {{ game.gameName }}
             </td>
-
             <td colspan="2" class="hover">
 
               ${{ Number(accountList[index].userBalance).toLocaleString() }}
