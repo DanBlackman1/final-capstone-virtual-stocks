@@ -218,6 +218,7 @@ font-size:17px;
 border-bottom:black solid 2px;
 width:210px;
 
+
 }
 .gametime {
   display:flex ;
@@ -252,6 +253,8 @@ label {
   border: black solid;
   padding: 10px;
   width:550px;
+      background-color: rgb(233, 233, 233);
+
 }
 thead th:nth-child(1) {
   width: 25%;
