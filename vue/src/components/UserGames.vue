@@ -14,11 +14,7 @@
             <td colspan="1" class="hover" id="gameName" >
               {{ game.gameName }}
             </td>
-<<<<<<< HEAD
             <td colspan="2" class="hover">
-=======
-            <td colspan="2" class="hover" >
->>>>>>> main
               ${{ Number(accountList[index].userBalance).toLocaleString() }}
             </td>
             <td colspan="3" class="hover" >
