@@ -318,8 +318,6 @@ INSERT INTO stock_amount (account_id, stock_symbol, total_shares) VALUES ('15', 
 UPDATE account SET (user_balance, stock_value, dollar_amount) = ('102394.90', '80921.92', '21474.45') WHERE account_id = '15';
 
 
-
-
 INSERT INTO invite (user_id, game_id, accepted) VALUES ('3', '4', 'false');
 INSERT INTO invite (user_id, game_id, accepted) VALUES ('3', '5', 'false');
 
@@ -335,3 +333,15 @@ INSERT INTO invite (user_id, game_id, accepted) VALUES ('6', '5', 'false');
 INSERT INTO invite (user_id, game_id, accepted) VALUES ('7', '4', 'false');
 INSERT INTO invite (user_id, game_id, accepted) VALUES ('7', '1', 'false');
 
+
+INSERT INTO game (game_name, organizer_id, start_date, end_date) VALUES ('First Game', '5', '2022/02/05', '2022/02/09');
+INSERT INTO account (user_balance, stock_value, dollar_amount) VALUES ('105087.35', '0', '105087.35');
+INSERT INTO game_data (user_id, game_id, account_id) VALUES ('3', '6', '16');
+INSERT INTO account (user_balance, stock_value, dollar_amount) VALUES ('110453.89', '0', '110453.89');
+INSERT INTO game_data (user_id, game_id, account_id) VALUES ('4', '6', '17');
+INSERT INTO account (user_balance, stock_value, dollar_amount) VALUES ('115087.75', '0', '115087.75');
+INSERT INTO game_data (user_id, game_id, account_id) VALUES ('5', '6', '18');
+INSERT INTO account (user_balance, stock_value, dollar_amount) VALUES ('102087.95', '0', '102087.95');
+INSERT INTO game_data (user_id, game_id, account_id) VALUES ('6', '6', '19');
+INSERT INTO account (user_balance, stock_value, dollar_amount) VALUES ('108245.65', '0', '108245.65');
+INSERT INTO game_data (user_id, game_id, account_id) VALUES ('7', '6', '20');
